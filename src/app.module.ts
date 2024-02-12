@@ -20,6 +20,8 @@ import { UilityModule } from './uility/uility.module';
 import { Uility } from './uility/entities/uility.entity';
 import { Brokenequipment } from './brokenequipment/entities/brokenequipment.entity';
 import { BrokenequipmentModule } from './brokenequipment/brokenequipment.module';
+import { SalaryModule } from './salary/salary.module';
+import { Salary } from './salary/entities/salary.entity';
 
 
 // @Module({
@@ -45,7 +47,7 @@ import { BrokenequipmentModule } from './brokenequipment/brokenequipment.module'
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion, Uility, Brokenequipment],
+      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion, Uility, Brokenequipment, Salary],
       synchronize: true,
     }),
     CustomersModule,
@@ -57,6 +59,7 @@ import { BrokenequipmentModule } from './brokenequipment/brokenequipment.module'
     PromotionsModule,
     UilityModule,
     BrokenequipmentModule,
+    SalaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
