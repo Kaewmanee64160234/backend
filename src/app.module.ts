@@ -14,6 +14,8 @@ import { ActivityModule } from './activity/activity.module';
 import { Activity } from './activity/entities/activity.entity';
 import { RoomserviceModule } from './roomservice/roomservice.module';
 import { Roomservice } from './roomservice/entities/roomservice.entity';
+import { PromotionsModule } from './promotions/promotions.module';
+import { Promotion } from './promotions/entities/promotion.entity';
 
 // @Module({
 //   imports: [
@@ -38,7 +40,7 @@ import { Roomservice } from './roomservice/entities/roomservice.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice],
+      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion],
       synchronize: true,
     }),
     CustomersModule,
@@ -47,6 +49,7 @@ import { Roomservice } from './roomservice/entities/roomservice.entity';
     RoomsModule,
     ActivityModule,
     RoomserviceModule,
+    PromotionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
