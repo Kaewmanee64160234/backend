@@ -26,6 +26,9 @@ import { CheckinandoutModule } from './checkinandout/checkinandout.module';
 import { Checkinandout } from './checkinandout/entities/checkinandout.entity';
 import { ReviewsModule } from './reviews/reviews.module';
 import { Review } from './reviews/entities/review.entity';
+import { ReceiptsModule } from './receipts/receipts.module';
+import { Receipt } from './receipts/entities/receipt.entity';
+import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
 
 
 // @Module({
@@ -51,7 +54,7 @@ import { Review } from './reviews/entities/review.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion, Uility, Brokenequipment, Salary, Checkinandout, Review],
+      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion, Uility, Brokenequipment, Salary, Checkinandout, Review, Receipt, ReceiptDetail],
       synchronize: true,
     }),
     CustomersModule,
@@ -66,6 +69,7 @@ import { Review } from './reviews/entities/review.entity';
     SalaryModule,
     CheckinandoutModule,
     ReviewsModule,
+    ReceiptsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
