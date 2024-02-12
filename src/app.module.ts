@@ -10,6 +10,8 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { RoomsModule } from './rooms/rooms.module';
 import { Room } from './rooms/entities/room.entity';
+import { ActivityModule } from './activity/activity.module';
+import { Activity } from './activity/entities/activity.entity';
 
 // @Module({
 //   imports: [
@@ -34,13 +36,14 @@ import { Room } from './rooms/entities/room.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Customer, Employee, User, Room],
+      entities: [Customer, Employee, User, Room, Activity],
       synchronize: true,
     }),
     CustomersModule,
     EmployeesModule,
     UsersModule,
     RoomsModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
