@@ -6,7 +6,7 @@ import { Review } from './entities/review.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class sReviewService {
+export class ReviewsService {
 
   constructor(
     @InjectRepository(Review)
