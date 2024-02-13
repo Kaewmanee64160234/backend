@@ -1,5 +1,8 @@
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 import { ReceiptDetail } from "./receiptdetail.entity";
+import { Customer } from "src/customers/entities/customer.entity";
+import { Employee } from "src/employees/entities/employee.entity";
+import { Promotion } from "src/promotions/entities/promotion.entity";
 
 @Entity()
 export class Receipt {
@@ -38,5 +41,14 @@ export class Receipt {
 
   @OneToMany (() => ReceiptDetail , (receiptdetail) => receiptdetail.receipt)
   receiptdetail: ReceiptDetail[];
+
+  @ManyToOne (() => Customer, (customer) => customer.receipt)
+  customer: Customer;
+
+  @ManyToOne (() => Employee, (employee) => employee.receipt)
+  employee: Employee;
+
+  @ManyToOne (() => Promotion, (promotion) => promotion.receipt)
+  promotion: Promotion;
 
 }

@@ -1,3 +1,4 @@
+import { Receipt } from "src/receipts/entities/receipt.entity";
 import { User } from "src/users/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn , Column , OneToOne , JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
@@ -21,4 +22,7 @@ export class Customer {
   @OneToOne(() => User, (user) => user.customer)
   @JoinColumn()
   user: User
+
+  @OneToMany (() => Receipt , (receipt) => receipt.customer)
+  receipt: Receipt[];
 }

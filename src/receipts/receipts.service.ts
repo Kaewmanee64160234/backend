@@ -21,7 +21,7 @@ export class ReceiptsService {
   }
 
   findAll() {
-    return this.receiptsRepository.find({ relations: ['receiptdetail' ] });
+    return this.receiptsRepository.find({ relations: ['customer', 'employee' , 'promotion' , 'receiptdetail'] });
   }
 
   // findAlldetail() {

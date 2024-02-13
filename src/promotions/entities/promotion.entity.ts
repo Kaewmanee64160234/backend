@@ -1,3 +1,4 @@
+import { Receipt } from "src/receipts/entities/receipt.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
 @Entity()
@@ -22,4 +23,7 @@ export class Promotion {
 
   @Column()
   prom_used_point: number;
+
+  @OneToMany (() => Receipt , (receipt) => receipt.promotion)
+  receipt: Receipt[];
 }
