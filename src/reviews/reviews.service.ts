@@ -18,7 +18,7 @@ export class ReviewsService {
   }
 
   findAll() {
-    return this.reviewsRepository.find({ relations: ['receiptdetail' , 'room']});
+    return this.reviewsRepository.find({ relations: ['room' , 'receiptdetail' ]});
   }
 
   findOne(id: number) {

@@ -1,3 +1,4 @@
+import { Employee } from "src/employees/entities/employee.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
 @Entity()
@@ -26,4 +27,6 @@ export class Uility {
   @Column()
   ue_date: Date;
 
+  @ManyToOne (() => Employee, (employee) => employee.uility)
+  employee : Employee;
 }

@@ -1,5 +1,6 @@
 import { Checkinandout } from "src/checkinandout/entities/checkinandout.entity";
 import { Receipt } from "src/receipts/entities/receipt.entity";
+import { Uility } from "src/uility/entities/uility.entity";
 import { User } from "src/users/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn , Column,OneToOne ,JoinColumn, OneToMany, ManyToOne} from "typeorm";
 
@@ -29,6 +30,9 @@ export class Employee {
   @Column()
   emp_dsw: Date;
 
+  @Column()
+  emp_hourly_wage: Date;
+
   @OneToOne(() => User, (user) => user.employee)
   @JoinColumn()
     user: User
@@ -38,4 +42,7 @@ export class Employee {
 
   @OneToMany (() => Receipt , (receipt) => receipt.employee)
   receipt: Receipt[];
+
+  @OneToMany (() => Uility , (uility) => uility.employee)
+  uility: Uility[];
 }

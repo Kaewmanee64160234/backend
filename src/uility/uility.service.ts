@@ -18,7 +18,7 @@ export class UilityService {
   }
 
   findAll() {
-    return this.uilityRepository.find();
+    return this.uilityRepository.find({ relations: ['employee']});
   }
 
   findOne(id: number) {
