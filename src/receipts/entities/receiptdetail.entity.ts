@@ -4,6 +4,7 @@ import { Receipt } from "./receipt.entity";
 import { Room } from "src/rooms/entities/room.entity";
 import { Brokenequipment } from "src/brokenequipment/entities/brokenequipment.entity";
 import { Roomservice } from "src/roomservice/entities/roomservice.entity";
+import { Review } from "src/reviews/entities/review.entity";
 
 @Entity()
 export class ReceiptDetail {
@@ -25,8 +26,8 @@ export class ReceiptDetail {
   @OneToMany (() => Roomservice , (roomservice) => roomservice.receiptdetail)
   roomservice: Roomservice[];
 
-  // @OneToMany (() => Activity , (activity) => activity.receiptdetail)
-  // activity: Activity[];
+  @OneToMany (() => Review , (review) => review.receiptdetail)
+  review: Review[];
 
   @ManyToOne (() => Receipt, (receipt) => receipt.receiptdetail)
   receipt : Receipt;

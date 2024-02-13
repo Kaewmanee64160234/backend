@@ -6,7 +6,7 @@ import { Review } from './entities/review.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class ReviewsService {
+export class sReviewService {
 
   constructor(
     @InjectRepository(Review)
@@ -18,7 +18,7 @@ export class ReviewsService {
   }
 
   findAll() {
-    return this.reviewsRepository.find();
+    return this.reviewsRepository.find({ relations: ['receiptdetail' , 'room']});
   }
 
   findOne(id: number) {

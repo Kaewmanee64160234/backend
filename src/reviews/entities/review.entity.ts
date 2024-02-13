@@ -1,3 +1,4 @@
+import { ReceiptDetail } from "src/receipts/entities/receiptdetail.entity";
 import { Room } from "src/rooms/entities/room.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
@@ -26,5 +27,8 @@ export class Review {
 
   @ManyToOne (() => Room, (room) => room.review)
   room : Room;
+
+  @ManyToOne (() => ReceiptDetail, (receiptdetail) => receiptdetail.review)
+  receiptdetail : ReceiptDetail;
 
 }
