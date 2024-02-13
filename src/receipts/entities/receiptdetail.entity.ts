@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn } from "typeorm";
+import { Activity } from "src/activity/entities/activity.entity";
+import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
+import { Receipt } from "./receipt.entity";
 
 @Entity()
 export class ReceiptDetail {
@@ -13,5 +15,11 @@ export class ReceiptDetail {
 
   @Column()
   recd_child: string;
+
+  // @OneToMany (() => Activity , (activity) => activity.receiptdetail)
+  // activity: Activity[];
+
+  @ManyToOne (() => Receipt, (receipt) => receipt.receiptdetail)
+  receipt : Receipt;
 
 }

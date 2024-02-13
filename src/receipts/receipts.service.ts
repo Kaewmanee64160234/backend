@@ -4,6 +4,7 @@ import { UpdateReceiptDto } from './dto/update-receipt.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Receipt } from './entities/receipt.entity';
 import { Repository } from 'typeorm';
+import { ReceiptDetail } from './entities/receiptdetail.entity';
 
 @Injectable()
 export class ReceiptsService {
@@ -11,6 +12,8 @@ export class ReceiptsService {
   constructor(
     @InjectRepository(Receipt)
     private receiptsRepository: Repository<Receipt>,
+    // @InjectRepository(ReceiptDetail)
+    // private receiptsdetailRepository: Repository<ReceiptDetail>,
   ) {}
 
   create(createReceiptDto: CreateReceiptDto) {
@@ -18,8 +21,12 @@ export class ReceiptsService {
   }
 
   findAll() {
-    return this.receiptsRepository.find();
+    return this.receiptsRepository.find({ relations: ['receiptdetail' ] });
   }
+
+  // findAlldetail() {
+  //   return this.receiptsdetailRepository.find({ relations: ['activity' ] });
+  // }
 
   findOne(id: number) {
     return `This action returns a #${id} receipt`;

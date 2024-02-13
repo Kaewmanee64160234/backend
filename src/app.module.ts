@@ -70,6 +70,7 @@ import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
     CheckinandoutModule,
     ReviewsModule,
     ReceiptsModule,
+    ReceiptDetail
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
+import { ReceiptDetail } from "./receiptdetail.entity";
 
 @Entity()
 export class Receipt {
@@ -34,5 +35,8 @@ export class Receipt {
 
   @Column()
   rec_status_late: string;
+
+  @OneToMany (() => ReceiptDetail , (receiptdetail) => receiptdetail.receipt)
+  receiptdetail: ReceiptDetail[];
 
 }

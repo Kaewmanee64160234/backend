@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn , Column,OneToOne ,JoinColumn} from "typeorm";
+import { Entity, PrimaryColumn , Column,OneToOne ,JoinColumn, OneToMany, ManyToOne} from "typeorm";
 
 @Entity()
 export class Room {
