@@ -18,7 +18,7 @@ export class ActivityService {
   }
 
   findAll() {
-    return this.activitysRepository.find();
+    return this.activitysRepository.find({relations: ['receiptdetail']});
   }
 
   findOne(id: number) {

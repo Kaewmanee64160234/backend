@@ -26,7 +26,8 @@ export class ReceiptsService {
       .leftJoinAndSelect('receipt.employee', 'employee')
       .leftJoinAndSelect('receipt.promotion', 'promotion')
       .leftJoinAndSelect('receipt.receiptdetail', 'receiptdetail')
-      .leftJoinAndSelect('receiptdetail.activity', 'activity')
+      .leftJoinAndSelect('receiptdetail.room', 'room')
+      .leftJoinAndSelect('receiptdetail.brokenequipment', 'brokenequipment')
       .getMany();
   }
 

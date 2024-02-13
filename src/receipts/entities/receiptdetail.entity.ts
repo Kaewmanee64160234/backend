@@ -1,6 +1,8 @@
 import { Activity } from "src/activity/entities/activity.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 import { Receipt } from "./receipt.entity";
+import { Room } from "src/rooms/entities/room.entity";
+import { Brokenequipment } from "src/brokenequipment/entities/brokenequipment.entity";
 
 @Entity()
 export class ReceiptDetail {
@@ -21,5 +23,11 @@ export class ReceiptDetail {
 
   @ManyToOne (() => Receipt, (receipt) => receipt.receiptdetail)
   receipt : Receipt;
+
+  @ManyToOne (() => Room, (room) => room.receiptdetail)
+  room : Room;
+
+  @ManyToOne (() => Brokenequipment, (brokenequipment) => brokenequipment.receiptdetail)
+  brokenequipment : Brokenequipment;
 
 }
