@@ -1,3 +1,4 @@
+import { Room } from "src/rooms/entities/room.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
 @Entity()
@@ -22,5 +23,8 @@ export class Review {
 
   @Column()
   rev_date: Date;
+
+  @ManyToOne (() => Room, (room) => room.review)
+  room : Room;
 
 }

@@ -16,8 +16,8 @@ export class ReceiptDetail {
   @Column()
   recd_child: string;
 
-  // @OneToMany (() => Activity , (activity) => activity.receiptdetail)
-  // activity: Activity[];
+  @OneToMany (() => Activity , (activity) => activity.receiptdetail)
+  activity: Activity[];
 
   @ManyToOne (() => Receipt, (receipt) => receipt.receiptdetail)
   receipt : Receipt;

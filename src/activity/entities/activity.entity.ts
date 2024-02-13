@@ -15,7 +15,7 @@ export class Activity {
   @Column()
   act_des: string;
 
-  // @ManyToOne (() => ReceiptDetail, (receiptdetail) => receiptdetail.activity)
-  // receiptdetail : ReceiptDetail;
+  @ManyToOne (() => ReceiptDetail, (receiptdetail) => receiptdetail.activity)
+  receiptdetail : ReceiptDetail;
   
 }

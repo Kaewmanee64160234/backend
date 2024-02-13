@@ -1,3 +1,4 @@
+import { Checkinandout } from "src/checkinandout/entities/checkinandout.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
 @Entity()
@@ -16,4 +17,7 @@ export class Salary {
 
   @Column()
   ss_paid_status: string;
+
+  @OneToMany (() => Checkinandout , (checkinandout) => checkinandout.salary)
+  checkinandout: Checkinandout[];
 }

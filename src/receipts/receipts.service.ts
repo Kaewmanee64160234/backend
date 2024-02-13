@@ -20,8 +20,14 @@ export class ReceiptsService {
     return 'This action adds a new receipt';
   }
 
-  findAll() {
-    return this.receiptsRepository.find({ relations: ['customer', 'employee' , 'promotion' , 'receiptdetail'] });
+  async findAll() {
+    return await this.receiptsRepository.createQueryBuilder('receipt')
+      .leftJoinAndSelect('receipt.customer', 'customer')
+      .leftJoinAndSelect('receipt.employee', 'employee')
+      .leftJoinAndSelect('receipt.promotion', 'promotion')
+      .leftJoinAndSelect('receipt.receiptdetail', 'receiptdetail')
+      .leftJoinAndSelect('receiptdetail.activity', 'activity')
+      .getMany();
   }
 
   // findAlldetail() {

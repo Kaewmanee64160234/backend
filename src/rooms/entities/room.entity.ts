@@ -1,3 +1,4 @@
+import { Review } from "src/reviews/entities/review.entity";
 import { Entity, PrimaryColumn , Column,OneToOne ,JoinColumn, OneToMany, ManyToOne} from "typeorm";
 
 @Entity()
@@ -17,4 +18,6 @@ export class Room {
   @Column()
   room_status: string;
 
+  @OneToMany (() => Review , (review) => review.room)
+  review: Review[];
 }

@@ -18,7 +18,7 @@ export class CheckinandoutService {
   }
 
   findAll() {
-    return this.checkinandoutRepository.find();
+    return this.checkinandoutRepository.find({ relations: ['salary', 'employee'] });
   }
 
   findOne(id: number) {

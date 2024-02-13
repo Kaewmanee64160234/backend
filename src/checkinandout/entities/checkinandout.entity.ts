@@ -1,3 +1,5 @@
+import { Employee } from "src/employees/entities/employee.entity";
+import { Salary } from "src/salary/entities/salary.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
 
 @Entity()
@@ -19,4 +21,10 @@ export class Checkinandout {
 
   @Column()
   cio_paid_status: string;
+
+  @ManyToOne (() => Salary, (salary) => salary.checkinandout)
+  salary : Salary;
+
+  @ManyToOne (() => Employee, (employee) => employee.checkinandout)
+  employee : Employee;
 }
