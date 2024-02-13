@@ -3,6 +3,7 @@ import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMan
 import { Receipt } from "./receipt.entity";
 import { Room } from "src/rooms/entities/room.entity";
 import { Brokenequipment } from "src/brokenequipment/entities/brokenequipment.entity";
+import { Roomservice } from "src/roomservice/entities/roomservice.entity";
 
 @Entity()
 export class ReceiptDetail {
@@ -20,6 +21,12 @@ export class ReceiptDetail {
 
   @OneToMany (() => Activity , (activity) => activity.receiptdetail)
   activity: Activity[];
+
+  @OneToMany (() => Roomservice , (roomservice) => roomservice.receiptdetail)
+  roomservice: Roomservice[];
+
+  // @OneToMany (() => Activity , (activity) => activity.receiptdetail)
+  // activity: Activity[];
 
   @ManyToOne (() => Receipt, (receipt) => receipt.receiptdetail)
   receipt : Receipt;

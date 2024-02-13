@@ -1,3 +1,4 @@
+import { ReceiptDetail } from "src/receipts/entities/receiptdetail.entity";
 import { Entity, PrimaryGeneratedColumn , Column , OneToOne , JoinColumn , OneToMany, ManyToOne} from "typeorm";
 
 @Entity()
@@ -19,5 +20,8 @@ export class Roomservice {
 
   @Column()
   room_ser_datedel: Date;
+
+  @ManyToOne (() => ReceiptDetail, (receiptdetail) => receiptdetail.roomservice)
+  receiptdetail : ReceiptDetail;
   
 }
