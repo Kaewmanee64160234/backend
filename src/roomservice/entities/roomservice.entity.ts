@@ -23,5 +23,5 @@ export class Roomservice {
 
   @ManyToOne (() => ReceiptDetail, (receiptdetail) => receiptdetail.roomservice)
   receiptdetail : ReceiptDetail;
-  
+
 }

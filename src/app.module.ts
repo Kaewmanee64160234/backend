@@ -29,6 +29,8 @@ import { Review } from './reviews/entities/review.entity';
 import { ReceiptsModule } from './receipts/receipts.module';
 import { Receipt } from './receipts/entities/receipt.entity';
 import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
+import { RoomtypesModule } from './roomtypes/roomtypes.module';
+import { Roomtype } from './roomtypes/entities/roomtype.entity';
 
 
 // @Module({
@@ -54,7 +56,7 @@ import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion, Uility, Brokenequipment, Salary, Checkinandout, Review, Receipt, ReceiptDetail],
+      entities: [Customer, Employee, User, Room, Activity, Room, Roomservice, Promotion, Uility, Brokenequipment, Salary, Checkinandout, Review, Receipt, ReceiptDetail, Roomtype],
       synchronize: true,
     }),
     CustomersModule,
@@ -70,7 +72,8 @@ import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
     CheckinandoutModule,
     ReviewsModule,
     ReceiptsModule,
-    ReceiptDetail
+    ReceiptDetail,
+    RoomtypesModule
   ],
   controllers: [AppController],
   providers: [AppService],

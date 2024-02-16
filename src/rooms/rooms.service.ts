@@ -18,7 +18,7 @@ export class RoomsService {
   }
 
   findAll() {
-    return this.roomsRepository.find();
+    return this.roomsRepository.find({relations: ['roomtype']});
   }
 
   findOne(id: number) {
