@@ -14,7 +14,7 @@ export class EmployeesService {
   ) {}
 
   create(createEmployeeDto: CreateEmployeeDto) {
-    const employee = this.employeesRepository.find({});
+    const employee = this.employeesRepository.save(createEmployeeDto);
     if(!employee){
       throw new NotFoundException();
     }
@@ -40,7 +40,6 @@ export class EmployeesService {
     }
     const updatedEmployee = {...employee,...updateEmployeeDto};
     return this.employeesRepository.save(updatedEmployee);
-
   }
 
   async remove(id: number) {

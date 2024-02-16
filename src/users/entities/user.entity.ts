@@ -1,6 +1,6 @@
 import { Customer } from "src/customers/entities/customer.entity";
 import { Employee } from "src/employees/entities/employee.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne , CreateDateColumn , DeleteDateColumn , UpdateDateColumn  } from "typeorm";
 
 @Entity()
 export class User {
@@ -18,6 +18,15 @@ export class User {
 
   @Column()
   user_role: string;
+
+  @CreateDateColumn()
+  createDate : Date
+
+  @UpdateDateColumn()
+  updateDate : Date
+
+  @DeleteDateColumn()
+  deleteDate : Date
 
   @OneToOne(() => Customer, (customer) => customer.user)
   @JoinColumn()

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -14,22 +14,39 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    const user = this.usersRepository.save(createUserDto);
+    if(!user){
+      throw new NotFoundException();
+    }
+    return user
   }
 
   findAll() {
     return this.usersRepository.find({ relations: ['customer','employee'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.usersRepository.findOne({ where: {user_id :id}});
+    if (!user){
+      throw new NotFoundException();
+    }
+    return user
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.usersRepository.findOneBy({user_id :id})
+    if(!user){
+      throw new NotFoundException();
+    }
+    const updatedUser = {...user,...updateUserDto};
+    return this.usersRepository.save(updatedUser);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const user = await this.usersRepository.findOneBy({user_id :id})
+    if(!user){
+      throw new NotFoundException();
+    }
+    return this.usersRepository.softRemove(user);
   }
 }
