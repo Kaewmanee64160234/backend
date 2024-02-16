@@ -3,9 +3,7 @@ export class CreateCustomerDto {
 
   cus_name: string;
 
-
   cus_tel: string;
-
 
   cus_point: number;
 
