@@ -1,5 +1,5 @@
 import { ReceiptDetail } from "src/receipts/entities/receiptdetail.entity";
-import { Entity, PrimaryGeneratedColumn , Column , OneToOne , JoinColumn , OneToMany, ManyToOne} from "typeorm";
+import { Entity, PrimaryGeneratedColumn , Column , OneToOne , JoinColumn , OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn} from "typeorm";
 
 @Entity()
 export class Roomservice {
@@ -20,6 +20,15 @@ export class Roomservice {
 
   @Column()
   room_ser_datedel: Date;
+
+  @CreateDateColumn()
+  createDate : Date
+
+  @UpdateDateColumn()
+  updateDate : Date
+
+  @DeleteDateColumn()
+  deleteDate : Date
 
   @ManyToOne (() => ReceiptDetail, (receiptdetail) => receiptdetail.roomservice)
   receiptdetail : ReceiptDetail;
