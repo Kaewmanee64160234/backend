@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUilityDto } from './dto/create-uility.dto';
 import { UpdateUilityDto } from './dto/update-uility.dto';
 import { Repository } from 'typeorm';
@@ -14,22 +14,39 @@ export class UilityService {
   ) {}
 
   create(createUilityDto: CreateUilityDto) {
-    return 'This action adds a new uility';
+    const uility = this.uilityRepository.save(createUilityDto);
+    if(!uility){
+      throw new NotFoundException();
+    }
+    return uility
   }
 
   findAll() {
     return this.uilityRepository.find({ relations: ['employee']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} uility`;
+  async findOne(id: number) {
+    const uility = await this.uilityRepository.findOne({ where: { ue_id: id }, relations: ['employee'] });
+    if (!uility){
+      throw new NotFoundException();
+    }
+    return uility
   }
 
-  update(id: number, updateUilityDto: UpdateUilityDto) {
-    return `This action updates a #${id} uility`;
+  async update(id: number, updateUilityDto: UpdateUilityDto) {
+    const uility = await this.uilityRepository.findOneBy({ue_id :id})
+    if(!uility){
+      throw new NotFoundException();
+    }
+    const updatedUility = {...uility,...updateUilityDto};
+    return this.uilityRepository.save(updatedUility);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} uility`;
+  async remove(id: number) {
+    const uility = await this.uilityRepository.findOneBy({ue_id :id})
+    if(!uility){
+      throw new NotFoundException();
+    }
+    return this.uilityRepository.softRemove(uility);
   }
 }
