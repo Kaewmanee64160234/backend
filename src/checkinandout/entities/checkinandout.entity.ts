@@ -1,6 +1,6 @@
 import { Employee } from "src/employees/entities/employee.entity";
 import { Salary } from "src/salary/entities/salary.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity()
 export class Checkinandout {
@@ -21,6 +21,15 @@ export class Checkinandout {
 
   @Column()
   cio_paid_status: string;
+
+  @CreateDateColumn()
+  createDate : Date
+
+  @UpdateDateColumn()
+  updateDate : Date
+
+  @DeleteDateColumn()
+  deleteDate : Date
 
   @ManyToOne (() => Salary, (salary) => salary.checkinandout)
   salary : Salary;
