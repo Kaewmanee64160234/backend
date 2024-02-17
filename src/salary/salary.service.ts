@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSalaryDto } from './dto/create-salary.dto';
 import { UpdateSalaryDto } from './dto/update-salary.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,22 +14,39 @@ export class SalaryService {
   ) {}
 
   create(createSalaryDto: CreateSalaryDto) {
-    return 'This action adds a new salary';
+    const salary = this.salaryRepository.save(createSalaryDto);
+    if(!salary){
+      throw new NotFoundException();
+    }
+    return salary
   }
 
   findAll() {
     return this.salaryRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} salary`;
+  async findOne(id: number) {
+    const salary = await this.salaryRepository.findOne({ where: { ss_id: id } });
+    if (!salary){
+      throw new NotFoundException();
+    }
+    return salary
   }
 
-  update(id: number, updateSalaryDto: UpdateSalaryDto) {
-    return `This action updates a #${id} salary`;
+  async update(id: number, updateSalaryDto: UpdateSalaryDto) {
+    const salary = await this.salaryRepository.findOneBy({ss_id :id})
+    if(!salary){
+      throw new NotFoundException();
+    }
+    const updatedSalary = {...salary,...updateSalaryDto};
+    return this.salaryRepository.save(updatedSalary);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} salary`;
+  async remove(id: number) {
+    const room = await this.salaryRepository.findOneBy({ss_id :id})
+    if(!room){
+      throw new NotFoundException();
+    }
+    return this.salaryRepository.softRemove(room);
   }
 }
