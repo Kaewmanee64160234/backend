@@ -1,6 +1,6 @@
 import { ReceiptDetail } from "src/receipts/entities/receiptdetail.entity";
 import { Room } from "src/rooms/entities/room.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity()
 export class Review {
@@ -24,6 +24,15 @@ export class Review {
 
   @Column()
   rev_date: Date;
+
+  @CreateDateColumn()
+  createDate : Date
+
+  @UpdateDateColumn()
+  updateDate : Date
+
+  @DeleteDateColumn()
+  deleteDate : Date
 
   @ManyToOne (() => Room, (room) => room.review)
   room : Room;
