@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 import { Activity } from './entities/activity.entity';
@@ -14,22 +14,39 @@ export class ActivityService {
   ) {}
 
   create(createActivityDto: CreateActivityDto) {
-    return 'This action adds a new activity';
+    const activity = this.activitysRepository.save(createActivityDto);
+    if(!activity){
+      throw new NotFoundException();
+    }
+    return activity
   }
 
   findAll() {
     return this.activitysRepository.find({relations: ['receiptdetail']});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} activity`;
+  async findOne(id: number) {
+    const activity = await this.activitysRepository.findOne({ where: {act_id :id}});
+    if (!activity){
+      throw new NotFoundException();
+    }
+    return activity
   }
 
-  update(id: number, updateActivityDto: UpdateActivityDto) {
-    return `This action updates a #${id} activity`;
+  async update(id: number, updateActivityDto: UpdateActivityDto) {
+    const activity = await this.activitysRepository.findOneBy({act_id :id})
+    if(!activity){
+      throw new NotFoundException();
+    }
+    const updatedActivity = {...activity,...updateActivityDto};
+    return this.activitysRepository.save(updatedActivity);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} activity`;
+  async remove(id: number) {
+    const activity = await this.activitysRepository.findOneBy({act_id :id})
+    if(!activity){
+      throw new NotFoundException();
+    }
+    return this.activitysRepository.softRemove(activity);
   }
 }
