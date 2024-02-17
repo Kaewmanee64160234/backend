@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 import { ReceiptDetail } from "./receiptdetail.entity";
 import { Customer } from "src/customers/entities/customer.entity";
 import { Employee } from "src/employees/entities/employee.entity";
@@ -9,35 +9,41 @@ export class Receipt {
   @PrimaryGeneratedColumn()
   rec_id: number;
 
-  @Column()
+  @CreateDateColumn()
   rec_create_date: Date;
 
-  @Column()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   rec_checkin: Date;
 
-  @Column()
+  @Column({ default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   rec_checkout: Date;
 
   @Column()
   rec_total: number;
 
-  @Column()
+  @Column({ default: 0 })
   rec_cash_pledge: number;
 
-  @Column()
+  @Column({ default: 0 })
   rec_total_discount: number;
 
-  @Column()
+  @Column({ default: "cash" })
   rec_payment_booking: string;
 
-  @Column()
+  @Column({ default: "cash" })
   rec_payment_checkout: string;
 
-  @Column()
+  @Column({ default: "Not Comfrim" })
   rec_status: string;
 
-  @Column()
-  rec_status_late: string;
+  @Column({ default: false })
+  rec_status_late: boolean;
+
+  @UpdateDateColumn()
+  updateDate : Date
+
+  @DeleteDateColumn()
+  deleteDate : Date
 
   @OneToMany (() => ReceiptDetail , (receiptdetail) => receiptdetail.receipt)
   receiptdetail: ReceiptDetail[];
