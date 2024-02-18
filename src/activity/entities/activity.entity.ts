@@ -6,13 +6,13 @@ export class Activity {
 @PrimaryGeneratedColumn()
   act_id: number;
 
-  @Column()
+  @Column({ type: 'text' })
   act_name: string;
 
-  @Column()
+  @Column({ type: 'real' })
   act_price: number;
 
-  @Column()
+  @Column({ nullable: true, type: 'text' })
   act_des: string;
 
   @CreateDateColumn()

@@ -1,3 +1,4 @@
+import { time } from "console";
 import { Employee } from "src/employees/entities/employee.entity";
 import { Salary } from "src/salary/entities/salary.entity";
 import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
@@ -13,13 +14,22 @@ export class Checkinandout {
   @Column()
   cio_time_in: Date;
 
+  // @Column({ type: 'time' })
+  // cio_time_in: string;
+
   @Column()
   cio_time_out: Date;
 
+  // @Column({ type: 'time' })
+  // cio_time_out: string;
+  
   @Column()
   cio_total_hour: Date;
 
-  @Column()
+  // @Column()
+  // cio_total_hour: string;
+
+  @Column({ nullable: true, type: 'text' })
   cio_paid_status: string;
 
   @CreateDateColumn()

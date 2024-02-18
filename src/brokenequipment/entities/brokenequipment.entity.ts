@@ -6,13 +6,13 @@ export class Brokenequipment {
   @PrimaryGeneratedColumn()
   bro_ep_id: number;
 
-  @Column()
+  @Column({ nullable: true, type: 'text' })
   bro_ep_name: string;
 
   @Column()
   bro_ep_qty: number;
 
-  @Column()
+  @Column({ nullable: true, type: 'text' })
   bro_ep_note: string;
 
   @CreateDateColumn()
