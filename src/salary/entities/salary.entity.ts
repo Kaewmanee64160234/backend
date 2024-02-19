@@ -11,11 +11,13 @@ export class Salary {
 
   @Column()
   ss_work_hour: Date;
+  // @Column()
+  // ss_work_hour: number;
 
-  @Column()
+  @Column({type: 'real'})
   ss_salary: number;
 
-  @Column()
+  @Column({nullable:true , type: 'text'})
   ss_paid_status: string;
 
   @CreateDateColumn()

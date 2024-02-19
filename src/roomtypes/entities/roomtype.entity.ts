@@ -6,34 +6,34 @@ export class Roomtype {
 @PrimaryGeneratedColumn()
     room_type_id : number;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type : string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_name: string;
 
-    @Column()
+    @Column({type: 'real'})
     room_type_price: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_bed_size: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_chromecast: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_electric_sheer: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_bath: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_wifi: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_water: string;
 
-    @Column()
+    @Column({nullable:true , type: 'text'})
     room_type_desk: string;
 
     @CreateDateColumn()

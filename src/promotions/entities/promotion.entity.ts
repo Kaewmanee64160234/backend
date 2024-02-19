@@ -12,13 +12,13 @@ export class Promotion {
   @Column()
   prom_end_date: Date;
 
-  @Column()
+  @Column({type: 'text', nullable: true})
   prom_name: string;
 
-  @Column()
+  @Column({type: 'real', nullable: true})
   prom_discount: number;
 
-  @Column()
+  @Column({nullable: true})
   prom_discount_pres: number;
 
   @Column()

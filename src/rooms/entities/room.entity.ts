@@ -7,12 +7,13 @@ import { Entity, PrimaryColumn , Column,OneToOne ,JoinColumn, OneToMany, ManyToO
 export class Room {
   @PrimaryColumn()
   room_id: number;
+  // @PrimaryColumn({ unique: true })
+  // room_id: string;
 
-
-  @Column()
+  @Column({type: 'text' , nullable:true})
   room_des: string;
 
-  @Column()
+  @Column({type: 'text'})
   room_status: string;
 
   @CreateDateColumn()

@@ -11,13 +11,13 @@ export class ReceiptDetail {
   @PrimaryGeneratedColumn()
   recd_id: number;
 
-  @Column()
+  @Column({type :'real' , nullable : true})
   recd_total_price: number;
 
-  @Column({ default : 0})
+  @Column({ default : 0 ,nullable : true})
   recd_adult: number;
 
-  @Column({ default : 0})
+  @Column({ default : 0 , nullable : true})
   recd_child: number;
 
   @CreateDateColumn()

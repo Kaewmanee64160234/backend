@@ -6,25 +6,27 @@ export class Uility {
   @PrimaryGeneratedColumn()
   ue_id: number;
 
-  @Column()
+  @Column({type: 'real'})
   ue_water: number;
 
-  @Column()
+  @Column({type: 'real'})
   ue_electric: number;
 
-  @Column()
+  @Column({type: 'real'})
   ue_total: number;
 
-  @Column()
+  @Column({nullable:true , type: 'text'})
   ue_paid_status: string;
 
-  @Column()
+  @Column({nullable:true , type: 'real'})
   ue_price: number;
 
-  @Column()
+  @Column({nullable:true})
   ue_other: string;
+  // @Column({nullable:true , type: 'real'})
+  // ue_other: number;
 
-  @Column()
+  @Column({nullable:true})
   ue_date: Date;
 
   @CreateDateColumn()

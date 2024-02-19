@@ -6,19 +6,21 @@ export class Roomservice {
 @PrimaryGeneratedColumn()
   room_ser_id: number;
 
-  @Column()
+  @Column({type : 'text' ,nullable:true})
   room_ser_type: string;
 
-  @Column()
+  @Column({type : 'text' ,nullable:true})
   room_ser_name: string;
 
-  @Column()
+  @Column({type : 'real' ,nullable:true})
   room_ser_price: number;
 
-  @Column()
+  @Column({nullable:true})
   room_ser_timedel: Date;
+  // @Column({type : 'time' ,nullable:true})
+  // room_ser_timedel: Date;
 
-  @Column()
+  @Column({nullable:true})
   room_ser_datedel: Date;
 
   @CreateDateColumn()

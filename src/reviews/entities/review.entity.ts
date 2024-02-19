@@ -7,19 +7,25 @@ export class Review {
   @PrimaryGeneratedColumn()
   rev_id: number;
 
-  @Column()
+  @Column({type : 'text',nullable : true})
   rev_name: string;
 
-  @Column()
+  @Column({nullable : true})
   rev_star_clean: string;
-
-  @Column()
+  // @Column({nullable : true})
+  // rev_star_clean: number;
+  
+  @Column({nullable : true})
   rev_star_service: string;
+  // @Column({nullable : true})
+  // rev_star_service: number;
 
-  @Column()
+  @Column({nullable : true})
   rev_star_conv: string;
+  // @Column({nullable : true})
+  // rev_star_conv: number;
 
-  @Column()
+  @Column({type : 'text',nullable : true})
   rev_comment: string;
 
   @Column()

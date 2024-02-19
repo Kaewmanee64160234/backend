@@ -7,16 +7,16 @@ export class User {
   @PrimaryGeneratedColumn()
   user_id: number;
 
-  @Column()
+  @Column({type: 'text'})
   user_name: string;
 
-  @Column()
+  @Column({type: 'text', unique: true})
   user_login: string;
 
-  @Column()
+  @Column({type: 'text'})
   user_password: string;
 
-  @Column()
+  @Column({type: 'text'})
   user_role: string;
 
   @CreateDateColumn()
@@ -28,13 +28,13 @@ export class User {
   @DeleteDateColumn()
   deleteDate : Date
 
-  @OneToOne(() => Customer, (customer) => customer.user)
+  @OneToOne(() => Customer, customer => customer.user, { nullable: true })
   @JoinColumn()
-  customer: Customer
+  customer: Customer | null;
 
-  @OneToOne(() => Employee, (employee) => employee.user)
+  @OneToOne(() => Employee, (employee) => employee.user, { nullable: true })
   @JoinColumn()
-  employee: Employee
+  employee: Employee| null;
 
 
 }
