@@ -1,8 +1,19 @@
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
-import { ReceiptDetail } from "./receiptdetail.entity";
-import { Customer } from "src/customers/entities/customer.entity";
-import { Employee } from "src/employees/entities/employee.entity";
-import { Promotion } from "src/promotions/entities/promotion.entity";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
+import { ReceiptDetail } from './receiptdetail.entity';
+import { Customer } from 'src/customers/entities/customer.entity';
+import { Employee } from 'src/employees/entities/employee.entity';
+import { Promotion } from 'src/promotions/entities/promotion.entity';
 
 @Entity()
 export class Receipt {
@@ -12,49 +23,52 @@ export class Receipt {
   @CreateDateColumn()
   rec_create_date: Date;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP' , nullable: true})
+  @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: true })
   rec_checkin: Date;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' , nullable: true})
+  @Column({
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+    nullable: true,
+  })
   rec_checkout: Date;
 
-  @Column({type: 'real' , nullable: true})
+  @Column({ type: 'real', nullable: true })
   rec_total: number;
 
-  @Column({ default: 0 ,type: 'real'})
+  @Column({ default: 0, type: 'real' })
   rec_cash_pledge: number;
 
-  @Column({ default: 0 ,type: 'real'})
+  @Column({ default: 0, type: 'real' })
   rec_total_discount: number;
 
-  @Column({ default: "cash" ,type: 'text', nullable: true})
+  @Column({ default: 'cash', type: 'text', nullable: true })
   rec_payment_booking: string;
 
-  @Column({ default: "cash" ,type: 'text', nullable: true})
+  @Column({ default: 'cash', type: 'text', nullable: true })
   rec_payment_checkout: string;
 
-  @Column({ default: "Not Comfrim" ,type: 'text', nullable: true})
+  @Column({ default: 'Not Comfrim', type: 'text', nullable: true })
   rec_status: string;
 
-  @Column({ default: false ,type: 'text', nullable: true})
+  @Column({ default: false, type: 'text', nullable: true })
   rec_status_late: boolean;
 
   @UpdateDateColumn()
-  updateDate : Date
+  updateDate: Date;
 
   @DeleteDateColumn()
-  deleteDate : Date
+  deleteDate: Date;
 
-  @OneToMany (() => ReceiptDetail , (receiptdetail) => receiptdetail.receipt)
+  @OneToMany(() => ReceiptDetail, (receiptdetail) => receiptdetail.receipt)
   receiptdetail: ReceiptDetail[];
 
-  @ManyToOne (() => Customer, (customer) => customer.receipt)
+  @ManyToOne(() => Customer, (customer) => customer.receipt)
   customer: Customer;
 
-  @ManyToOne (() => Employee, (employee) => employee.receipt)
+  @ManyToOne(() => Employee, (employee) => employee.receipt)
   employee: Employee;
 
-  @ManyToOne (() => Promotion, (promotion) => promotion.receipt)
+  @ManyToOne(() => Promotion, (promotion) => promotion.receipt)
   promotion: Promotion;
-
 }

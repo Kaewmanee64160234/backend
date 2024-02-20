@@ -7,7 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ActivityService {
-
   constructor(
     @InjectRepository(Activity)
     private activitysRepository: Repository<Activity>,
@@ -15,36 +14,38 @@ export class ActivityService {
 
   create(createActivityDto: CreateActivityDto) {
     const activity = this.activitysRepository.save(createActivityDto);
-    if(!activity){
+    if (!activity) {
       throw new NotFoundException();
     }
-    return activity
+    return activity;
   }
 
   findAll() {
-    return this.activitysRepository.find({relations: ['receiptdetail']});
+    return this.activitysRepository.find({ relations: ['receiptdetail'] });
   }
 
   async findOne(id: number) {
-    const activity = await this.activitysRepository.findOne({ where: {act_id :id}});
-    if (!activity){
+    const activity = await this.activitysRepository.findOne({
+      where: { act_id: id },
+    });
+    if (!activity) {
       throw new NotFoundException();
     }
-    return activity
+    return activity;
   }
 
   async update(id: number, updateActivityDto: UpdateActivityDto) {
-    const activity = await this.activitysRepository.findOneBy({act_id :id})
-    if(!activity){
+    const activity = await this.activitysRepository.findOneBy({ act_id: id });
+    if (!activity) {
       throw new NotFoundException();
     }
-    const updatedActivity = {...activity,...updateActivityDto};
+    const updatedActivity = { ...activity, ...updateActivityDto };
     return this.activitysRepository.save(updatedActivity);
   }
 
   async remove(id: number) {
-    const activity = await this.activitysRepository.findOneBy({act_id :id})
-    if(!activity){
+    const activity = await this.activitysRepository.findOneBy({ act_id: id });
+    if (!activity) {
       throw new NotFoundException();
     }
     return this.activitysRepository.softRemove(activity);

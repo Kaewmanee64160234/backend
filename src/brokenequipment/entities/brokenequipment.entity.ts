@@ -1,5 +1,16 @@
-import { ReceiptDetail } from "src/receipts/entities/receiptdetail.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Brokenequipment {
@@ -16,15 +27,17 @@ export class Brokenequipment {
   bro_ep_note: string;
 
   @CreateDateColumn()
-  createDate : Date
+  createDate: Date;
 
   @UpdateDateColumn()
-  updateDate : Date
+  updateDate: Date;
 
   @DeleteDateColumn()
-  deleteDate : Date
+  deleteDate: Date;
 
-  @OneToMany (() => ReceiptDetail , (receiptdetail) => receiptdetail.brokenequipment)
+  @OneToMany(
+    () => ReceiptDetail,
+    (receiptdetail) => receiptdetail.brokenequipment,
+  )
   receiptdetail: ReceiptDetail[];
-
 }

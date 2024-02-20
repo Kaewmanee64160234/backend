@@ -7,6 +7,6 @@ import { Roomservice } from './entities/roomservice.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Roomservice])],
   controllers: [RoomserviceController],
-  providers: [RoomserviceService]
+  providers: [RoomserviceService],
 })
 export class RoomserviceModule {}

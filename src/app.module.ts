@@ -31,6 +31,7 @@ import { Receipt } from './receipts/entities/receipt.entity';
 import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
 import { RoomtypesModule } from './roomtypes/roomtypes.module';
 import { Roomtype } from './roomtypes/entities/roomtype.entity';
+import { AuthsModule } from './auths/auths.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { Roomtype } from './roomtypes/entities/roomtype.entity';
     ReceiptsModule,
     ReceiptDetail,
     RoomtypesModule,
+    AuthsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

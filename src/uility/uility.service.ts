@@ -7,7 +7,6 @@ import { Uility } from './entities/uility.entity';
 
 @Injectable()
 export class UilityService {
-
   constructor(
     @InjectRepository(Uility)
     private uilityRepository: Repository<Uility>,
@@ -15,36 +14,39 @@ export class UilityService {
 
   create(createUilityDto: CreateUilityDto) {
     const uility = this.uilityRepository.save(createUilityDto);
-    if(!uility){
+    if (!uility) {
       throw new NotFoundException();
     }
-    return uility
+    return uility;
   }
 
   findAll() {
-    return this.uilityRepository.find({ relations: ['employee']});
+    return this.uilityRepository.find({ relations: ['employee'] });
   }
 
   async findOne(id: number) {
-    const uility = await this.uilityRepository.findOne({ where: { ue_id: id }, relations: ['employee'] });
-    if (!uility){
+    const uility = await this.uilityRepository.findOne({
+      where: { ue_id: id },
+      relations: ['employee'],
+    });
+    if (!uility) {
       throw new NotFoundException();
     }
-    return uility
+    return uility;
   }
 
   async update(id: number, updateUilityDto: UpdateUilityDto) {
-    const uility = await this.uilityRepository.findOneBy({ue_id :id})
-    if(!uility){
+    const uility = await this.uilityRepository.findOneBy({ ue_id: id });
+    if (!uility) {
       throw new NotFoundException();
     }
-    const updatedUility = {...uility,...updateUilityDto};
+    const updatedUility = { ...uility, ...updateUilityDto };
     return this.uilityRepository.save(updatedUility);
   }
 
   async remove(id: number) {
-    const uility = await this.uilityRepository.findOneBy({ue_id :id})
-    if(!uility){
+    const uility = await this.uilityRepository.findOneBy({ ue_id: id });
+    if (!uility) {
       throw new NotFoundException();
     }
     return this.uilityRepository.softRemove(uility);

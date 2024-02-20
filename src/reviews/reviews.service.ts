@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ReviewsService {
-
   constructor(
     @InjectRepository(Review)
     private reviewsRepository: Repository<Review>,
@@ -15,36 +14,40 @@ export class ReviewsService {
 
   create(createReviewDto: CreateReviewDto) {
     const review = this.reviewsRepository.save(createReviewDto);
-    if(!review){
+    if (!review) {
       throw new NotFoundException();
     }
-    return review
+    return review;
   }
 
   findAll() {
-    return this.reviewsRepository.find({ relations: ['room' , 'receiptdetail' ]});
+    return this.reviewsRepository.find({
+      relations: ['room', 'receiptdetail'],
+    });
   }
 
   async findOne(id: number) {
-    const review = await this.reviewsRepository.findOne({ where: {rev_id :id}});
-    if (!review){
+    const review = await this.reviewsRepository.findOne({
+      where: { rev_id: id },
+    });
+    if (!review) {
       throw new NotFoundException();
     }
-    return review
+    return review;
   }
 
   async update(id: number, updateReviewDto: UpdateReviewDto) {
-    const review = await this.reviewsRepository.findOneBy({rev_id :id})
-    if(!review){
+    const review = await this.reviewsRepository.findOneBy({ rev_id: id });
+    if (!review) {
       throw new NotFoundException();
     }
-    const updatedReview = {...review,...updateReviewDto};
+    const updatedReview = { ...review, ...updateReviewDto };
     return this.reviewsRepository.save(updatedReview);
   }
 
   async remove(id: number) {
-    const review = await this.reviewsRepository.findOneBy({rev_id :id})
-    if(!review){
+    const review = await this.reviewsRepository.findOneBy({ rev_id: id });
+    if (!review) {
       throw new NotFoundException();
     }
     return this.reviewsRepository.softRemove(review);

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UilityService } from './uility.service';
 import { CreateUilityDto } from './dto/create-uility.dto';
 import { UpdateUilityDto } from './dto/update-uility.dto';

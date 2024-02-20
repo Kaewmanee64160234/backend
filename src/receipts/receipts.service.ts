@@ -14,7 +14,6 @@ import { Activity } from 'src/activity/entities/activity.entity';
 
 @Injectable()
 export class ReceiptsService {
-
   constructor(
     @InjectRepository(Receipt)
     private receiptsRepository: Repository<Receipt>,
@@ -31,10 +30,11 @@ export class ReceiptsService {
     @InjectRepository(Promotion)
     private promotionsRepository: Repository<Promotion>,
     @InjectRepository(Activity)
-    private activityRepository: Repository<Activity>
-  ) { }
+    private activityRepository: Repository<Activity>,
+  ) {}
 
-  async create(createReceiptDto: CreateReceiptDto) {// สร้าง receipt
+  async create(createReceiptDto: CreateReceiptDto) {
+    // สร้าง receipt
 
     // ค้นหาลูกค้า (customer)
     const customer = await this.customersRepository.findOneBy({
@@ -68,19 +68,22 @@ export class ReceiptsService {
     const rec = await this.receiptsRepository.save(receipt);
 
     const receiptsdetail: ReceiptDetail[] = await Promise.all(
-
       createReceiptDto.receiptdetail.map(async (re) => {
         const receiptdetail = new ReceiptDetail();
         receiptdetail.recd_total_price = re.recd_total_price;
 
         // ค้นหาประเภทห้อง (roomtype)
-        receiptdetail.room.roomtype = await this.roomTypesRepository.findOneBy({ room_type_id: re.roomTypeId });
+        receiptdetail.room.roomtype = await this.roomTypesRepository.findOneBy({
+          room_type_id: re.roomTypeId,
+        });
         if (!receiptdetail.room.roomtype) {
           throw new NotFoundException('Room type not found');
         }
 
         // ค้นหาห้อง (room)
-        receiptdetail.room = await this.roomsRepository.findOneBy({ room_id: re.roomId });
+        receiptdetail.room = await this.roomsRepository.findOneBy({
+          room_id: re.roomId,
+        });
         if (!receiptdetail.room) {
           throw new NotFoundException('Room not found');
         }
@@ -98,11 +101,12 @@ export class ReceiptsService {
     // activity
     //- promotion
     await this.receiptsRepository.save(receipt);
-    return receipt
+    return receipt;
   }
 
   async findAll() {
-    return await this.receiptsRepository.createQueryBuilder('receipt')
+    return await this.receiptsRepository
+      .createQueryBuilder('receipt')
       .leftJoinAndSelect('receipt.customer', 'customer')
       .leftJoinAndSelect('receipt.employee', 'employee')
       .leftJoinAndSelect('receipt.promotion', 'promotion')

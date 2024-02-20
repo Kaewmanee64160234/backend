@@ -1,7 +1,18 @@
-import { time } from "console";
-import { Employee } from "src/employees/entities/employee.entity";
-import { Salary } from "src/salary/entities/salary.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { time } from 'console';
+import { Employee } from 'src/employees/entities/employee.entity';
+import { Salary } from 'src/salary/entities/salary.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Checkinandout {
@@ -22,7 +33,7 @@ export class Checkinandout {
 
   // @Column({ type: 'time' })
   // cio_time_out: string;
-  
+
   @Column()
   cio_total_hour: Date;
 
@@ -33,17 +44,17 @@ export class Checkinandout {
   cio_paid_status: string;
 
   @CreateDateColumn()
-  createDate : Date
+  createDate: Date;
 
   @UpdateDateColumn()
-  updateDate : Date
+  updateDate: Date;
 
   @DeleteDateColumn()
-  deleteDate : Date
+  deleteDate: Date;
 
-  @ManyToOne (() => Salary, (salary) => salary.checkinandout)
-  salary : Salary;
+  @ManyToOne(() => Salary, (salary) => salary.checkinandout)
+  salary: Salary;
 
-  @ManyToOne (() => Employee, (employee) => employee.checkinandout)
-  employee : Employee;
+  @ManyToOne(() => Employee, (employee) => employee.checkinandout)
+  employee: Employee;
 }
