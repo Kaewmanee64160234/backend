@@ -7,14 +7,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'www.db4free',
-      port: 3600,
-      username: 'hotelcarifornai',
-      password: 'pass@1234',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
       database: 'hotelcarifornai',
       entities: [],
       synchronize: true,
     }),
+
   ],
   controllers: [AppController],
   providers: [AppService],
