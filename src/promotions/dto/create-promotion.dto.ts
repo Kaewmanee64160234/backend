@@ -10,5 +10,4 @@ export class CreatePromotionDto {
   prom_discount: number;
 
   prom_discount_pres: number;
-
 }

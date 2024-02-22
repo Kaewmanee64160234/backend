@@ -1,5 +1,5 @@
 export class CreateSalaryDto {
-  ss_date_id:number;
+  ss_date_id: number;
 
   ss_date: Date;
 

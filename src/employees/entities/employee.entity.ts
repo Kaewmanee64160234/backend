@@ -20,7 +20,7 @@ export class Employee {
   @PrimaryGeneratedColumn()
   emp_id: number;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   emp_name: string;
 
   @Column({ type: 'text' })
@@ -32,7 +32,7 @@ export class Employee {
   @Column()
   emp_dob: Date;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   emp_addr: string;
 
   @Column({ unique: true, type: 'text' })
@@ -41,7 +41,7 @@ export class Employee {
   @Column()
   emp_dsw: Date;
 
-  @Column({type : 'real'})
+  @Column({ type: 'real' })
   emp_hourly_wage: number;
 
   @DeleteDateColumn()
@@ -55,7 +55,7 @@ export class Employee {
   checkinandout: Checkinandout[];
 
   @OneToMany(() => Booking, (booking) => booking.employee)
-  booking: Booking[];
+  bookings: Booking[];
 
   @OneToMany(() => Uility, (uility) => uility.employee)
   uility: Uility[];

@@ -25,6 +25,6 @@ import { Activity } from 'src/activity/entities/activity.entity';
     ]),
   ],
   controllers: [BookingController],
-  providers: [BookingService]
+  providers: [BookingService],
 })
 export class BookingModule {}

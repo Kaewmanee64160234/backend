@@ -23,7 +23,7 @@ export class BookingDetail {
   @PrimaryGeneratedColumn()
   booking_de_id: number;
 
-  @Column({ type: 'real'})
+  @Column({ type: 'real' })
   booking_de_total_price: number;
 
   @Column({ default: 0, nullable: true })
@@ -50,7 +50,7 @@ export class BookingDetail {
   @OneToMany(() => Review, (review) => review.bookingdetail)
   review: Review[];
 
-  @ManyToOne(() => Booking, (booking) => booking.bookingdetail)
+  @ManyToOne(() => Booking, (booking) => booking.bookingDetail)
   booking: Booking;
 
   @ManyToOne(() => Room, (room) => room.bookingdetail)
@@ -60,5 +60,5 @@ export class BookingDetail {
     () => Brokenequipment,
     (brokenequipment) => brokenequipment.bookingdetail,
   )
-  brokenequipment: Brokenequipment;
+  brokenEquipment: Brokenequipment;
 }

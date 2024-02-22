@@ -1,5 +1,4 @@
 import { Booking } from 'src/booking/entities/booking.entity';
-import { Receipt } from 'src/receipts/entities/receipt.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -19,7 +18,7 @@ export class Customer {
   @PrimaryGeneratedColumn()
   cus_id: number;
 
-  @Column({type: "text"})
+  @Column({ type: 'text' })
   cus_name: string;
 
   @CreateDateColumn()

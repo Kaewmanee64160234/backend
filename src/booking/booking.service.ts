@@ -73,9 +73,11 @@ export class BookingService {
         bookingsdetail.booking_de_total_price = re.booking_de_total_price;
 
         // ค้นหาประเภทห้อง (roomtype)
-        bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy({
-          room_type_id: re.roomTypeId,
-        });
+        bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy(
+          {
+            room_type_id: re.roomTypeId,
+          },
+        );
         if (!bookingsdetail.room.roomtype) {
           throw new NotFoundException('Room type not found');
         }

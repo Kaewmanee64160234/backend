@@ -32,7 +32,7 @@ export class Roomservice {
   @DeleteDateColumn()
   room_ser_datedel: Date;
 
-  @Column({nullable: true })
+  @Column({ nullable: true })
   room_ser_status: string;
 
   @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.roomservice)

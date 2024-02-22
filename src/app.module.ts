@@ -26,16 +26,15 @@ import { CheckinandoutModule } from './checkinandout/checkinandout.module';
 import { Checkinandout } from './checkinandout/entities/checkinandout.entity';
 import { ReviewsModule } from './reviews/reviews.module';
 import { Review } from './reviews/entities/review.entity';
-import { ReceiptsModule } from './receipts/receipts.module';
-import { Receipt } from './receipts/entities/receipt.entity';
-import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
 import { RoomtypesModule } from './roomtypes/roomtypes.module';
 import { Roomtype } from './roomtypes/entities/roomtype.entity';
-import { AuthsModule } from './auths/auths.module';
 import { ActivityperModule } from './activityper/activityper.module';
-import { Auth } from './auths/entities/auth.entity';
 import { Activityper } from './activityper/entities/activityper.entity';
 import { BookingModule } from './booking/booking.module';
+import { Booking } from './booking/entities/booking.entity';
+import { BookingDetail } from './booking/entities/bookingDetail';
+import { AuthsModule } from './auths/auths.module';
+import { Auth } from './auths/entities/auth.entity';
 
 @Module({
   imports: [
@@ -47,24 +46,28 @@ import { BookingModule } from './booking/booking.module';
       password: '',
       database: 'hotelcarifornai',
       entities: [
-        Customer, 
-        Employee, 
-        User, 
-        Room, 
-        Activity, 
+        Booking,
+        Employee,
+        Customer,
+        User,
+        Room,
+        Activity,
         Activityper,
-        Roomservice, 
-        Promotion, 
-        Brokenequipment, 
-        Salary, 
-        Checkinandout, 
+        Roomservice,
+        Promotion,
+        Brokenequipment,
+        Salary,
+        Checkinandout,
         Review,
-        Roomtype, 
-        Activityper
+        Roomtype,
+        Activityper,
+        Uility,
+        BookingDetail,
+        Auth,
       ],
       synchronize: true,
     }),
-
+    BookingModule,
     CustomersModule,
     EmployeesModule,
     UsersModule,
@@ -78,7 +81,9 @@ import { BookingModule } from './booking/booking.module';
     RoomtypesModule,
     ActivityperModule,
     BookingModule,
-    ActivityperModule
+    ActivityperModule,
+    UilityModule,
+    AuthsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

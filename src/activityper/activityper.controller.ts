@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ActivityperService } from './activityper.service';
 import { CreateActivityperDto } from './dto/create-activityper.dto';
 import { UpdateActivityperDto } from './dto/update-activityper.dto';
@@ -23,7 +31,10 @@ export class ActivityperController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateActivityperDto: UpdateActivityperDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateActivityperDto: UpdateActivityperDto,
+  ) {
     return this.activityperService.update(+id, updateActivityperDto);
   }
 

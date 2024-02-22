@@ -17,9 +17,9 @@ export class Brokenequipment {
   @PrimaryGeneratedColumn()
   bro_ep_id: number;
 
-  @Column({type: 'text' })
+  @Column({ type: 'text' })
   bro_ep_name: string;
-ฆ
+  ฆ;
   @Column()
   bro_ep_qty: number;
 
@@ -37,7 +37,7 @@ export class Brokenequipment {
 
   @OneToMany(
     () => BookingDetail,
-    (bookingdetail) => bookingdetail.brokenequipment,
+    (bookingdetail) => bookingdetail.brokenEquipment,
   )
   bookingdetail: BookingDetail[];
 }

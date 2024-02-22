@@ -23,7 +23,7 @@ export class Promotion {
   @Column()
   prom_end_date: Date;
 
-  @Column({ type: 'text'})
+  @Column({ type: 'text' })
   prom_name: string;
 
   @Column({ type: 'real', nullable: true })

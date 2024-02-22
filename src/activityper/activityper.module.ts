@@ -4,6 +4,6 @@ import { ActivityperController } from './activityper.controller';
 
 @Module({
   controllers: [ActivityperController],
-  providers: [ActivityperService]
+  providers: [ActivityperService],
 })
 export class ActivityperModule {}

@@ -1,4 +1,3 @@
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -31,5 +30,4 @@ export class Activityper {
 
   @DeleteDateColumn()
   deleteDate: Date;
-
 }
