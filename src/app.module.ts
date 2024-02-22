@@ -35,6 +35,7 @@ import { AuthsModule } from './auths/auths.module';
 import { ActivityperModule } from './activityper/activityper.module';
 import { Auth } from './auths/entities/auth.entity';
 import { Activityper } from './activityper/entities/activityper.entity';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -54,15 +55,12 @@ import { Activityper } from './activityper/entities/activityper.entity';
         Activityper,
         Roomservice, 
         Promotion, 
-        Uility, 
         Brokenequipment, 
         Salary, 
         Checkinandout, 
         Review,
-        Receipt,
-        ReceiptDetail, 
         Roomtype, 
-        Auth, 
+        Activityper
       ],
       synchronize: true,
     }),
@@ -74,15 +72,13 @@ import { Activityper } from './activityper/entities/activityper.entity';
     ActivityModule,
     RoomserviceModule,
     PromotionsModule,
-    UilityModule,
     BrokenequipmentModule,
-    SalaryModule,
     CheckinandoutModule,
     ReviewsModule,
-    ReceiptsModule,
     RoomtypesModule,
-    AuthsModule,
     ActivityperModule,
+    BookingModule,
+    ActivityperModule
   ],
   controllers: [AppController],
   providers: [AppService],

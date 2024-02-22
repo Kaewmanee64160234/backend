@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import { Review } from 'src/reviews/entities/review.entity';
 import { Roomtype } from 'src/roomtypes/entities/roomtype.entity';
 import {
@@ -31,8 +31,8 @@ export class Room {
   @OneToMany(() => Review, (review) => review.room)
   review: Review[];
 
-  @OneToMany(() => ReceiptDetail, (receiptdetail) => receiptdetail.room)
-  receiptdetail: ReceiptDetail[];
+  @OneToMany(() => BookingDetail, (bookingdetail) => bookingdetail.room)
+  bookingdetail: BookingDetail[];
 
   @ManyToOne(() => Roomtype, (roomtype) => roomtype.room)
   roomtype: Roomtype;

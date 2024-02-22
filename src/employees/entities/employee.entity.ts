@@ -1,5 +1,5 @@
+import { Booking } from 'src/booking/entities/booking.entity';
 import { Checkinandout } from 'src/checkinandout/entities/checkinandout.entity';
-import { Receipt } from 'src/receipts/entities/receipt.entity';
 import { Uility } from 'src/uility/entities/uility.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -54,8 +54,8 @@ export class Employee {
   @OneToMany(() => Checkinandout, (checkinandout) => checkinandout.employee)
   checkinandout: Checkinandout[];
 
-  @OneToMany(() => Receipt, (receipt) => receipt.employee)
-  receipt: Receipt[];
+  @OneToMany(() => Booking, (booking) => booking.employee)
+  booking: Booking[];
 
   @OneToMany(() => Uility, (uility) => uility.employee)
   uility: Uility[];

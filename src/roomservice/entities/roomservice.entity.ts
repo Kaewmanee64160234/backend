@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -35,6 +35,6 @@ export class Roomservice {
   @Column({nullable: true })
   room_ser_status: string;
 
-  @ManyToOne(() => ReceiptDetail, (receiptdetail) => receiptdetail.roomservice)
-  receiptdetail: ReceiptDetail;
+  @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.roomservice)
+  bookingdetail: BookingDetail;
 }

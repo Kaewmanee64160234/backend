@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -36,8 +36,8 @@ export class Brokenequipment {
   deleteDate: Date;
 
   @OneToMany(
-    () => ReceiptDetail,
-    (receiptdetail) => receiptdetail.brokenequipment,
+    () => BookingDetail,
+    (bookingdetail) => bookingdetail.brokenequipment,
   )
-  receiptdetail: ReceiptDetail[];
+  bookingdetail: BookingDetail[];
 }

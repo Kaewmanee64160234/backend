@@ -40,24 +40,24 @@ export class ReceiptDetail {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @OneToMany(() => Activity, (activity) => activity.receiptdetail)
-  activity: Activity[];
+  // @OneToMany(() => Activity, (activity) => activity.receiptdetail)
+  // activity: Activity[];
 
-  @OneToMany(() => Roomservice, (roomservice) => roomservice.receiptdetail)
-  roomservice: Roomservice[];
+  // @OneToMany(() => Roomservice, (roomservice) => roomservice.receiptdetail)
+  // roomservice: Roomservice[];
 
-  @OneToMany(() => Review, (review) => review.receiptdetail)
-  review: Review[];
+  // @OneToMany(() => Review, (review) => review.receiptdetail)
+  // review: Review[];
 
-  @ManyToOne(() => Receipt, (receipt) => receipt.receiptdetail)
-  receipt: Receipt;
+  // @ManyToOne(() => Receipt, (receipt) => receipt.receiptdetail)
+  // receipt: Receipt;
 
-  @ManyToOne(() => Room, (room) => room.receiptdetail)
-  room: Room;
+  // @ManyToOne(() => Room, (room) => room.receiptdetail)
+  // room: Room;
 
-  @ManyToOne(
-    () => Brokenequipment,
-    (brokenequipment) => brokenequipment.receiptdetail,
-  )
-  brokenequipment: Brokenequipment;
+  // @ManyToOne(
+  //   () => Brokenequipment,
+  //   (brokenequipment) => brokenequipment.receiptdetail,
+  // )
+  // brokenequipment: Brokenequipment;
 }

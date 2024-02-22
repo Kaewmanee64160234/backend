@@ -1,3 +1,4 @@
+import { Booking } from 'src/booking/entities/booking.entity';
 import { Receipt } from 'src/receipts/entities/receipt.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -31,6 +32,6 @@ export class Customer {
   @JoinColumn()
   user: User;
 
-  @OneToMany(() => Receipt, (receipt) => receipt.customer)
-  receipt: Receipt[];
+  @OneToMany(() => Booking, (booking) => booking.customer)
+  booking: Booking[];
 }

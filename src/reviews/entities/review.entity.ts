@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import { Room } from 'src/rooms/entities/room.entity';
 import {
   Entity,
@@ -39,6 +39,6 @@ export class Review {
   @ManyToOne(() => Room, (room) => room.review)
   room: Room;
 
-  @ManyToOne(() => ReceiptDetail, (receiptdetail) => receiptdetail.review)
-  receiptdetail: ReceiptDetail;
+  @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.review)
+  bookingdetail: BookingDetail;
 }

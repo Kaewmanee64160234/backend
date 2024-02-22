@@ -1,4 +1,4 @@
-import { Receipt } from 'src/receipts/entities/receipt.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -38,6 +38,6 @@ export class Promotion {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @OneToMany(() => Receipt, (receipt) => receipt.promotion)
-  receipt: Receipt[];
+  @OneToMany(() => Booking, (booking) => booking.promotion)
+  booking: Booking[];
 }
