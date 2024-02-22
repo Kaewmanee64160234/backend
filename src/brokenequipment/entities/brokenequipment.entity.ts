@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -17,9 +17,9 @@ export class Brokenequipment {
   @PrimaryGeneratedColumn()
   bro_ep_id: number;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column({type: 'text' })
   bro_ep_name: string;
-
+ฆ
   @Column()
   bro_ep_qty: number;
 
@@ -36,8 +36,8 @@ export class Brokenequipment {
   deleteDate: Date;
 
   @OneToMany(
-    () => ReceiptDetail,
-    (receiptdetail) => receiptdetail.brokenequipment,
+    () => BookingDetail,
+    (bookingdetail) => bookingdetail.brokenequipment,
   )
-  receiptdetail: ReceiptDetail[];
+  bookingdetail: BookingDetail[];
 }

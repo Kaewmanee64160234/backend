@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -18,6 +18,9 @@ export class Activity {
   act_id: number;
 
   @Column({ type: 'text' })
+  act_img_path: string;
+
+  @Column({ type: 'text' })
   act_name: string;
 
   @Column({ type: 'real' })
@@ -35,6 +38,6 @@ export class Activity {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @ManyToOne(() => ReceiptDetail, (receiptdetail) => receiptdetail.activity)
-  receiptdetail: ReceiptDetail;
+  @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.activity)
+  bookingdetail: BookingDetail;
 }

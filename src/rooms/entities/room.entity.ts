@@ -1,4 +1,4 @@
-import { ReceiptDetail } from 'src/receipts/entities/receiptdetail.entity';
+import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import { Review } from 'src/reviews/entities/review.entity';
 import { Roomtype } from 'src/roomtypes/entities/roomtype.entity';
 import {
@@ -16,22 +16,14 @@ import {
 
 @Entity()
 export class Room {
-  @PrimaryColumn()
-  room_id: number;
-  // @PrimaryColumn({ unique: true })
-  // room_id: string;
+  @PrimaryColumn({ unique: true })
+  room_id: string;
 
-  @Column({ type: 'text', nullable: true })
-  room_des: string;
+  @Column({ type: 'text' })
+  room_img_path: string;
 
   @Column({ type: 'text' })
   room_status: string;
-
-  @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;
@@ -39,8 +31,8 @@ export class Room {
   @OneToMany(() => Review, (review) => review.room)
   review: Review[];
 
-  @OneToMany(() => ReceiptDetail, (receiptdetail) => receiptdetail.room)
-  receiptdetail: ReceiptDetail[];
+  @OneToMany(() => BookingDetail, (bookingdetail) => bookingdetail.room)
+  bookingdetail: BookingDetail[];
 
   @ManyToOne(() => Roomtype, (roomtype) => roomtype.room)
   roomtype: Roomtype;

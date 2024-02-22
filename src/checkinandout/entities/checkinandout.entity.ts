@@ -22,29 +22,17 @@ export class Checkinandout {
   @Column()
   cio_date: Date;
 
-  @Column()
-  cio_time_in: Date;
+  @Column({ type: 'time' })
+  cio_time_in: string;
 
-  // @Column({ type: 'time' })
-  // cio_time_in: string;
-
-  @Column()
-  cio_time_out: Date;
-
-  // @Column({ type: 'time' })
-  // cio_time_out: string;
+  @Column({ type: 'time' })
+  cio_time_out: string;
 
   @Column()
-  cio_total_hour: Date;
-
-  // @Column()
-  // cio_total_hour: string;
+  cio_total_hour: number;
 
   @Column({ nullable: true, type: 'text' })
   cio_paid_status: string;
-
-  @CreateDateColumn()
-  createDate: Date;
 
   @UpdateDateColumn()
   updateDate: Date;

@@ -1,7 +1,7 @@
 export class CreateRoomDto {
-  room_id: number;
+  room_id?: string;
 
-  room_des: string;
+  room_img_path: string;
 
   room_status: string;
 }

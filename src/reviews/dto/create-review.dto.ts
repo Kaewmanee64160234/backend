@@ -1,11 +1,11 @@
 export class CreateReviewDto {
-  rev_name: string;
+  rev_id?: number;
 
-  rev_star_clean: string;
+  rev_star_clean: number;
 
-  rev_star_service: string;
+  rev_star_service: number;
 
-  rev_star_conv: string;
+  rev_star_conv: number;
 
   rev_comment: string;
 

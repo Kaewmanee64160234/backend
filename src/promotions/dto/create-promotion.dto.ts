@@ -1,4 +1,6 @@
 export class CreatePromotionDto {
+  prom_id: number;
+
   prom_created_date: Date;
 
   prom_end_date: Date;
@@ -9,5 +11,4 @@ export class CreatePromotionDto {
 
   prom_discount_pres: number;
 
-  prom_used_point: number;
 }

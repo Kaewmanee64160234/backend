@@ -1,3 +1,4 @@
+import { Booking } from 'src/booking/entities/booking.entity';
 import { Receipt } from 'src/receipts/entities/receipt.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -18,23 +19,11 @@ export class Customer {
   @PrimaryGeneratedColumn()
   cus_id: number;
 
-  @Column()
+  @Column({type: "text"})
   cus_name: string;
 
-  @Column()
-  cus_tel: string;
-
-  @Column()
-  cus_point: number;
-
-  @Column()
-  cus_start_date: Date;
-
   @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
+  cus_start_date: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;
@@ -43,6 +32,6 @@ export class Customer {
   @JoinColumn()
   user: User;
 
-  @OneToMany(() => Receipt, (receipt) => receipt.customer)
-  receipt: Receipt[];
+  @OneToMany(() => Booking, (booking) => booking.customer)
+  booking: Booking[];
 }

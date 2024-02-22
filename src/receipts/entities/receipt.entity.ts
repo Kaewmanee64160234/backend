@@ -60,15 +60,15 @@ export class Receipt {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @OneToMany(() => ReceiptDetail, (receiptdetail) => receiptdetail.receipt)
-  receiptdetail: ReceiptDetail[];
+  // @OneToMany(() => ReceiptDetail, (receiptdetail) => receiptdetail.receipt)
+  // receiptdetail: ReceiptDetail[];
 
-  @ManyToOne(() => Customer, (customer) => customer.receipt)
-  customer: Customer;
+  // @ManyToOne(() => Customer, (customer) => customer.receipt)
+  // customer: Customer;
 
-  @ManyToOne(() => Employee, (employee) => employee.receipt)
-  employee: Employee;
+  // @ManyToOne(() => Employee, (employee) => employee.receipt)
+  // employee: Employee;
 
-  @ManyToOne(() => Promotion, (promotion) => promotion.receipt)
-  promotion: Promotion;
+  // @ManyToOne(() => Promotion, (promotion) => promotion.receipt)
+  // promotion: Promotion;
 }
