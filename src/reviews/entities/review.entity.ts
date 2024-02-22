@@ -18,35 +18,20 @@ export class Review {
   @PrimaryGeneratedColumn()
   rev_id: number;
 
-  @Column({ type: 'text', nullable: true })
-  rev_name: string;
+  @Column()
+  rev_star_clean: number;
 
-  @Column({ nullable: true })
-  rev_star_clean: string;
-  // @Column({nullable : true})
-  // rev_star_clean: number;
+  @Column()
+  rev_star_service: number;
 
-  @Column({ nullable: true })
-  rev_star_service: string;
-  // @Column({nullable : true})
-  // rev_star_service: number;
-
-  @Column({ nullable: true })
-  rev_star_conv: string;
-  // @Column({nullable : true})
-  // rev_star_conv: number;
+  @Column()
+  rev_star_conv: number;
 
   @Column({ type: 'text', nullable: true })
   rev_comment: string;
 
-  @Column()
-  rev_date: Date;
-
   @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
+  rev_date: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;

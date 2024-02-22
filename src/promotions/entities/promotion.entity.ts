@@ -17,13 +17,13 @@ export class Promotion {
   @PrimaryGeneratedColumn()
   prom_id: number;
 
-  @Column()
+  @CreateDateColumn()
   prom_created_date: Date;
 
   @Column()
   prom_end_date: Date;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text'})
   prom_name: string;
 
   @Column({ type: 'real', nullable: true })
@@ -31,12 +31,6 @@ export class Promotion {
 
   @Column({ nullable: true })
   prom_discount_pres: number;
-
-  @Column()
-  prom_used_point: number;
-
-  @CreateDateColumn()
-  createDate: Date;
 
   @UpdateDateColumn()
   updateDate: Date;

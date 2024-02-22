@@ -17,9 +17,9 @@ export class Brokenequipment {
   @PrimaryGeneratedColumn()
   bro_ep_id: number;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column({type: 'text' })
   bro_ep_name: string;
-
+ฆ
   @Column()
   bro_ep_qty: number;
 

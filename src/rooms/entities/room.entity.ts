@@ -16,22 +16,14 @@ import {
 
 @Entity()
 export class Room {
-  @PrimaryColumn()
-  room_id: number;
-  // @PrimaryColumn({ unique: true })
-  // room_id: string;
+  @PrimaryColumn({ unique: true })
+  room_id: string;
 
-  @Column({ type: 'text', nullable: true })
-  room_des: string;
+  @Column({ type: 'text' })
+  room_img_path: string;
 
   @Column({ type: 'text' })
   room_status: string;
-
-  @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;

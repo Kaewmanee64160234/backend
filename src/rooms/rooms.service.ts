@@ -24,7 +24,7 @@ export class RoomsService {
     return this.roomsRepository.find({ relations: ['roomtype'] });
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const room = await this.roomsRepository.findOne({
       where: { room_id: id },
       relations: ['roomtype'],
@@ -35,7 +35,7 @@ export class RoomsService {
     return room;
   }
 
-  async update(id: number, updateRoomDto: UpdateRoomDto) {
+  async update(id: string, updateRoomDto: UpdateRoomDto) {
     const room = await this.roomsRepository.findOneBy({ room_id: id });
     if (!room) {
       throw new NotFoundException();
@@ -44,7 +44,7 @@ export class RoomsService {
     return this.roomsRepository.save(updatedRoom);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const room = await this.roomsRepository.findOneBy({ room_id: id });
     if (!room) {
       throw new NotFoundException();

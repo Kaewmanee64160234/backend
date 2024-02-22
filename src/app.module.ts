@@ -32,6 +32,9 @@ import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
 import { RoomtypesModule } from './roomtypes/roomtypes.module';
 import { Roomtype } from './roomtypes/entities/roomtype.entity';
 import { AuthsModule } from './auths/auths.module';
+import { ActivityperModule } from './activityper/activityper.module';
+import { Auth } from './auths/entities/auth.entity';
+import { Activityper } from './activityper/entities/activityper.entity';
 
 @Module({
   imports: [
@@ -42,7 +45,25 @@ import { AuthsModule } from './auths/auths.module';
       username: 'root',
       password: '',
       database: 'hotelcarifornai',
-      entities: [],
+      entities: [
+        Customer, 
+        Employee, 
+        User, 
+        Room, 
+        Activity, 
+        Activityper,
+        Roomservice, 
+        Promotion, 
+        Uility, 
+        Brokenequipment, 
+        Salary, 
+        Checkinandout, 
+        Review,
+        Receipt,
+        ReceiptDetail, 
+        Roomtype, 
+        Auth, 
+      ],
       synchronize: true,
     }),
 
@@ -59,9 +80,9 @@ import { AuthsModule } from './auths/auths.module';
     CheckinandoutModule,
     ReviewsModule,
     ReceiptsModule,
-    ReceiptDetail,
     RoomtypesModule,
     AuthsModule,
+    ActivityperModule,
   ],
   controllers: [AppController],
   providers: [AppService],

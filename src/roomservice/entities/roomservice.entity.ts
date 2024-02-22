@@ -26,22 +26,14 @@ export class Roomservice {
   @Column({ type: 'real', nullable: true })
   room_ser_price: number;
 
-  @Column({ nullable: true })
-  room_ser_timedel: Date;
-  // @Column({type : 'time' ,nullable:true})
-  // room_ser_timedel: Date;
-
-  @Column({ nullable: true })
-  room_ser_datedel: Date;
-
   @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
+  room_ser_timedel: Date;
 
   @DeleteDateColumn()
-  deleteDate: Date;
+  room_ser_datedel: Date;
+
+  @Column({nullable: true })
+  room_ser_status: string;
 
   @ManyToOne(() => ReceiptDetail, (receiptdetail) => receiptdetail.roomservice)
   receiptdetail: ReceiptDetail;

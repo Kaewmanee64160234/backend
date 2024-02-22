@@ -1,5 +1,5 @@
 export class CreateEmployeeDto {
-  emp_id: number;
+  emp_id?: number;
 
   emp_name: string;
 
@@ -7,7 +7,7 @@ export class CreateEmployeeDto {
 
   emp_tel: string;
 
-  emp_dob: string;
+  emp_dob: Date;
 
   emp_addr: string;
 
@@ -15,5 +15,5 @@ export class CreateEmployeeDto {
 
   emp_dsw: Date;
 
-  emp_hourly_wage: Date;
+  emp_hourly_wage: number;
 }

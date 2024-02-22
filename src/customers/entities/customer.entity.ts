@@ -24,6 +24,8 @@ export class Customer {
   @CreateDateColumn()
   cus_start_date: Date;
 
+  @DeleteDateColumn()
+  deleteDate: Date;
 
   @OneToOne(() => User, (user) => user.customer)
   @JoinColumn()

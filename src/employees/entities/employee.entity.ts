@@ -20,41 +20,29 @@ export class Employee {
   @PrimaryGeneratedColumn()
   emp_id: number;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text'})
   emp_name: string;
 
   @Column({ type: 'text' })
   emp_position: string;
 
-  @Column({ unique: true, type: 'text', nullable: true })
+  @Column({ unique: true, type: 'text' })
   emp_tel: string;
 
-  @Column({ type: 'text', nullable: true })
-  emp_dob: string;
+  @Column()
+  emp_dob: Date;
 
-  // @Column({nullable: true})
-  // emp_dob: date;
-
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text'})
   emp_addr: string;
 
-  @Column({ unique: true, type: 'text', nullable: true })
+  @Column({ unique: true, type: 'text' })
   emp_email: string;
 
   @Column()
   emp_dsw: Date;
 
-  @Column()
-  emp_hourly_wage: Date;
-
-  // @Column({type : 'real'})
-  // emp_hourly_wage: number;
-
-  @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
+  @Column({type : 'real'})
+  emp_hourly_wage: number;
 
   @DeleteDateColumn()
   deleteDate: Date;

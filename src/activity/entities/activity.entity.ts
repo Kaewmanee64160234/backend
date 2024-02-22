@@ -18,6 +18,9 @@ export class Activity {
   act_id: number;
 
   @Column({ type: 'text' })
+  act_img_path: string;
+
+  @Column({ type: 'text' })
   act_name: string;
 
   @Column({ type: 'real' })

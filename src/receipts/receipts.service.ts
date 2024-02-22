@@ -80,13 +80,13 @@ export class ReceiptsService {
           throw new NotFoundException('Room type not found');
         }
 
-        // ค้นหาห้อง (room)
-        receiptdetail.room = await this.roomsRepository.findOneBy({
-          room_id: re.roomId,
-        });
-        if (!receiptdetail.room) {
-          throw new NotFoundException('Room not found');
-        }
+        // // ค้นหาห้อง (room)
+        // receiptdetail.room = await this.roomsRepository.findOneBy({
+        //   room_id: re.roomId,
+        // });
+        // if (!receiptdetail.room) {
+        //   throw new NotFoundException('Room not found');
+        // }
 
         receiptdetail.recd_id = rec.rec_id;
         return receiptdetail;

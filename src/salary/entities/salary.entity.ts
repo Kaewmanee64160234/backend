@@ -21,21 +21,13 @@ export class Salary {
   ss_date: Date;
 
   @Column()
-  ss_work_hour: Date;
-  // @Column()
-  // ss_work_hour: number;
+  ss_work_hour: number;
 
   @Column({ type: 'real' })
   ss_salary: number;
 
   @Column({ nullable: true, type: 'text' })
   ss_paid_status: string;
-
-  @CreateDateColumn()
-  createDate: Date;
-
-  @UpdateDateColumn()
-  updateDate: Date;
 
   @DeleteDateColumn()
   deleteDate: Date;
