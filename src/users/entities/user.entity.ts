@@ -1,4 +1,4 @@
-import { Length } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
 import { Customer } from 'src/customers/entities/customer.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import {
@@ -49,7 +49,4 @@ export class User {
   @OneToOne(() => Employee, (employee) => employee.user, { nullable: true })
   @JoinColumn()
   employee: Employee | null;
-}
-function IsEmail(): (target: User, propertyKey: 'user_login') => void {
-  throw new Error('Function not implemented.');
 }
