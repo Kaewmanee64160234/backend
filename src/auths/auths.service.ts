@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { Customer } from 'src/customers/entities/customer.entity';
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 @Injectable()
 export class AuthsService {
   constructor(
@@ -37,52 +38,73 @@ export class AuthsService {
   }
 
   async register(userDto: CreateUserDto): Promise<User> {
-    // Check for duplicate email
-    const existingUser = await this.usersRepository.findOne({
-      where: {
-        user_login: userDto.email, // Assuming user_login is the email field
-      },
-    });
+    try {
+      const existingUser = await this.usersRepository.findOne({
+        where: {
+          user_login: userDto.email,
+        },
+      });
 
-    if (existingUser) {
-      throw new HttpException('Email already in use.', HttpStatus.BAD_REQUEST);
-    }
+      if (existingUser) {
+        throw new HttpException(
+          'Email already in use.',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
 
-    // Validate password rules: 8-12 chars, upper & lower case, number, special char
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
-    if (!passwordRegex.test(userDto.user_password)) {
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+      if (!passwordRegex.test(userDto.user_password)) {
+        throw new HttpException(
+          'Password does not meet the requirements.',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      const hashedPassword = await bcrypt.hash(userDto.user_password, 10);
+
+      // Create the user and save it
+      const user = this.usersRepository.create({
+        user_name: userDto.user_name,
+        user_login: userDto.email,
+        user_password: hashedPassword,
+        user_role: 'customer',
+      });
+
+      await this.usersRepository.save(user); // Make sure to await the save operation
+
+      // Create the customer linked to the user and save it
+      const customer = this.customersRepository.create({
+        cus_name: user.user_name,
+        user: user, // This links the customer to the user
+      });
+
+      const customer_ = await this.customersRepository.save(customer); // Await the save operation
+      user.customer = customer_;
+      await this.usersRepository.save(user); // Make sure to await the save operation
+      // Fetch and return the user with customer information
+      return await this.usersRepository.findOne({
+        where: { user_login: user.user_login },
+        relations: ['customer'], // Make sure 'customer' is the correct relation name
+      });
+    } catch (error) {
+      console.error(error); // More specific error logging
       throw new HttpException(
-        'Password does not meet the requirements.',
-        HttpStatus.BAD_REQUEST,
+        'Failed to register user.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-
-    const hashedPassword = await bcrypt.hash(userDto.user_password, 10);
-
-    const user = this.usersRepository.create({
-      user_name: userDto.user_name,
-      user_login: userDto.email, // Assuming user_login is intended to store email
-      user_password: hashedPassword,
-      user_role: 'customer',
-    });
-
-    const customer = this.customersRepository.create({
-      cus_name: user.user_name,
-      user: user,
-    });
-
-    user.customer = customer;
-
-    return this.usersRepository.save(user);
   }
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersRepository.findOne({
       where: { user_login: email },
+      relations: ['customer'],
     });
     if (user && (await this.comparePasswords(password, user.user_password))) {
       return user;
+    } else {
+      throw new HttpException('Not found User', HttpStatus.NOT_FOUND);
     }
     return null;
   }
