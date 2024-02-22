@@ -1,43 +1,54 @@
-import { Employee } from "src/employees/entities/employee.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Employee } from 'src/employees/entities/employee.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Uility {
   @PrimaryGeneratedColumn()
   ue_id: number;
 
-  @Column({type: 'real'})
+  @Column({ type: 'real' })
   ue_water: number;
 
-  @Column({type: 'real'})
+  @Column({ type: 'real' })
   ue_electric: number;
 
-  @Column({type: 'real'})
+  @Column({ type: 'real' })
   ue_total: number;
 
-  @Column({nullable:true , type: 'text'})
+  @Column({ nullable: true, type: 'text' })
   ue_paid_status: string;
 
-  @Column({nullable:true , type: 'real'})
+  @Column({ nullable: true, type: 'real' })
   ue_price: number;
 
-  @Column({nullable:true})
+  @Column({ nullable: true })
   ue_other: string;
   // @Column({nullable:true , type: 'real'})
   // ue_other: number;
 
-  @Column({nullable:true})
+  @Column({ nullable: true })
   ue_date: Date;
 
   @CreateDateColumn()
-  createDate : Date
+  createDate: Date;
 
   @UpdateDateColumn()
-  updateDate : Date
+  updateDate: Date;
 
   @DeleteDateColumn()
-  deleteDate : Date
+  deleteDate: Date;
 
-  @ManyToOne (() => Employee, (employee) => employee.uility)
-  employee : Employee;
+  @ManyToOne(() => Employee, (employee) => employee.uility)
+  employee: Employee;
 }

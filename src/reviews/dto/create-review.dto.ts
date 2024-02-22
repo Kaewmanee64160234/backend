@@ -1,5 +1,4 @@
 export class CreateReviewDto {
-
   rev_name: string;
 
   rev_star_clean: string;

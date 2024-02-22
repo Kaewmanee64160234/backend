@@ -31,49 +31,21 @@ import { Receipt } from './receipts/entities/receipt.entity';
 import { ReceiptDetail } from './receipts/entities/receiptdetail.entity';
 import { RoomtypesModule } from './roomtypes/roomtypes.module';
 import { Roomtype } from './roomtypes/entities/roomtype.entity';
-
-
-// @Module({
-//   imports: [
-//     TypeOrmModule.forRoot({
-//       type: 'mysql',
-//       host: 'www.db4free',
-//       port: 3600,
-//       username: 'hotelcarifornai',
-//       password: 'pass@1234',
-//       database: 'hotelcarifornai',
-//       entities: [Customer],
-//       synchronize: true,
-//     }),
-//     CustomersModule,
-//   ],
-//   controllers: [AppController],
-//   providers: [AppService],
-// })
+import { AuthsModule } from './auths/auths.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'db.sqlite',
-      entities: [Customer, 
-        Employee, 
-        User, 
-        Room, 
-        Activity, 
-        Room, 
-        Roomservice, 
-        Promotion, 
-        Uility, 
-        Brokenequipment, 
-        Salary, 
-        Checkinandout, 
-        Review, 
-        Receipt, 
-        ReceiptDetail, 
-        Roomtype],
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'hotelcarifornai',
+      entities: [],
       synchronize: true,
     }),
+
     CustomersModule,
     EmployeesModule,
     UsersModule,
@@ -88,7 +60,8 @@ import { Roomtype } from './roomtypes/entities/roomtype.entity';
     ReviewsModule,
     ReceiptsModule,
     ReceiptDetail,
-    RoomtypesModule
+    RoomtypesModule,
+    AuthsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

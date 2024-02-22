@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class SalaryService {
-
   constructor(
     @InjectRepository(Salary)
     private salaryRepository: Repository<Salary>,
@@ -15,10 +14,10 @@ export class SalaryService {
 
   create(createSalaryDto: CreateSalaryDto) {
     const salary = this.salaryRepository.save(createSalaryDto);
-    if(!salary){
+    if (!salary) {
       throw new NotFoundException();
     }
-    return salary
+    return salary;
   }
 
   findAll() {
@@ -26,25 +25,27 @@ export class SalaryService {
   }
 
   async findOne(id: number) {
-    const salary = await this.salaryRepository.findOne({ where: { ss_id: id } });
-    if (!salary){
+    const salary = await this.salaryRepository.findOne({
+      where: { ss_id: id },
+    });
+    if (!salary) {
       throw new NotFoundException();
     }
-    return salary
+    return salary;
   }
 
   async update(id: number, updateSalaryDto: UpdateSalaryDto) {
-    const salary = await this.salaryRepository.findOneBy({ss_id :id})
-    if(!salary){
+    const salary = await this.salaryRepository.findOneBy({ ss_id: id });
+    if (!salary) {
       throw new NotFoundException();
     }
-    const updatedSalary = {...salary,...updateSalaryDto};
+    const updatedSalary = { ...salary, ...updateSalaryDto };
     return this.salaryRepository.save(updatedSalary);
   }
 
   async remove(id: number) {
-    const room = await this.salaryRepository.findOneBy({ss_id :id})
-    if(!room){
+    const room = await this.salaryRepository.findOneBy({ ss_id: id });
+    if (!room) {
       throw new NotFoundException();
     }
     return this.salaryRepository.softRemove(room);

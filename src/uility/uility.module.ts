@@ -7,6 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [TypeOrmModule.forFeature([Uility])],
   controllers: [UilityController],
-  providers: [UilityService]
+  providers: [UilityService],
 })
 export class UilityModule {}

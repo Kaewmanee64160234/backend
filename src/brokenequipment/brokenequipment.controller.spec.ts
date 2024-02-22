@@ -11,7 +11,9 @@ describe('BrokenequipmentController', () => {
       providers: [BrokenequipmentService],
     }).compile();
 
-    controller = module.get<BrokenequipmentController>(BrokenequipmentController);
+    controller = module.get<BrokenequipmentController>(
+      BrokenequipmentController,
+    );
   });
 
   it('should be defined', () => {

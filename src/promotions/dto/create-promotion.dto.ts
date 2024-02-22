@@ -1,5 +1,4 @@
 export class CreatePromotionDto {
-
   prom_created_date: Date;
 
   prom_end_date: Date;

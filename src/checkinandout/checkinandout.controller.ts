@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CheckinandoutService } from './checkinandout.service';
 import { CreateCheckinandoutDto } from './dto/create-checkinandout.dto';
 import { UpdateCheckinandoutDto } from './dto/update-checkinandout.dto';
@@ -23,7 +31,10 @@ export class CheckinandoutController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCheckinandoutDto: UpdateCheckinandoutDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCheckinandoutDto: UpdateCheckinandoutDto,
+  ) {
     return this.checkinandoutService.update(+id, updateCheckinandoutDto);
   }
 

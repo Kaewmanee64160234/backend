@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PromotionsService {
-
   constructor(
     @InjectRepository(Promotion)
     private promotionsRepository: Repository<Promotion>,
@@ -15,10 +14,10 @@ export class PromotionsService {
 
   create(createPromotionDto: CreatePromotionDto) {
     const promotion = this.promotionsRepository.save(createPromotionDto);
-    if(!promotion){
+    if (!promotion) {
       throw new NotFoundException();
     }
-    return promotion
+    return promotion;
   }
 
   findAll() {
@@ -26,28 +25,33 @@ export class PromotionsService {
   }
 
   async findOne(id: number) {
-    const promotion = await this.promotionsRepository.findOne({ where: {prom_id :id}});
-    if (!promotion){
+    const promotion = await this.promotionsRepository.findOne({
+      where: { prom_id: id },
+    });
+    if (!promotion) {
       throw new NotFoundException();
     }
-    return promotion
+    return promotion;
   }
 
   async update(id: number, updatePromotionDto: UpdatePromotionDto) {
-    const promotion = await this.promotionsRepository.findOneBy({prom_id :id})
-    if(!promotion){
+    const promotion = await this.promotionsRepository.findOneBy({
+      prom_id: id,
+    });
+    if (!promotion) {
       throw new NotFoundException();
     }
-    const updatePromotion = {...promotion,...updatePromotionDto};
+    const updatePromotion = { ...promotion, ...updatePromotionDto };
     return this.promotionsRepository.save(updatePromotion);
   }
 
   async remove(id: number) {
-    const promotion = await this.promotionsRepository.findOneBy({prom_id :id})
-    if(!promotion){
+    const promotion = await this.promotionsRepository.findOneBy({
+      prom_id: id,
+    });
+    if (!promotion) {
       throw new NotFoundException();
     }
     return this.promotionsRepository.softRemove(promotion);
   }
-
 }

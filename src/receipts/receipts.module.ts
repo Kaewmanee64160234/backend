@@ -12,8 +12,19 @@ import { Promotion } from 'src/promotions/entities/promotion.entity';
 import { Activity } from 'src/activity/entities/activity.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Receipt, ReceiptDetail, Customer, Employee, Room, Roomtype, Promotion, Activity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Receipt,
+      ReceiptDetail,
+      Customer,
+      Employee,
+      Room,
+      Roomtype,
+      Promotion,
+      Activity,
+    ]),
+  ],
   controllers: [ReceiptsController],
-  providers: [ReceiptsService]
+  providers: [ReceiptsService],
 })
 export class ReceiptsModule {}

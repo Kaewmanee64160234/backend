@@ -16,7 +16,4 @@ export class CreateEmployeeDto {
   emp_dsw: Date;
 
   emp_hourly_wage: Date;
-
 }
-
-

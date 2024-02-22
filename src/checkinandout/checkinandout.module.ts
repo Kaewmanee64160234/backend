@@ -7,6 +7,6 @@ import { Checkinandout } from './entities/checkinandout.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Checkinandout])],
   controllers: [CheckinandoutController],
-  providers: [CheckinandoutService]
+  providers: [CheckinandoutService],
 })
 export class CheckinandoutModule {}

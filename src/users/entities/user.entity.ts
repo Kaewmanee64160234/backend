@@ -1,40 +1,52 @@
-import { Customer } from "src/customers/entities/customer.entity";
-import { Employee } from "src/employees/entities/employee.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne , CreateDateColumn , DeleteDateColumn , UpdateDateColumn  } from "typeorm";
+import { IsEmail, Length } from 'class-validator';
+import { Customer } from 'src/customers/entities/customer.entity';
+import { Employee } from 'src/employees/entities/employee.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   user_id: number;
 
-  @Column({type: 'text'})
+  @Column({ type: 'text' })
+  @Length(8, 20)
   user_name: string;
 
-  @Column({type: 'text', unique: true})
+  @Column({ type: 'text', unique: true })
+  @IsEmail()
   user_login: string;
 
-  @Column({type: 'text'})
+  @Column({ type: 'text' })
   user_password: string;
 
-  @Column({type: 'text'})
+  @Column({ type: 'text' })
   user_role: string;
 
   @CreateDateColumn()
-  createDate : Date
+  createDate: Date;
 
   @UpdateDateColumn()
-  updateDate : Date
+  updateDate: Date;
 
   @DeleteDateColumn()
-  deleteDate : Date
+  deleteDate: Date;
 
-  @OneToOne(() => Customer, customer => customer.user, { nullable: true })
+  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
   @JoinColumn()
   customer: Customer | null;
 
   @OneToOne(() => Employee, (employee) => employee.user, { nullable: true })
   @JoinColumn()
-  employee: Employee| null;
-
-
+  employee: Employee | null;
 }

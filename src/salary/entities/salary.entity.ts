@@ -1,5 +1,16 @@
-import { Checkinandout } from "src/checkinandout/entities/checkinandout.entity";
-import { Entity, PrimaryGeneratedColumn , Column, OneToOne, JoinColumn, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Checkinandout } from 'src/checkinandout/entities/checkinandout.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Salary {
@@ -14,21 +25,21 @@ export class Salary {
   // @Column()
   // ss_work_hour: number;
 
-  @Column({type: 'real'})
+  @Column({ type: 'real' })
   ss_salary: number;
 
-  @Column({nullable:true , type: 'text'})
+  @Column({ nullable: true, type: 'text' })
   ss_paid_status: string;
 
   @CreateDateColumn()
-  createDate : Date
+  createDate: Date;
 
   @UpdateDateColumn()
-  updateDate : Date
+  updateDate: Date;
 
   @DeleteDateColumn()
-  deleteDate : Date
+  deleteDate: Date;
 
-  @OneToMany (() => Checkinandout , (checkinandout) => checkinandout.salary)
+  @OneToMany(() => Checkinandout, (checkinandout) => checkinandout.salary)
   checkinandout: Checkinandout[];
 }
