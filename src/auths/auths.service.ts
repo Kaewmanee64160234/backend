@@ -38,7 +38,6 @@ export class AuthsService {
     if (!passwordRegex.test(userDto.user_password)) {
       throw new Error('Password does not meet the requirements.');
     }
-
     const hashedPassword = await bcrypt.hash(userDto.user_password, 10);
     const user = this.usersRepository.create({
       user_name: userDto.user_name,

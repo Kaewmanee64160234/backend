@@ -49,7 +49,7 @@ export class AuthsController {
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto) {
     return this.authsService.validateUser(
-      createUserDto.user_login,
+      createUserDto.email,
       createUserDto.user_password,
     );
   }

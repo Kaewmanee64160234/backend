@@ -5,7 +5,6 @@ export class CreateUserDto {
   user_name: string;
   @IsEmail()
   email: string;
-  user_login: string;
 
   user_password: string;
 
