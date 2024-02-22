@@ -7,26 +7,11 @@ export class Customer {
   @PrimaryGeneratedColumn()
   cus_id: number;
 
-  @Column()
+  @Column({type: "text"})
   cus_name: string;
-
-  // @Column()
-  // cus_tel: string;
-
-  // @Column()
-  // cus_point: number;
 
   @CreateDateColumn()
   cus_start_date: Date;
-
-  // @CreateDateColumn()
-  // createDate : Date
-
-  // @UpdateDateColumn()
-  // updateDate : Date
-
-  // @DeleteDateColumn()
-  // deleteDate : Date
 
   @OneToOne(() => User, (user) => user.customer)
   @JoinColumn()
