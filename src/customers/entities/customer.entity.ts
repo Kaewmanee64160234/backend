@@ -10,23 +10,23 @@ export class Customer {
   @Column()
   cus_name: string;
 
-  @Column()
-  cus_tel: string;
+  // @Column()
+  // cus_tel: string;
 
-  @Column()
-  cus_point: number;
-
-  @Column()
-  cus_start_date: Date;
+  // @Column()
+  // cus_point: number;
 
   @CreateDateColumn()
-  createDate : Date
+  cus_start_date: Date;
 
-  @UpdateDateColumn()
-  updateDate : Date
+  // @CreateDateColumn()
+  // createDate : Date
 
-  @DeleteDateColumn()
-  deleteDate : Date
+  // @UpdateDateColumn()
+  // updateDate : Date
+
+  // @DeleteDateColumn()
+  // deleteDate : Date
 
   @OneToOne(() => User, (user) => user.customer)
   @JoinColumn()
