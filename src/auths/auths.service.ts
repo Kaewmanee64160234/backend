@@ -71,17 +71,18 @@ export class AuthsService {
         user_role: 'customer',
       });
 
-      await this.usersRepository.save(user); // Make sure to await the save operation
+      const user_ = await this.usersRepository.save(user); // Make sure to await the save operation
 
       // Create the customer linked to the user and save it
       const customer = this.customersRepository.create({
         cus_name: user.user_name,
-        user: user, // This links the customer to the user
+        user: user_, // This links the customer to the user
       });
 
       const customer_ = await this.customersRepository.save(customer); // Await the save operation
-      user.customer = customer_;
-      await this.usersRepository.save(user); // Make sure to await the save operation
+      user_.customer = customer_;
+      await this.usersRepository.save(user_); //
+
       // Fetch and return the user with customer information
       return await this.usersRepository.findOne({
         where: { user_login: user.user_login },
@@ -89,10 +90,7 @@ export class AuthsService {
       });
     } catch (error) {
       console.error(error); // More specific error logging
-      throw new HttpException(
-        'Failed to register user.',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error, HttpStatus.NOT_FOUND);
     }
   }
 
@@ -106,7 +104,6 @@ export class AuthsService {
     } else {
       throw new HttpException('Not found User', HttpStatus.NOT_FOUND);
     }
-    return null;
   }
   //
   private async comparePasswords(
