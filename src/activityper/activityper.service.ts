@@ -7,7 +7,6 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ActivityperService {
-
   constructor(
     @InjectRepository(Activityper)
     private activityPersRepository: Repository<Activityper>,
@@ -36,7 +35,9 @@ export class ActivityperService {
   }
 
   async update(id: number, updateActivityperDto: UpdateActivityperDto) {
-    const activityPer = await this.activityPersRepository.findOneBy({ act_rec_id: id });
+    const activityPer = await this.activityPersRepository.findOneBy({
+      act_rec_id: id,
+    });
     if (!activityPer) {
       throw new NotFoundException();
     }
@@ -45,7 +46,9 @@ export class ActivityperService {
   }
 
   async remove(id: number) {
-    const activityPer = await this.activityPersRepository.findOneBy({ act_rec_id: id });
+    const activityPer = await this.activityPersRepository.findOneBy({
+      act_rec_id: id,
+    });
     if (!activityPer) {
       throw new NotFoundException();
     }

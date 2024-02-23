@@ -87,4 +87,3 @@ import { Auth } from './auths/entities/auth.entity';
   providers: [AppService],
 })
 export class AppModule {}
-

@@ -93,6 +93,4 @@ export class Booking {
 
   @OneToMany(() => Activityper, (activityPer) => activityPer.booking)
   activityPer: Activityper[];
-
-
 }

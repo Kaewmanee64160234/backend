@@ -22,8 +22,8 @@ export class BookingDetail {
   @PrimaryGeneratedColumn()
   booking_de_id: number;
 
-  @Column({ type: 'real' })
-  booking_de_total_price: number;
+  // @Column({ type: 'real' })
+  // booking_de_total_price: number;
 
   @Column({ default: 0, nullable: true })
   booking_de_adult: number;

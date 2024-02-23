@@ -39,7 +39,7 @@ export class RoomsService {
   }
 
   async getRoomByType(roomstatus: string, roomTypeName: string) {
-    const room = await this.roomsRepository.findOne({
+    const room = await this.roomsRepository.find({
       where: { room_status: roomstatus },
       relations: ['roomtype'],
       join: {
@@ -50,7 +50,7 @@ export class RoomsService {
       },
     });
 
-    if (!room || room.roomtype.room_type_name !== roomTypeName) {
+    if (!room || room.length === 0) {
       throw new NotFoundException('Room not found');
     }
 

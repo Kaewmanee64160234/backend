@@ -1,9 +1,10 @@
+import { CreateActivityperDto } from 'src/activityper/dto/create-activityper.dto';
 import { Activityper } from 'src/activityper/entities/activityper.entity';
 
 class CreateBookingDetailDto {
   booking_de_adult: string;
   booking_de_child: string;
-  booking_de_total_price: number;
+  // booking_de_total_price: number;
   roomId: string;
 }
 
@@ -24,31 +25,31 @@ export class CreateBookingDto {
 
   booking_cus_addr_des: string;
 
-  booking_checkin: Date;
+  booking_checkin?: Date;
 
-  booking_checkout: Date;
+  booking_checkout?: Date;
 
   booking_total: number;
 
   booking_cash_pledge: number;
 
-  booking_total_discount: number;
+  booking_total_discount?: number;
 
   booking_payment_booking: string;
 
-  booking_payment_checkout: string;
+  booking_payment_checkout?: string;
 
   booking_status: string;
 
-  booking_status_late: string;
+  booking_status_late?: string;
 
-  customerId: number;
+  customerId?: number;
 
-  employeeId: number;
+  employeeId?: number;
 
-  promotionId: number;
+  promotionId?: number;
 
   bookingdetail: CreateBookingDetailDto[];
 
-  activity_booking: Activityper[];
+  activity_booking?: CreateActivityperDto[];
 }
