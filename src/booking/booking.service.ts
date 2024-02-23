@@ -11,6 +11,7 @@ import { Promotion } from 'src/promotions/entities/promotion.entity';
 import { Activity } from 'src/activity/entities/activity.entity';
 import { Booking } from './entities/booking.entity';
 import { BookingDetail } from './entities/bookingDetail';
+import { Activityper } from 'src/activityper/entities/activityper.entity';
 
 @Injectable()
 export class BookingService {
@@ -34,7 +35,7 @@ export class BookingService {
   ) { }
 
   async create(createBookingDto: CreateBookingDto) {
-    // สร้าง receipt
+    // สร้าง booking
 
     // ค้นหาลูกค้า (customer)
     const customer = await this.customersRepository.findOneBy({
@@ -61,12 +62,47 @@ export class BookingService {
     }
 
     const booking: Booking = new Booking();
+    //booking 
+    booking.booking_cus_name = createBookingDto.booking_cus_name;
+    booking.booking_cus_lastname = createBookingDto.booking_cus_lastname;
+    booking.booking_cus_tel = createBookingDto.booking_cus_tel;
+    booking.booking_cus_email = createBookingDto.booking_cus_email;
+    booking.booking_cus_addr = createBookingDto.booking_cus_addr;
+    booking.booking_cus_addr_des = createBookingDto.booking_cus_addr_des;
+    booking.booking_cash_pledge = createBookingDto.booking_cash_pledge;
+    booking.booking_payment_booking = createBookingDto.booking_payment_booking;
+    booking.booking_status = createBookingDto.booking_status;
+//
+    booking.booking_checkin =createBookingDto.booking_checkin;
+    booking.booking_checkout =createBookingDto.booking_checkout;
+    booking.booking_payment_checkout = createBookingDto.booking_payment_checkout;
+    booking.booking_status_late  = createBookingDto.booking_status_late;
+
     booking.customer = customer;
     booking.employee = employee;
     booking.promotion = promotion;
-    // booking.booking_total = 0;
 
-    const book = await this.bookingsRepository.save(booking);
+//booking  activity 
+for (const act of createBookingDto.activity_booking){
+  const activity_ = await this.activityRepository.findOne({where:{act_id:act.act_rec_id}})
+  if(activity_!= null){
+    //push in booking
+
+    const activity_detail = new Activityper();
+    // activity_detail.activity
+
+
+  }
+
+}
+
+
+
+    // booking.booking_total = 0;
+    booking.booking_total_discount = createBookingDto.booking_total_discount;
+    booking.booking_total = createBookingDto.booking_total,
+
+    // const book = await this.bookingsRepository.save(booking);
 
     for(const book of createBookingDto.bookingdetail){
       const bookingDetail = new BookingDetail();
@@ -75,6 +111,8 @@ export class BookingService {
       bookingDetail.room = await this.roomsRepository.findOneBy({
         room_id: book.roomId,
       });
+      // bookingDetail.booking_de_adult = createBookingDto.booking_de_adult;
+      
       bookingDetail.booking = booking;
       await this.bookingsdetailRepository.save(bookingDetail);
     }

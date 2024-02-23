@@ -1,3 +1,5 @@
+import { Activityper } from "src/activityper/entities/activityper.entity";
+
 class CreateBookingDetailDto {
   booking_de_adult: string;
   booking_de_child: string;
@@ -47,4 +49,8 @@ export class CreateBookingDto {
   promotionId: number;
 
   bookingdetail: CreateBookingDetailDto[];
+  activity_booking:Activityper[]
+  
+
+
 }
