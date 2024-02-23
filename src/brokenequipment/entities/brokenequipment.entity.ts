@@ -37,7 +37,7 @@ export class Brokenequipment {
 
   @OneToMany(
     () => BookingDetail,
-    (bookingdetail) => bookingdetail.brokenEquipment,
+    (bookingDetail) => bookingDetail.brokenEquipment,
   )
-  bookingdetail: BookingDetail[];
+  bookingDetail: BookingDetail[];
 }

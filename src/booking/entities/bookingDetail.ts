@@ -1,4 +1,3 @@
-import { Activity } from 'src/activity/entities/activity.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -41,24 +40,21 @@ export class BookingDetail {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @OneToMany(() => Activity, (activity) => activity.bookingdetail)
-  activity: Activity[];
-
-  @OneToMany(() => Roomservice, (roomservice) => roomservice.bookingdetail)
+  @OneToMany(() => Roomservice, (roomservice) => roomservice.bookingDetail)
   roomservice: Roomservice[];
 
-  @OneToMany(() => Review, (review) => review.bookingdetail)
+  @OneToMany(() => Review, (review) => review.bookingDetail)
   review: Review[];
 
   @ManyToOne(() => Booking, (booking) => booking.bookingDetail)
   booking: Booking;
 
-  @ManyToOne(() => Room, (room) => room.bookingdetail)
+  @ManyToOne(() => Room, (room) => room.bookingDetail)
   room: Room;
 
   @ManyToOne(
     () => Brokenequipment,
-    (brokenequipment) => brokenequipment.bookingdetail,
+    (brokenequipment) => brokenequipment.bookingDetail,
   )
   brokenEquipment: Brokenequipment;
 }

@@ -52,7 +52,6 @@ import { Auth } from './auths/entities/auth.entity';
         User,
         Room,
         Activity,
-        Activityper,
         Roomservice,
         Promotion,
         Brokenequipment,
@@ -67,7 +66,6 @@ import { Auth } from './auths/entities/auth.entity';
       ],
       synchronize: true,
     }),
-    BookingModule,
     CustomersModule,
     EmployeesModule,
     UsersModule,
@@ -80,12 +78,13 @@ import { Auth } from './auths/entities/auth.entity';
     ReviewsModule,
     RoomtypesModule,
     ActivityperModule,
-    BookingModule,
-    ActivityperModule,
     UilityModule,
     AuthsModule,
+    BookingModule,
+    SalaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+

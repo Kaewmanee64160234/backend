@@ -35,6 +35,6 @@ export class Roomservice {
   @Column({ nullable: true })
   room_ser_status: string;
 
-  @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.roomservice)
-  bookingdetail: BookingDetail;
+  @ManyToOne(() => BookingDetail, (bookingDetail) => bookingDetail.roomservice)
+  bookingDetail: BookingDetail;
 }

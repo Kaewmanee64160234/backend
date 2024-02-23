@@ -1,3 +1,5 @@
+import { Activity } from 'src/activity/entities/activity.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -30,4 +32,10 @@ export class Activityper {
 
   @DeleteDateColumn()
   deleteDate: Date;
+
+  @ManyToOne(() => Booking, (booking) => booking.activityPer)
+  booking: Booking;
+
+  @ManyToOne(() => Activity, (activity) => activity.activityPer)
+  activity: Activity;
 }

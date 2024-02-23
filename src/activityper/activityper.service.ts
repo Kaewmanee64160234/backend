@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateActivityperDto } from './dto/create-activityper.dto';
 import { UpdateActivityperDto } from './dto/update-activityper.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Activityper } from './entities/activityper.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ActivityperService {
+
+  constructor(
+    @InjectRepository(Activityper)
+    private activityPersRepository: Repository<Activityper>,
+  ) {}
+
   create(createActivityperDto: CreateActivityperDto) {
-    return 'This action adds a new activityper';
+    const activityPer = this.activityPersRepository.save(createActivityperDto);
+    if (!activityPer) {
+      throw new NotFoundException();
+    }
+    return activityPer;
   }
 
   findAll() {
-    return `This action returns all activityper`;
+    return this.activityPersRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} activityper`;
+  async findOne(id: number) {
+    const activityPer = await this.activityPersRepository.findOne({
+      where: { act_rec_id: id },
+    });
+    if (!activityPer) {
+      throw new NotFoundException();
+    }
+    return activityPer;
   }
 
-  update(id: number, updateActivityperDto: UpdateActivityperDto) {
-    return `This action updates a #${id} activityper`;
+  async update(id: number, updateActivityperDto: UpdateActivityperDto) {
+    const activityPer = await this.activityPersRepository.findOneBy({ act_rec_id: id });
+    if (!activityPer) {
+      throw new NotFoundException();
+    }
+    const updatedActivityPer = { ...activityPer, ...updateActivityperDto };
+    return this.activityPersRepository.save(updatedActivityPer);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} activityper`;
+  async remove(id: number) {
+    const activityPer = await this.activityPersRepository.findOneBy({ act_rec_id: id });
+    if (!activityPer) {
+      throw new NotFoundException();
+    }
+    return this.activityPersRepository.softRemove(activityPer);
   }
 }

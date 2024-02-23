@@ -1,3 +1,4 @@
+import { Activityper } from 'src/activityper/entities/activityper.entity';
 import { BookingDetail } from 'src/booking/entities/bookingDetail';
 import {
   Entity,
@@ -38,6 +39,6 @@ export class Activity {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.activity)
-  bookingdetail: BookingDetail;
+  @OneToMany(() => Activityper, (activityPer) => activityPer.activity)
+  activityPer: Activityper[];
 }

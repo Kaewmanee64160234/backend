@@ -31,8 +31,8 @@ export class Room {
   @OneToMany(() => Review, (review) => review.room)
   review: Review[];
 
-  @OneToMany(() => BookingDetail, (bookingdetail) => bookingdetail.room)
-  bookingdetail: BookingDetail[];
+  @OneToMany(() => BookingDetail, (bookingDetail) => bookingDetail.room)
+  bookingDetail: BookingDetail[];
 
   @ManyToOne(() => Roomtype, (roomtype) => roomtype.room)
   roomtype: Roomtype;

@@ -14,6 +14,7 @@ import { Customer } from 'src/customers/entities/customer.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { Promotion } from 'src/promotions/entities/promotion.entity';
 import { BookingDetail } from './bookingDetail';
+import { Activityper } from 'src/activityper/entities/activityper.entity';
 
 @Entity()
 export class Booking {
@@ -78,7 +79,7 @@ export class Booking {
   @DeleteDateColumn()
   deleteDate: Date;
 
-  @OneToMany(() => BookingDetail, (bookingetail) => bookingetail.booking)
+  @OneToMany(() => BookingDetail, (bookingDetail) => bookingDetail.booking)
   bookingDetail: BookingDetail[];
 
   @ManyToOne(() => Customer, (customer) => customer.booking)
@@ -89,4 +90,9 @@ export class Booking {
 
   @ManyToOne(() => Promotion, (promotion) => promotion.booking)
   promotion: Promotion;
+
+  @OneToMany(() => Activityper, (activityPer) => activityPer.booking)
+  activityPer: Activityper[];
+
+
 }

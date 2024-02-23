@@ -39,6 +39,6 @@ export class Review {
   @ManyToOne(() => Room, (room) => room.review)
   room: Room;
 
-  @ManyToOne(() => BookingDetail, (bookingdetail) => bookingdetail.review)
-  bookingdetail: BookingDetail;
+  @ManyToOne(() => BookingDetail, (bookingDetail) => bookingDetail.review)
+  bookingDetail: BookingDetail;
 }
