@@ -31,7 +31,7 @@ export class BookingService {
     private promotionsRepository: Repository<Promotion>,
     @InjectRepository(Activity)
     private activityRepository: Repository<Activity>,
-  ) {}
+  ) { }
 
   async create(createBookingDto: CreateBookingDto) {
     // สร้าง receipt
@@ -52,58 +52,38 @@ export class BookingService {
       throw new NotFoundException('Employee not found');
     }
 
-    // // ค้นหาพนักงาน (promotion)
-    // const promotion = await this.promotionsRepository.findOneBy({
-    //   prom_id: createReceiptDto.pr,
-    // });
-    // if (!employee) {
-    //   throw new NotFoundException('Employee not found');
-    // }
+    // ค้นหาโปรโมชั่น (promotion)
+    const promotion = await this.promotionsRepository.findOneBy({
+      prom_id: createBookingDto.promotionId,
+    });
+    if (!promotion) {
+      throw new NotFoundException('Promotion not found');
+    }
 
     const booking: Booking = new Booking();
     booking.customer = customer;
     booking.employee = employee;
-    booking.booking_total = 0;
+    booking.promotion = promotion;
+    // booking.booking_total = 0;
 
     const book = await this.bookingsRepository.save(booking);
 
-    const bookingdetail: BookingDetail[] = await Promise.all(
-      createBookingDto.bookingdetail.map(async (re) => {
-        const bookingsdetail = new BookingDetail();
-        bookingsdetail.booking_de_total_price = re.booking_de_total_price;
-
-        // ค้นหาประเภทห้อง (roomtype)
-        bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy(
-          {
-            room_type_id: re.roomTypeId,
-          },
-        );
-        if (!bookingsdetail.room.roomtype) {
-          throw new NotFoundException('Room type not found');
-        }
-
-        // // ค้นหาห้อง (room)
-        // receiptdetail.room = await this.roomsRepository.findOneBy({
-        //   room_id: re.roomId,
-        // });
-        // if (!receiptdetail.room) {
-        //   throw new NotFoundException('Room not found');
-        // }
-
-        bookingsdetail.booking_de_id = book.booking_id;
-        return bookingsdetail;
-      }),
-    );
-
-    for (const bookingsdetail_ of bookingdetail) {
-      this.bookingsdetailRepository.save(bookingsdetail_);
-      booking.booking_total += bookingsdetail_.booking_de_total_price;
+    for(const book of createBookingDto.bookingdetail){
+      const bookingDetail = new BookingDetail();
+      // bookingDetail.booking_de_adult = book.booking_de_adult;
+      // bookingDetail.booking_de_child = book.booking_de_child;
+      bookingDetail.room = await this.roomsRepository.findOneBy({
+        room_id: book.roomId,
+      });
+      bookingDetail.booking = booking;
+      await this.bookingsdetailRepository.save(bookingDetail);
     }
-    booking.booking_total += booking.booking_cash_pledge;
-    // activity
-    //- promotion
     await this.bookingsRepository.save(booking);
-    return booking;
+    return await this.bookingsRepository.findOne({
+      where: {booking_id: booking.booking_id},
+      relations: ['bookingDetail']
+    })
+  
   }
 
   findAll() {
@@ -122,3 +102,51 @@ export class BookingService {
     return `This action removes a #${id} booking`;
   }
 }
+
+
+
+
+
+
+
+    // const bookingdetail: BookingDetail[] = await Promise.all(
+    //   createBookingDto.bookingdetail.map(async (bookingde) => {
+    //     const bookingsdetail = new BookingDetail();
+    //     bookingsdetail.booking_de_total_price = bookingde.booking_de_total_price;
+
+    //     // ค้นหาห้อง (room)
+    //     bookingsdetail.room = await this.roomsRepository.findOneBy({
+    //       room_id: bookingde.roomId,
+    //     });        
+    //     if (!bookingsdetail.room) {
+    //       throw new NotFoundException('Room not found');
+    //     }
+
+
+    //     // ค้นหาประเภทห้อง (roomtype)
+    //     bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy(
+    //       {
+    //         room_type_id: bookingde.roomTypeId,
+    //       },
+    //     );
+    //     if (!bookingsdetail.room.roomtype) {
+    //       throw new NotFoundException('Room type not found');
+    //     }
+
+
+    //     bookingsdetail.booking_de_id = book.booking_id;
+    //     return bookingsdetail;
+    //   }),
+    // );
+
+    // for (const bookingsdetail_ of bookingdetail) {
+    //   this.bookingsdetailRepository.save(bookingsdetail_);
+    //   booking.booking_total += bookingsdetail_.booking_de_total_price;
+    // }
+    // booking.booking_total += booking.booking_cash_pledge;
+    // // activity
+    // //- promotion
+    // await this.bookingsRepository.save(booking);
+    // return booking;
+
+    

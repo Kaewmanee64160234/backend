@@ -2,8 +2,7 @@ class CreateBookingDetailDto {
   booking_de_adult: string;
   booking_de_child: string;
   booking_de_total_price: number;
-  roomId: number;
-  roomTypeId: number;
+  roomId: string;
 }
 
 export class CreateBookingDto {
@@ -44,6 +43,8 @@ export class CreateBookingDto {
   customerId: number;
 
   employeeId: number;
+
+  promotionId: number;
 
   bookingdetail: CreateBookingDetailDto[];
 }
