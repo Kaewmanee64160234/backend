@@ -137,8 +137,16 @@ export class BookingService {
     return `This action returns all booking`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
+  //findOne booking
+  async findOne(id: number) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: ['customer', 'employee', 'promotion', 'activityPer'],
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
   }
 
   update(id: number, updateBookingDto: UpdateBookingDto) {
@@ -148,42 +156,17 @@ export class BookingService {
   remove(id: number) {
     return `This action removes a #${id} booking`;
   }
+
+  //create update status booking
+  async updateStatusBooking(updateBookingDto: UpdateBookingDto) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: updateBookingDto.booking_id },
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    booking.booking_status = updateBookingDto.booking_status;
+    await this.bookingsRepository.save(booking);
+    return booking;
+  }
 }
-
-// const bookingdetail: BookingDetail[] = await Promise.all(
-//   createBookingDto.bookingdetail.map(async (bookingde) => {
-//     const bookingsdetail = new BookingDetail();
-//     bookingsdetail.booking_de_total_price = bookingde.booking_de_total_price;
-
-//     // ค้นหาห้อง (room)
-//     bookingsdetail.room = await this.roomsRepository.findOneBy({
-//       room_id: bookingde.roomId,
-//     });
-//     if (!bookingsdetail.room) {
-//       throw new NotFoundException('Room not found');
-//     }
-
-//     // ค้นหาประเภทห้อง (roomtype)
-//     bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy(
-//       {
-//         room_type_id: bookingde.roomTypeId,
-//       },
-//     );
-//     if (!bookingsdetail.room.roomtype) {
-//       throw new NotFoundException('Room type not found');
-//     }
-
-//     bookingsdetail.booking_de_id = book.booking_id;
-//     return bookingsdetail;
-//   }),
-// );
-
-// for (const bookingsdetail_ of bookingdetail) {
-//   this.bookingsdetailRepository.save(bookingsdetail_);
-//   booking.booking_total += bookingsdetail_.booking_de_total_price;
-// }
-// booking.booking_total += booking.booking_cash_pledge;
-// // activity
-// //- promotion
-// await this.bookingsRepository.save(booking);
-// return booking;
