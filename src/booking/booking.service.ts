@@ -32,7 +32,7 @@ export class BookingService {
     private promotionsRepository: Repository<Promotion>,
     @InjectRepository(Activity)
     private activityRepository: Repository<Activity>,
-  ) { }
+  ) {}
 
   async create(createBookingDto: CreateBookingDto) {
     // สร้าง booking
@@ -62,7 +62,7 @@ export class BookingService {
     }
 
     const booking: Booking = new Booking();
-    //booking 
+    //booking
     booking.booking_cus_name = createBookingDto.booking_cus_name;
     booking.booking_cus_lastname = createBookingDto.booking_cus_lastname;
     booking.booking_cus_tel = createBookingDto.booking_cus_tel;
@@ -72,56 +72,53 @@ export class BookingService {
     booking.booking_cash_pledge = createBookingDto.booking_cash_pledge;
     booking.booking_payment_booking = createBookingDto.booking_payment_booking;
     booking.booking_status = createBookingDto.booking_status;
-//
-    booking.booking_checkin =createBookingDto.booking_checkin;
-    booking.booking_checkout =createBookingDto.booking_checkout;
-    booking.booking_payment_checkout = createBookingDto.booking_payment_checkout;
-    booking.booking_status_late  = createBookingDto.booking_status_late;
+    //
+    booking.booking_checkin = createBookingDto.booking_checkin;
+    booking.booking_checkout = createBookingDto.booking_checkout;
+    booking.booking_payment_checkout =
+      createBookingDto.booking_payment_checkout;
+    booking.booking_status_late = createBookingDto.booking_status_late;
 
     booking.customer = customer;
     booking.employee = employee;
     booking.promotion = promotion;
 
-//booking  activity 
-for (const act of createBookingDto.activity_booking){
-  const activity_ = await this.activityRepository.findOne({where:{act_id:act.act_rec_id}})
-  if(activity_!= null){
-    //push in booking
+    //booking  activity
+    for (const act of createBookingDto.activity_booking) {
+      const activity_ = await this.activityRepository.findOne({
+        where: { act_id: act.act_rec_id },
+      });
+      if (activity_ != null) {
+        //push in booking
 
-    const activity_detail = new Activityper();
-    // activity_detail.activity
-
-
-  }
-
-}
-
-
+        const activity_detail = new Activityper();
+        // activity_detail.activity
+      }
+    }
 
     // booking.booking_total = 0;
     booking.booking_total_discount = createBookingDto.booking_total_discount;
-    booking.booking_total = createBookingDto.booking_total,
+    // booking.booking_total = createBookingDto.booking_total,
 
     // const book = await this.bookingsRepository.save(booking);
 
-    for(const book of createBookingDto.bookingdetail){
-      const bookingDetail = new BookingDetail();
-      // bookingDetail.booking_de_adult = book.booking_de_adult;
-      // bookingDetail.booking_de_child = book.booking_de_child;
-      bookingDetail.room = await this.roomsRepository.findOneBy({
-        room_id: book.roomId,
-      });
-      // bookingDetail.booking_de_adult = createBookingDto.booking_de_adult;
-      
-      bookingDetail.booking = booking;
-      await this.bookingsdetailRepository.save(bookingDetail);
-    }
-    await this.bookingsRepository.save(booking);
-    return await this.bookingsRepository.findOne({
-      where: {booking_id: booking.booking_id},
-      relations: ['bookingDetail']
-    })
-  
+    // for(const book of createBookingDto.bookingdetail){
+    //   const bookingDetail = new BookingDetail();
+    //   // bookingDetail.booking_de_adult = book.booking_de_adult;
+    //   // bookingDetail.booking_de_child = book.booking_de_child;
+    //   bookingDetail.room = await this.roomsRepository.findOneBy({
+    //     room_id: book.roomId,
+    //   });
+    //   // bookingDetail.booking_de_adult = createBookingDto.booking_de_adult;
+
+    //   bookingDetail.booking = booking;
+    //   await this.bookingsdetailRepository.save(bookingDetail);
+    // }
+    // await this.bookingsRepository.save(booking);
+    // return await this.bookingsRepository.findOne({
+    //   where: {booking_id: booking.booking_id},
+    //   relations: ['bookingDetail']
+    // })
   }
 
   findAll() {
@@ -141,50 +138,40 @@ for (const act of createBookingDto.activity_booking){
   }
 }
 
+// const bookingdetail: BookingDetail[] = await Promise.all(
+//   createBookingDto.bookingdetail.map(async (bookingde) => {
+//     const bookingsdetail = new BookingDetail();
+//     bookingsdetail.booking_de_total_price = bookingde.booking_de_total_price;
 
+//     // ค้นหาห้อง (room)
+//     bookingsdetail.room = await this.roomsRepository.findOneBy({
+//       room_id: bookingde.roomId,
+//     });
+//     if (!bookingsdetail.room) {
+//       throw new NotFoundException('Room not found');
+//     }
 
+//     // ค้นหาประเภทห้อง (roomtype)
+//     bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy(
+//       {
+//         room_type_id: bookingde.roomTypeId,
+//       },
+//     );
+//     if (!bookingsdetail.room.roomtype) {
+//       throw new NotFoundException('Room type not found');
+//     }
 
+//     bookingsdetail.booking_de_id = book.booking_id;
+//     return bookingsdetail;
+//   }),
+// );
 
-
-
-    // const bookingdetail: BookingDetail[] = await Promise.all(
-    //   createBookingDto.bookingdetail.map(async (bookingde) => {
-    //     const bookingsdetail = new BookingDetail();
-    //     bookingsdetail.booking_de_total_price = bookingde.booking_de_total_price;
-
-    //     // ค้นหาห้อง (room)
-    //     bookingsdetail.room = await this.roomsRepository.findOneBy({
-    //       room_id: bookingde.roomId,
-    //     });        
-    //     if (!bookingsdetail.room) {
-    //       throw new NotFoundException('Room not found');
-    //     }
-
-
-    //     // ค้นหาประเภทห้อง (roomtype)
-    //     bookingsdetail.room.roomtype = await this.roomTypesRepository.findOneBy(
-    //       {
-    //         room_type_id: bookingde.roomTypeId,
-    //       },
-    //     );
-    //     if (!bookingsdetail.room.roomtype) {
-    //       throw new NotFoundException('Room type not found');
-    //     }
-
-
-    //     bookingsdetail.booking_de_id = book.booking_id;
-    //     return bookingsdetail;
-    //   }),
-    // );
-
-    // for (const bookingsdetail_ of bookingdetail) {
-    //   this.bookingsdetailRepository.save(bookingsdetail_);
-    //   booking.booking_total += bookingsdetail_.booking_de_total_price;
-    // }
-    // booking.booking_total += booking.booking_cash_pledge;
-    // // activity
-    // //- promotion
-    // await this.bookingsRepository.save(booking);
-    // return booking;
-
-    
+// for (const bookingsdetail_ of bookingdetail) {
+//   this.bookingsdetailRepository.save(bookingsdetail_);
+//   booking.booking_total += bookingsdetail_.booking_de_total_price;
+// }
+// booking.booking_total += booking.booking_cash_pledge;
+// // activity
+// //- promotion
+// await this.bookingsRepository.save(booking);
+// return booking;

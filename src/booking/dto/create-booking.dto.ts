@@ -1,4 +1,4 @@
-import { Activityper } from "src/activityper/entities/activityper.entity";
+import { Activityper } from 'src/activityper/entities/activityper.entity';
 
 class CreateBookingDetailDto {
   booking_de_adult: string;
@@ -49,8 +49,6 @@ export class CreateBookingDto {
   promotionId: number;
 
   bookingdetail: CreateBookingDetailDto[];
-  activity_booking:Activityper[]
-  
 
-
+  activity_booking: Activityper[];
 }
