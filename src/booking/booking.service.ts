@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Get, Injectable, NotFoundException, Param } from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -134,14 +134,16 @@ export class BookingService {
     }
   }
   findAll() {
-    return `This action returns all booking`;
+    return this.bookingsRepository.find({
+      relations: ['customer', 'employee', 'promotion'],
+    });
   }
 
   //findOne booking
   async findOne(id: number) {
     const booking = await this.bookingsRepository.findOne({
       where: { booking_id: id },
-      relations: ['customer', 'employee', 'promotion', 'activityPer'],
+      relations: ['customer', 'employee', 'promotion'],
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
@@ -149,24 +151,58 @@ export class BookingService {
     return booking;
   }
 
-  update(id: number, updateBookingDto: UpdateBookingDto) {
-    return `This action updates a #${id} booking`;
-  }
+  // update(id: number, updateBookingDto: UpdateBookingDto) {
+  //   return `This action updates a #${id} booking`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} booking`;
   }
 
   //create update status booking
-  async updateStatusBooking(updateBookingDto: UpdateBookingDto) {
+  async updateStatusBooking(id: number, updateBookingDto: UpdateBookingDto) {
     const booking = await this.bookingsRepository.findOne({
-      where: { booking_id: updateBookingDto.booking_id },
+      where: { booking_id: id },
+    });
+
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    // Update booking status and updateDate
+    booking.booking_status = updateBookingDto.booking_status;
+    booking.updateDate = new Date(); // Set updateDate to current date/time
+
+    await this.bookingsRepository.save(booking);
+
+    return booking;
+  }
+
+  async getBookingByStatus(bookingstatus: string) {
+    const booking = await this.bookingsRepository.find({
+      where: { booking_status: bookingstatus },
+      relations: ['customer', 'employee', 'promotion'],
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
     }
-    booking.booking_status = updateBookingDto.booking_status;
-    await this.bookingsRepository.save(booking);
+    return booking;
+  }
+
+  async getBookingByConfirm(bookingstatus: string) {
+    const booking = await this.bookingsRepository.find({
+      where: { booking_status: bookingstatus },
+      relations: ['customer', 'employee', 'promotion'],
+      order: {
+        updateDate: 'DESC',
+      },
+    });
+
+    if (!booking || booking.length === 0) {
+      console.error();
+      throw new NotFoundException('Booking not found');
+    }
+
     return booking;
   }
 }

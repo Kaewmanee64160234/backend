@@ -1,5 +1,4 @@
 import { CreateActivityperDto } from 'src/activityper/dto/create-activityper.dto';
-import { Activityper } from 'src/activityper/entities/activityper.entity';
 
 class CreateBookingDetailDto {
   booking_de_adult: string;

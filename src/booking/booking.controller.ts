@@ -32,7 +32,7 @@ export class BookingController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
-    return this.bookingService.update(+id, updateBookingDto);
+    return this.bookingService.updateStatusBooking(+id, updateBookingDto);
   }
 
   @Delete(':id')
@@ -41,8 +41,23 @@ export class BookingController {
   }
 
   //update status booking
-  @Patch('/confrim')
-  updateStatusBooking(@Body('status') updateBookingDto: UpdateBookingDto) {
-    return this.bookingService.updateStatusBooking(updateBookingDto);
+  // @Patch('/confrim')
+  // updateStatusconfrimBooking(@Body() updateBookingDto: UpdateBookingDto) {
+  //   return this.bookingService.getBookingByConfirm(updateBookingDto);
+  // }
+
+  @Get('/status/:bookingstatus')
+  findByStatusBooking(@Param('bookingstatus') bookingstatus: string) {
+    return this.bookingService.getBookingByStatus(bookingstatus);
   }
+
+  @Get('/status/:bookingstatus/time')
+  findByStatusBookingDesc(@Param('bookingstatus') bookingstatus: string) {
+    return this.bookingService.getBookingByConfirm(bookingstatus);
+  }
+
+  // @Get('/status/:bookingstatus')
+  // findByStatusBooking(@Param('bookingstatus') bookingstatus: string) {
+  //   return this.bookingService.getBookingByStatus(bookingstatus);
+  // }
 }

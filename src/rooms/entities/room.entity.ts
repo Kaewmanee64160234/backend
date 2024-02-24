@@ -5,12 +5,8 @@ import {
   Entity,
   PrimaryColumn,
   Column,
-  OneToOne,
-  JoinColumn,
   OneToMany,
   ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
 
