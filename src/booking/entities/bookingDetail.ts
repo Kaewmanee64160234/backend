@@ -23,11 +23,7 @@ export class BookingDetail {
   // @Column({ type: 'real' })
   // booking_de_total_price: number;
 
-  @Column({ default: 0, nullable: true })
-  booking_de_adult: number;
-
-  @Column({ default: 0, nullable: true })
-  booking_de_child: number;
+ 
 
   @CreateDateColumn()
   createDate: Date;

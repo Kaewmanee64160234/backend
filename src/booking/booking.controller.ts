@@ -40,24 +40,29 @@ export class BookingController {
     return this.bookingService.remove(+id);
   }
 
-  //update status booking
-  // @Patch('/confrim')
-  // updateStatusconfrimBooking(@Body() updateBookingDto: UpdateBookingDto) {
-  //   return this.bookingService.getBookingByConfirm(updateBookingDto);
-  // }
+  // update status booking
+  @Patch('/confrim')
+  updateStatusconfrimBooking(@Body() updateBookingDto: UpdateBookingDto) {
+    return this.bookingService.getBookingByConfirm(updateBookingDto);
+  }
 
   @Get('/status/:bookingstatus')
   findByStatusBooking(@Param('bookingstatus') bookingstatus: string) {
     return this.bookingService.getBookingByStatus(bookingstatus);
   }
 
-  @Get('/status/:bookingstatus/time')
-  findByStatusBookingDesc(@Param('bookingstatus') bookingstatus: string) {
-    return this.bookingService.getBookingByConfirm(bookingstatus);
+  // @Get('/status/:bookingstatus/time')
+  // findByStatusBookingDesc(@Param('bookingstatus') bookingstatus: string) {
+  //   return this.bookingService.getBookingByConfirm(bookingstatus);
+  // }
+
+  @Get('/customer/:bookingcus')
+  findByCustomer(@Param('bookingcus') bookingcus: number) {
+    return this.bookingService.getBookingByCustomer(bookingcus);
   }
 
-  // @Get('/status/:bookingstatus')
-  // findByStatusBooking(@Param('bookingstatus') bookingstatus: string) {
-  //   return this.bookingService.getBookingByStatus(bookingstatus);
-  // }
+  @Get('/customer/:bookingcus/time')
+  findByCustomerLastcreated(@Param('bookingcus') bookingcus: number) {
+    return this.bookingService.getBookingByCustomerIdLastcreated(bookingcus);
+  }
 }

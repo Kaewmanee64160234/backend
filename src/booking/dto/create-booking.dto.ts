@@ -42,6 +42,10 @@ export class CreateBookingDto {
 
   booking_status_late?: string;
 
+  booking_adult: number;
+
+  booking_child: number;
+
   customerId?: number;
 
   employeeId?: number;

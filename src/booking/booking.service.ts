@@ -50,6 +50,9 @@ export class BookingService {
       booking.booking_checkout = null;
       booking.booking_payment_checkout = null;
       booking.booking_status_late = null;
+      booking.booking_adult = createBookingDto.booking_adult;
+      booking.booking_child = createBookingDto.booking_child;
+
 
       booking.booking_total = 0;
       for (const book of createBookingDto.bookingdetail) {
@@ -189,9 +192,9 @@ export class BookingService {
     return booking;
   }
 
-  async getBookingByConfirm(bookingstatus: string) {
+  async getBookingByConfirm(updateBookingDto : UpdateBookingDto) {
     const booking = await this.bookingsRepository.find({
-      where: { booking_status: bookingstatus },
+      where: { booking_id: updateBookingDto.booking_id },
       relations: ['customer', 'employee', 'promotion'],
       order: {
         updateDate: 'DESC',
@@ -203,6 +206,48 @@ export class BookingService {
       throw new NotFoundException('Booking not found');
     }
 
+    return booking;
+  }
+
+  async getBookingByConfirmTime(updateBookingDto : UpdateBookingDto) {
+    const booking = await this.bookingsRepository.find({
+      where: { booking_id: updateBookingDto.booking_id },
+      relations: ['customer', 'employee', 'promotion'],
+      order: {
+        updateDate: 'DESC',
+      },
+    });
+
+    if (!booking || booking.length === 0) {
+      console.error();
+      throw new NotFoundException('Booking not found');
+    }
+
+    return booking;
+  }
+
+  async getBookingByCustomer(bookingcus: number) {
+    const booking = await this.bookingsRepository.find({
+      where: { customer : {cus_id : bookingcus} },
+      relations: ['customer', 'employee', 'promotion'],
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
+  }
+
+  async getBookingByCustomerIdLastcreated(bookingcus: number) {
+    const booking = await this.bookingsRepository.find({
+      where: { customer : {cus_id : bookingcus} },
+      relations: ['customer', 'employee', 'promotion'],
+      order: {
+        updateDate: 'DESC',
+      },
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
     return booking;
   }
 }
