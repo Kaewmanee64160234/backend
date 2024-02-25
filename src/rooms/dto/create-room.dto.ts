@@ -7,5 +7,5 @@ export class CreateRoomDto {
 
   room_status: string;
 
-  rooom_roomtype: Roomtype[];
+  rooom_roomtype_id: number;
 }

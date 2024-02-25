@@ -15,12 +15,20 @@ export class RoomsService {
     private roomstypeRepository: Repository<Roomtype>,
   ) {}
 
-  create(createRoomtypeDto: CreateRoomDto) {
-    const room = this.roomsRepository.save(createRoomtypeDto);
-    if (!room) {
+  async create(createRoomtypeDto: CreateRoomDto) {
+    const typeRoom = await this.roomstypeRepository.findOne({
+      where: { room_type_id: createRoomtypeDto.rooom_roomtype_id },
+    });
+    const room = new Room();
+    room.room_id = createRoomtypeDto.room_id;
+    room.room_img_path = createRoomtypeDto.room_img_path;
+    room.room_status = 'ready';
+    room.roomtype = typeRoom;
+    const room_ = this.roomsRepository.save(room);
+    if (!room_) {
       throw new NotFoundException();
     }
-    return room;
+    return room_;
   }
 
   findAll() {

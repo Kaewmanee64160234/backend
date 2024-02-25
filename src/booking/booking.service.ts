@@ -55,6 +55,7 @@ export class BookingService {
 
       booking.booking_total = 0;
       for (const book of createBookingDto.bookingdetail) {
+        console.log(book);
         const room = await this.roomsRepository.findOne({
           relations: ['roomtype'],
           where: { room_id: book.roomId },
@@ -137,7 +138,14 @@ export class BookingService {
   }
   findAll() {
     return this.bookingsRepository.find({
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+      ],
     });
   }
 
@@ -145,7 +153,14 @@ export class BookingService {
   async findOne(id: number) {
     const booking = await this.bookingsRepository.findOne({
       where: { booking_id: id },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+      ],
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');

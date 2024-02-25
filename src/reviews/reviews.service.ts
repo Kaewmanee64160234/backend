@@ -22,7 +22,7 @@ export class ReviewsService {
 
   findAll() {
     return this.reviewsRepository.find({
-      relations: ['room', 'receiptdetail'],
+      relations: ['room', 'bookingDetail.booking.customer'],
     });
   }
 

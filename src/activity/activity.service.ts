@@ -21,7 +21,7 @@ export class ActivityService {
   }
 
   findAll() {
-    return this.activitysRepository.find({ relations: ['receiptdetail'] });
+    return this.activitysRepository.find();
   }
 
   async findOne(id: number) {
