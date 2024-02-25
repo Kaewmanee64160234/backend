@@ -56,13 +56,13 @@ export class BookingController {
   //   return this.bookingService.getBookingByConfirm(bookingstatus);
   // }
 
-  @Get('/customer/:bookingcus')
-  findByCustomer(@Param('bookingcus') bookingcus: number) {
-    return this.bookingService.getBookingByCustomer(bookingcus);
+  @Get('/customer/:id')
+  findByCustomer(@Param('id') bookingcus: number) {
+    return this.bookingService.getBookingByCustommerId(bookingcus);
   }
 
-  @Get('/customer/:bookingcus/time')
-  findByCustomerLastcreated(@Param('bookingcus') bookingcus: number) {
+  @Get('/customer/:id/lasted')
+  findByCustomerLastcreated(@Param('id') bookingcus: number) {
     return this.bookingService.getBookingByCustomerIdLastcreated(bookingcus);
   }
 }

@@ -240,7 +240,7 @@ export class BookingService {
     return booking;
   }
 
-  async getBookingByCustomer(bookingcus: number) {
+  async getBookingByCustommerId(bookingcus: number) {
     const booking = await this.bookingsRepository.find({
       where: { customer: { cus_id: bookingcus } },
       relations: ['customer', 'employee', 'promotion'],
@@ -252,7 +252,7 @@ export class BookingService {
   }
 
   async getBookingByCustomerIdLastcreated(bookingcus: number) {
-    const booking = await this.bookingsRepository.find({
+    const booking = await this.bookingsRepository.findOne({
       where: { customer: { cus_id: bookingcus } },
       relations: ['customer', 'employee', 'promotion'],
       order: {
