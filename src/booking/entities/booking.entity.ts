@@ -51,7 +51,11 @@ export class Booking {
     nullable: true,
   })
   booking_checkout: Date;
+  @Column({ default: 0, nullable: true })
+  booking_de_adult: number;
 
+  @Column({ default: 0, nullable: true })
+  booking_de_child: number;
   @Column({ type: 'real', nullable: true })
   booking_total: number;
 

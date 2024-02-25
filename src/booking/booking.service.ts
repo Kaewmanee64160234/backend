@@ -53,6 +53,7 @@ export class BookingService {
 
       booking.booking_total = 0;
       for (const book of createBookingDto.bookingdetail) {
+        console.log(book);
         const room = await this.roomsRepository.findOne({
           relations: ['roomtype'],
           where: { room_id: book.roomId },
