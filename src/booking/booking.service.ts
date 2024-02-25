@@ -145,6 +145,8 @@ export class BookingService {
         'bookingDetail',
         'activityPer',
         'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
       ],
     });
   }
@@ -160,6 +162,8 @@ export class BookingService {
         'bookingDetail',
         'activityPer',
         'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
       ],
     });
     if (!booking) {
