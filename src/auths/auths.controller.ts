@@ -16,10 +16,10 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 export class AuthsController {
   constructor(private readonly authsService: AuthsService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authsService.create(createAuthDto);
-  }
+  // @Post()
+  // create(@Body() createAuthDto: CreateAuthDto) {
+  //   return this.authsService.create(createAuthDto);
+  // }
 
   @Get()
   findAll() {
@@ -31,10 +31,10 @@ export class AuthsController {
     return this.authsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authsService.update(+id, updateAuthDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
+  //   return this.authsService.update(+id, updateAuthDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

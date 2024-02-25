@@ -43,8 +43,8 @@ export class RoomtypesController {
     return this.roomtypesService.remove(+id);
   }
 
-  @Get('/types/:room_type')
-  findByStatusBooking(@Param('room_type') roomtypes: string) {
+  @Get('/room_type/:type')
+  findByTypeRoom(@Param('type') roomtypes: string) {
     return this.roomtypesService.getTypeRoom(roomtypes);
   }
 }

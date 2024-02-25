@@ -46,9 +46,9 @@ export class RoomsService {
     return room;
   }
 
-  async getRoomByType(roomstatus: string, roomTypeName: string) {
+  async getRoomByTypeAndStatus(roomstatus: string, roomType: string) {
     const room = await this.roomsRepository.find({
-      where: { room_status: roomstatus },
+      where: { room_status: roomstatus, roomtype: { room_type: roomType } },
       relations: ['roomtype'],
       join: {
         alias: 'room',

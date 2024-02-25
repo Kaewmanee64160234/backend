@@ -30,12 +30,12 @@ export class RoomsController {
     return this.roomsService.findOne(id);
   }
 
-  @Get('/status/:roomstatus/room_type_name/:type')
+  @Get('/room_status/:status/room_type/:type')
   findRoomTypeByStatusAndType(
-    @Param('roomstatus') roomstatus: string,
-    @Param('type') roomTypeName: string,
+    @Param('status') roomstatus: string,
+    @Param('type') roomType: string,
   ) {
-    return this.roomsService.getRoomByType(roomstatus, roomTypeName);
+    return this.roomsService.getRoomByTypeAndStatus(roomstatus, roomType);
   }
 
   @Patch(':id')
