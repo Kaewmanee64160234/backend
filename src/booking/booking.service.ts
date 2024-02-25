@@ -138,7 +138,14 @@ export class BookingService {
   }
   findAll() {
     return this.bookingsRepository.find({
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+      ],
     });
   }
 
@@ -146,7 +153,14 @@ export class BookingService {
   async findOne(id: number) {
     const booking = await this.bookingsRepository.findOne({
       where: { booking_id: id },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+      ],
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
