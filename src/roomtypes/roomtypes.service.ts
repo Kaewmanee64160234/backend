@@ -57,7 +57,7 @@ export class RoomtypesService {
 
   async getTypeRoom(roomtype_: string) {
     const roomtype = await this.roomtypesRepository.find({
-      where: { room_type : roomtype_ }
+      where: { room_type: roomtype_ },
     });
     if (!roomtype) {
       throw new NotFoundException('RoomType not found');

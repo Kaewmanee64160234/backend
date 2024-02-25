@@ -53,7 +53,6 @@ export class BookingService {
       booking.booking_adult = createBookingDto.booking_adult;
       booking.booking_child = createBookingDto.booking_child;
 
-
       booking.booking_total = 0;
       for (const book of createBookingDto.bookingdetail) {
         console.log(book);
@@ -193,7 +192,7 @@ export class BookingService {
     return booking;
   }
 
-  async getBookingByConfirm(updateBookingDto : UpdateBookingDto) {
+  async getBookingByConfirm(updateBookingDto: UpdateBookingDto) {
     const booking = await this.bookingsRepository.find({
       where: { booking_id: updateBookingDto.booking_id },
       relations: ['customer', 'employee', 'promotion'],
@@ -210,7 +209,7 @@ export class BookingService {
     return booking;
   }
 
-  async getBookingByConfirmTime(updateBookingDto : UpdateBookingDto) {
+  async getBookingByConfirmTime(updateBookingDto: UpdateBookingDto) {
     const booking = await this.bookingsRepository.find({
       where: { booking_id: updateBookingDto.booking_id },
       relations: ['customer', 'employee', 'promotion'],
@@ -229,7 +228,7 @@ export class BookingService {
 
   async getBookingByCustomer(bookingcus: number) {
     const booking = await this.bookingsRepository.find({
-      where: { customer : {cus_id : bookingcus} },
+      where: { customer: { cus_id: bookingcus } },
       relations: ['customer', 'employee', 'promotion'],
     });
     if (!booking) {
@@ -240,7 +239,7 @@ export class BookingService {
 
   async getBookingByCustomerIdLastcreated(bookingcus: number) {
     const booking = await this.bookingsRepository.find({
-      where: { customer : {cus_id : bookingcus} },
+      where: { customer: { cus_id: bookingcus } },
       relations: ['customer', 'employee', 'promotion'],
       order: {
         updateDate: 'DESC',

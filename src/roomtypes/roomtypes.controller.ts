@@ -47,6 +47,4 @@ export class RoomtypesController {
   findByStatusBooking(@Param('room_type') roomtypes: string) {
     return this.roomtypesService.getTypeRoom(roomtypes);
   }
-
-
 }
