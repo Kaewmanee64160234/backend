@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, Repository, getRepository } from 'typeorm';
 import { Room } from './entities/room.entity';
 import { Roomtype } from 'src/roomtypes/entities/roomtype.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class RoomsService {
@@ -64,21 +64,6 @@ export class RoomsService {
 
     return room;
   }
-
-  // async getRoomByTypeId(roomstatus: string, roomTypeId: number) {
-  //   const room = await getRepository(Room)
-  //     .createQueryBuilder('room')
-  //     .leftJoinAndSelect('room.roomtype', 'roomtype')
-  //     .where('room.room_status = :roomstatus', { roomstatus })
-  //     .andWhere('roomtype.room_type_id = :roomTypeId', { roomTypeId })
-  //     .getOne();
-
-  //   if (!room) {
-  //     throw new NotFoundException('Room not found');
-  //   }
-
-  //   return room;
-  // }
 
   async update(id: string, updateRoomDto: UpdateRoomDto) {
     const room = await this.roomsRepository.findOneBy({ room_id: id });

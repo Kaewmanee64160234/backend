@@ -54,4 +54,14 @@ export class RoomtypesService {
     }
     return this.roomtypesRepository.softRemove(roomtype);
   }
+
+  async getTypeRoom(roomtype_: string) {
+    const roomtype = await this.roomtypesRepository.find({
+      where: { room_type : roomtype_ }
+    });
+    if (!roomtype) {
+      throw new NotFoundException('RoomType not found');
+    }
+    return roomtype;
+  }
 }

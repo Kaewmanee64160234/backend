@@ -6,9 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { Employee } from 'src/employees/entities/employee.entity';
 import { Customer } from 'src/customers/entities/customer.entity';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 @Injectable()
 export class AuthsService {
   constructor(

@@ -38,14 +38,6 @@ export class RoomsController {
     return this.roomsService.getRoomByType(roomstatus, roomTypeName);
   }
 
-  // @Get('/status/:roomstatus/room_type_id/:type')
-  // findRoomTypeByStatusAndTypeID(
-  //   @Param('roomstatus') roomstatus: string,
-  //   @Param('type') roomTypeId: number,
-  // ) {
-  //   return this.roomsService.getRoomByType(roomstatus, roomTypeId);
-  // }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
     return this.roomsService.update(id, updateRoomDto);
