@@ -1,7 +1,6 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
   OneToMany,
   ManyToOne,
   CreateDateColumn,
@@ -22,8 +21,6 @@ export class BookingDetail {
 
   // @Column({ type: 'real' })
   // booking_de_total_price: number;
-
- 
 
   @CreateDateColumn()
   createDate: Date;

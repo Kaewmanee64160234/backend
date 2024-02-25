@@ -38,7 +38,8 @@ export class RoomsService {
     return room;
   }
 
-  async getRoomByType(roomstatus: string, roomTypeName: string) {
+  async getRoomByType(roomstatus: string) {
+    // , roomTypeName: string
     const room = await this.roomsRepository.find({
       where: { room_status: roomstatus },
       relations: ['roomtype'],
