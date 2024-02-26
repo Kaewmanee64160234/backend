@@ -192,7 +192,7 @@ export class BookingService {
 
     // Update booking status and updateDate
     booking.booking_status = updateBookingDto.booking_status;
-    booking.updateDate = new Date(); // Set updateDate to current date/time
+    booking.updateDate = new Date();
 
     await this.bookingsRepository.save(booking);
 
@@ -232,13 +232,13 @@ export class BookingService {
         'bookingDetail.room',
         'bookingDetail.room.roomtype',
       ],
+
       order: {
         updateDate: 'DESC',
       },
     });
 
-    if (!booking || booking.length === 0) {
-      console.error();
+    if (!booking) {
       throw new NotFoundException('Booking not found');
     }
 
