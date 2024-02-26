@@ -352,6 +352,27 @@ export class BookingService {
   //create fucntion getBookingbyStatusAndOrderTime
   async getBookingByStatusAndOrderTime(bookingstatus: string, order: string) {
     if (order.toLowerCase() === 'desc') {
+      if (bookingstatus.toLowerCase() === 'all') {
+        const booking = await this.bookingsRepository.find({
+          relations: [
+            'customer',
+            'employee',
+            'promotion',
+            'bookingDetail',
+            'activityPer',
+            'activityPer.activity',
+            'bookingDetail.room',
+            'bookingDetail.room.roomtype',
+          ],
+          order: {
+            booking_create_date: 'DESC',
+          },
+        });
+        if (!booking) {
+          throw new NotFoundException('Booking not found');
+        }
+        return booking;
+      }
       const booking = await this.bookingsRepository.find({
         where: { booking_status: bookingstatus },
         relations: [
@@ -390,6 +411,29 @@ export class BookingService {
         throw new NotFoundException('Booking not found');
       }
       return booking;
+    } else if (order.toLowerCase() === 'asc') {
+      if (bookingstatus.toLowerCase() === 'waiting') {
+        const booking = await this.bookingsRepository.find({
+          where: { booking_status: bookingstatus },
+          relations: [
+            'customer',
+            'employee',
+            'promotion',
+            'bookingDetail',
+            'activityPer',
+            'activityPer.activity',
+            'bookingDetail.room',
+            'bookingDetail.room.roomtype',
+          ],
+          order: {
+            booking_create_date: 'ASC',
+          },
+        });
+        if (!booking) {
+          throw new NotFoundException('Booking not found');
+        }
+        return booking;
+      }
     } else {
       const booking = await this.bookingsRepository.find({
         relations: [
