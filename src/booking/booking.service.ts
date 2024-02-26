@@ -196,7 +196,19 @@ export class BookingService {
 
     await this.bookingsRepository.save(booking);
 
-    return booking;
+    return this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
   }
 
   async getBookingByStatus(bookingstatus: string) {
@@ -337,9 +349,26 @@ export class BookingService {
         throw new NotFoundException('Booking not found');
       }
       return booking;
-    } else {
+    } else if (order.toLowerCase() === 'all') {
       const booking = await this.bookingsRepository.find({
         where: { booking_status: bookingstatus },
+        relations: [
+          'customer',
+          'employee',
+          'promotion',
+          'bookingDetail',
+          'activityPer',
+          'activityPer.activity',
+          'bookingDetail.room',
+          'bookingDetail.room.roomtype',
+        ],
+      });
+      if (!booking) {
+        throw new NotFoundException('Booking not found');
+      }
+      return booking;
+    } else {
+      const booking = await this.bookingsRepository.find({
         relations: [
           'customer',
           'employee',
@@ -358,6 +387,49 @@ export class BookingService {
         throw new NotFoundException('Booking not found');
       }
       return booking;
+    }
+  }
+
+  //create function search booking by namecustomer or id
+  async getBookingByCustomerNameOrId(updateBookingDto: UpdateBookingDto) {
+    console.log(updateBookingDto);
+    // Validate input to ensure it's not undefined, null, or any unexpected value
+    if (
+      !updateBookingDto.booking_cus_name ||
+      updateBookingDto.booking_cus_name.trim() === ''
+    ) {
+      throw new Error('Invalid customer name provided.');
+    }
+
+    // Proceed with the query if the input is valid
+    try {
+      const booking = await this.bookingsRepository.find({
+        where: [
+          { booking_cus_name: updateBookingDto.booking_cus_name },
+          { booking_cus_lastname: updateBookingDto.booking_cus_name },
+          { customer: { cus_name: updateBookingDto.booking_cus_name } },
+        ],
+        relations: [
+          'customer',
+          'employee',
+          'promotion',
+          'bookingDetail',
+          'activityPer',
+          'activityPer.activity',
+          'bookingDetail.room',
+          'bookingDetail.room.roomtype',
+        ],
+      });
+
+      if (!booking || booking.length === 0) {
+        throw new NotFoundException('Booking not found');
+      }
+
+      return booking;
+    } catch (error) {
+      // Handle or log the error as needed
+      console.error('Error fetching booking by customer name or ID:', error);
+      throw error; // Or handle more gracefully as needed
     }
   }
 }

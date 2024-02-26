@@ -54,6 +54,11 @@ export class BookingController {
     return this.bookingService.getBookingByStatus(bookingstatus);
   }
 
+  @Post('/find')
+  getBookingByCustomerNameOrId(@Body() updateBookingDto: UpdateBookingDto) {
+    return this.bookingService.getBookingByCustomerNameOrId(updateBookingDto);
+  }
+
   // @Get('/bookingstatus/:status/lasted')
   // findByStatusBookingDesc(@Param('status') bookingstatus: string) {
   //   return this.bookingService.getBookingByCustomerIdLastcreated(bookingstatus);
