@@ -10,6 +10,7 @@ import { Room } from 'src/rooms/entities/room.entity';
 import { Roomtype } from 'src/roomtypes/entities/roomtype.entity';
 import { Promotion } from 'src/promotions/entities/promotion.entity';
 import { Activity } from 'src/activity/entities/activity.entity';
+import { Activityper } from 'src/activityper/entities/activityper.entity';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Activity } from 'src/activity/entities/activity.entity';
       Roomtype,
       Promotion,
       Activity,
+      Activityper,
     ]),
   ],
   controllers: [BookingController],

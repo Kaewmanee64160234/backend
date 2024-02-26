@@ -32,6 +32,8 @@ export class BookingService {
     private promotionsRepository: Repository<Promotion>,
     @InjectRepository(Activity)
     private activityRepository: Repository<Activity>,
+    @InjectRepository(Activityper)
+    private activityPerRepository: Repository<Activityper>,
   ) {}
 
   async create(createBookingDto: CreateBookingDto) {
@@ -54,18 +56,7 @@ export class BookingService {
       booking.booking_child = createBookingDto.booking_child;
 
       booking.booking_total = 0;
-      for (const book of createBookingDto.bookingdetail) {
-        console.log(book);
-        const room = await this.roomsRepository.findOne({
-          relations: ['roomtype'],
-          where: { room_id: book.roomId },
-        });
-        if (room) {
-          booking.booking_total += room.roomtype.room_type_price;
-        } else {
-          throw new NotFoundException('Room not found');
-        }
-      }
+
       // Activity
       const activitypers = new Array<Activityper>();
       if (
@@ -87,7 +78,11 @@ export class BookingService {
             activity_.act_price * activity.act_rec_qty;
 
           booking.booking_total += activityper.act_rec_total_price;
-          activitypers.push(activityper);
+          const activityper_created = await this.activityPerRepository.save(
+            activityper,
+          );
+
+          activitypers.push(activityper_created);
         }
       }
       // ค้นหาพนักงาน
@@ -130,7 +125,35 @@ export class BookingService {
       booking.booking_total -= createBookingDto.booking_total_discount; // ลดราคา
       // save
       const booking_ = await this.bookingsRepository.save(booking);
-      return booking_;
+      for (const book of createBookingDto.bookingdetail) {
+        console.log(book);
+        const room = await this.roomsRepository.findOne({
+          relations: ['roomtype'],
+          where: { room_id: book.roomId },
+        });
+        if (room) {
+          booking.booking_total += room.roomtype.room_type_price;
+          const bookingDetail = new BookingDetail();
+          bookingDetail.room = room;
+          bookingDetail.booking = booking_;
+          await this.bookingsdetailRepository.save(bookingDetail);
+        } else {
+          throw new NotFoundException('Room not found');
+        }
+      }
+      return this.bookingsRepository.findOne({
+        where: { booking_id: booking_.booking_id },
+        relations: [
+          'customer',
+          'employee',
+          'promotion',
+          'bookingDetail',
+          'activityPer',
+          'activityPer.activity',
+          'bookingDetail.room',
+          'bookingDetail.room.roomtype',
+        ],
+      });
     } catch (error) {
       console.log(error);
       throw new NotFoundException('Booking not found');
