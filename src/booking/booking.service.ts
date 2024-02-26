@@ -206,37 +206,18 @@ export class BookingService {
     return booking;
   }
 
-  async getBookingByConfirm(updateBookingDto: UpdateBookingDto) {
-    const booking = await this.bookingsRepository.find({
-      where: { booking_id: updateBookingDto.booking_id },
+  async getBookingByConfirmLastcreated(bookingstatus: string) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_status: bookingstatus },
       relations: ['customer', 'employee', 'promotion'],
       order: {
         updateDate: 'DESC',
       },
     });
 
-    if (!booking || booking.length === 0) {
-      console.error();
+    if (!booking) {
       throw new NotFoundException('Booking not found');
     }
-
-    return booking;
-  }
-
-  async getBookingByConfirmTime(updateBookingDto: UpdateBookingDto) {
-    const booking = await this.bookingsRepository.find({
-      where: { booking_id: updateBookingDto.booking_id },
-      relations: ['customer', 'employee', 'promotion'],
-      order: {
-        updateDate: 'DESC',
-      },
-    });
-
-    if (!booking || booking.length === 0) {
-      console.error();
-      throw new NotFoundException('Booking not found');
-    }
-
     return booking;
   }
 
