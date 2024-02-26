@@ -65,4 +65,15 @@ export class BookingController {
   findByCustomerLastcreated(@Param('id') bookingcus: number) {
     return this.bookingService.getBookingByCustomerIdLastcreated(bookingcus);
   }
+
+  @Get('/time/:time/status/:status')
+  getBookingByStatusAndOrderTime(
+    @Param('time') bookingtime: string,
+    @Param('status') bookingstatus: string,
+  ) {
+    return this.bookingService.getBookingByStatusAndOrderTime(
+      bookingstatus,
+      bookingtime,
+    );
+  }
 }

@@ -56,7 +56,7 @@ export class RoomtypesService {
   }
 
   async getTypeRoom(roomtype_: string) {
-    const roomtype = await this.roomtypesRepository.find({
+    const roomtype = await this.roomtypesRepository.findOne({
       where: { room_type: roomtype_ },
     });
     if (!roomtype) {

@@ -202,7 +202,16 @@ export class BookingService {
   async getBookingByStatus(bookingstatus: string) {
     const booking = await this.bookingsRepository.find({
       where: { booking_status: bookingstatus },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
@@ -213,7 +222,16 @@ export class BookingService {
   async getBookingByConfirm(updateBookingDto: UpdateBookingDto) {
     const booking = await this.bookingsRepository.find({
       where: { booking_id: updateBookingDto.booking_id },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
       order: {
         updateDate: 'DESC',
       },
@@ -230,7 +248,16 @@ export class BookingService {
   async getBookingByConfirmTime(updateBookingDto: UpdateBookingDto) {
     const booking = await this.bookingsRepository.find({
       where: { booking_id: updateBookingDto.booking_id },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
       order: {
         updateDate: 'DESC',
       },
@@ -247,7 +274,16 @@ export class BookingService {
   async getBookingByCustommerId(bookingcus: number) {
     const booking = await this.bookingsRepository.find({
       where: { customer: { cus_id: bookingcus } },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
@@ -258,14 +294,70 @@ export class BookingService {
   async getBookingByCustomerIdLastcreated(bookingcus: number) {
     const booking = await this.bookingsRepository.findOne({
       where: { customer: { cus_id: bookingcus } },
-      relations: ['customer', 'employee', 'promotion'],
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
       order: {
-        updateDate: 'DESC',
+        booking_create_date: 'DESC',
       },
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
     }
     return booking;
+  }
+
+  //create fucntion getBookingbyStatusAndOrderTime
+  async getBookingByStatusAndOrderTime(bookingstatus: string, order: string) {
+    if (order.toLowerCase() === 'desc') {
+      const booking = await this.bookingsRepository.find({
+        where: { booking_status: bookingstatus },
+        relations: [
+          'customer',
+          'employee',
+          'promotion',
+          'bookingDetail',
+          'activityPer',
+          'activityPer.activity',
+          'bookingDetail.room',
+          'bookingDetail.room.roomtype',
+        ],
+        order: {
+          booking_create_date: 'DESC',
+        },
+      });
+      if (!booking) {
+        throw new NotFoundException('Booking not found');
+      }
+      return booking;
+    } else {
+      const booking = await this.bookingsRepository.find({
+        where: { booking_status: bookingstatus },
+        relations: [
+          'customer',
+          'employee',
+          'promotion',
+          'bookingDetail',
+          'activityPer',
+          'activityPer.activity',
+          'bookingDetail.room',
+          'bookingDetail.room.roomtype',
+        ],
+        order: {
+          booking_create_date: 'ASC',
+        },
+      });
+      if (!booking) {
+        throw new NotFoundException('Booking not found');
+      }
+      return booking;
+    }
   }
 }
