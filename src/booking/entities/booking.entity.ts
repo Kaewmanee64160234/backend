@@ -50,10 +50,10 @@ export class Booking {
   })
   booking_checkout: Date;
   @Column({ default: 0, nullable: true })
-  booking_de_adult: number;
+  booking_adult: number;
 
   @Column({ default: 0, nullable: true })
-  booking_de_child: number;
+  booking_child: number;
   @Column({ type: 'real', nullable: true })
   booking_total: number;
 
@@ -74,12 +74,6 @@ export class Booking {
 
   @Column({ default: 'Not Comfrim', type: 'text', nullable: true })
   booking_status_late: string;
-
-  @Column({ default: 0, nullable: true })
-  booking_adult: number;
-
-  @Column({ default: 0, nullable: true })
-  booking_child: number;
 
   @UpdateDateColumn()
   updateDate: Date;
