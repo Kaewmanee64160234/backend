@@ -124,23 +124,25 @@ export class BookingService {
       booking.booking_total_discount = createBookingDto.booking_total_discount;
       booking.booking_total -= createBookingDto.booking_total_discount; // ลดราคา
       // save
-      const booking_ = await this.bookingsRepository.save(booking);
       for (const book of createBookingDto.bookingdetail) {
         console.log(book);
         const room = await this.roomsRepository.findOne({
           relations: ['roomtype'],
           where: { room_id: book.roomId },
         });
+        console.log(room);
         if (room) {
           booking.booking_total += room.roomtype.room_type_price;
           const bookingDetail = new BookingDetail();
           bookingDetail.room = room;
-          bookingDetail.booking = booking_;
+          bookingDetail.booking = booking;
           await this.bookingsdetailRepository.save(bookingDetail);
         } else {
           throw new NotFoundException('Room not found');
         }
       }
+      const booking_ = await this.bookingsRepository.save(booking);
+
       return this.bookingsRepository.findOne({
         where: { booking_id: booking_.booking_id },
         relations: [
