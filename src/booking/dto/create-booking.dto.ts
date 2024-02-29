@@ -24,9 +24,9 @@ export class CreateBookingDto {
 
   booking_cus_addr_des: string;
 
-  booking_checkin?: Date;
+  booking_checkin: Date;
 
-  booking_checkout?: Date;
+  booking_checkout: Date;
 
   booking_total: number;
 

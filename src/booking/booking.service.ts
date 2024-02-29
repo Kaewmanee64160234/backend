@@ -48,8 +48,8 @@ export class BookingService {
       booking.booking_payment_booking =
         createBookingDto.booking_payment_booking;
       booking.booking_status = 'waiting';
-      booking.booking_checkin = null;
-      booking.booking_checkout = null;
+      booking.booking_checkin = new Date(createBookingDto.booking_checkin);
+      booking.booking_checkout = new Date(createBookingDto.booking_checkout);
       booking.booking_payment_checkout = null;
       booking.booking_status_late = null;
       booking.booking_adult = createBookingDto.booking_adult;
@@ -395,14 +395,16 @@ export class BookingService {
       booking.booking_payment_booking =
         createBookingDto.booking_payment_booking;
       booking.booking_status = 'waiting';
-      booking.booking_checkin = null;
-      booking.booking_checkout = null;
+      booking.booking_checkin = new Date(createBookingDto.booking_checkin);
+      booking.booking_checkout = new Date(createBookingDto.booking_checkout);
       booking.booking_payment_checkout = null;
       booking.booking_status_late = null;
       booking.booking_adult = createBookingDto.booking_adult;
       booking.booking_child = createBookingDto.booking_child;
 
       booking.booking_total = 0;
+      console.log(booking.booking_checkin);
+      console.log(booking.booking_checkout);
 
       // Activity
       const activitypers = new Array<Activityper>();

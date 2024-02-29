@@ -40,14 +40,10 @@ export class Booking {
   @Column({ type: 'text' })
   booking_cus_addr_des: string;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', nullable: true })
+  @Column({})
   booking_checkin: Date;
 
-  @Column({
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-    nullable: true,
-  })
+  @Column({})
   booking_checkout: Date;
   @Column({ default: 0, nullable: true })
   booking_adult: number;

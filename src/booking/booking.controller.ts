@@ -15,12 +15,12 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
-  @Post('employee')
+  @Post()
   create(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingService.create(createBookingDto);
   }
 
-  @Post()
+  @Post('employee')
   createByEmployee(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingService.createBookingByEmployee(createBookingDto);
   }

@@ -15,9 +15,6 @@ export class AuthsService {
     @InjectRepository(Customer)
     private customersRepository: Repository<Customer>,
   ) {}
-  // create(createAuthDto: CreateAuthDto) {
-  //   return 'This action adds a new auth';
-  // }
 
   findAll() {
     return `This action returns all auths`;
@@ -84,7 +81,7 @@ export class AuthsService {
       // Fetch and return the user with customer information
       return await this.usersRepository.findOne({
         where: { user_login: user.user_login },
-        relations: ['customer'], // Make sure 'customer' is the correct relation name
+        relations: ['customer', 'employee'], // Make sure 'customer' is the correct relation name
       });
     } catch (error) {
       console.error(error); // More specific error logging
@@ -95,7 +92,7 @@ export class AuthsService {
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.usersRepository.findOne({
       where: { user_login: email },
-      relations: ['customer'],
+      relations: ['customer', 'employee'],
     });
     if (user && (await this.comparePasswords(password, user.user_password))) {
       return user;
