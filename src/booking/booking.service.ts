@@ -204,7 +204,12 @@ export class BookingService {
   // }
 
   remove(id: number) {
-    return `This action removes a #${id} booking`;
+    try {
+      this.bookingsRepository.delete(id);
+      return { message: 'Delete success' };
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //create update status booking
@@ -351,6 +356,158 @@ export class BookingService {
       throw new NotFoundException('Booking not found');
     }
     return booking;
+  }
+
+  //getBookingByUserIdLastcreated
+  // async getBookingByUserIdLastcreated(bookingemp: number) {
+  //   const booking = await this.bookingsRepository.findOne({
+  //     where: { employee: { emp_id: bookingemp } },
+  //     relations: [
+  //       'customer',
+  //       'employee',
+  //       'promotion',
+  //       'bookingDetail',
+  //       'activityPer',
+  //       'activityPer.activity',
+  //       'bookingDetail.room',
+  //       'bookingDetail.room.roomtype',
+  //     ],
+  //     order: {
+  //       booking_create_date: 'DESC',
+  //     },
+  //   });
+  //   if (!booking) {
+  //     throw new NotFoundException('Booking not found');
+  //   }
+  //   return booking;
+  // }
+
+  //create function create booking by employee
+  async createBookingByEmployee(createBookingDto: CreateBookingDto) {
+    try {
+      const booking = new Booking();
+      booking.booking_cus_name = createBookingDto.booking_cus_name;
+      booking.booking_cus_lastname = createBookingDto.booking_cus_lastname;
+      booking.booking_cus_tel = createBookingDto.booking_cus_tel;
+      booking.booking_cus_email = createBookingDto.booking_cus_email;
+      booking.booking_cus_addr = createBookingDto.booking_cus_addr;
+      booking.booking_cus_addr_des = createBookingDto.booking_cus_addr_des;
+      booking.booking_payment_booking =
+        createBookingDto.booking_payment_booking;
+      booking.booking_status = 'waiting';
+      booking.booking_checkin = null;
+      booking.booking_checkout = null;
+      booking.booking_payment_checkout = null;
+      booking.booking_status_late = null;
+      booking.booking_adult = createBookingDto.booking_adult;
+      booking.booking_child = createBookingDto.booking_child;
+
+      booking.booking_total = 0;
+
+      // Activity
+      const activitypers = new Array<Activityper>();
+      if (
+        createBookingDto.activity_booking.length > 0 ||
+        createBookingDto.activity_booking != null
+      ) {
+        // array ของ activityper
+        for (const activity of createBookingDto.activity_booking) {
+          const activity_ = await this.activityRepository.findOne({
+            where: { act_id: activity.activityId },
+          });
+          if (!activity_) {
+            throw new NotFoundException('Activity not found');
+          }
+          const activityper = new Activityper(); // สร้าง activityper
+          activityper.activity = activity_;
+          activityper.act_rec_qty = activity.act_rec_qty;
+          activityper.act_rec_total_price =
+            activity_.act_price * activity.act_rec_qty;
+
+          booking.booking_total += activityper.act_rec_total_price;
+          const activityper_created = await this.activityPerRepository.save(
+            activityper,
+          );
+
+          activitypers.push(activityper_created);
+        }
+      }
+      // ค้นหาพนักงาน
+      if (createBookingDto.employeeId) {
+        const employee = await this.employeesRepository.findOne({
+          where: { emp_id: createBookingDto.employeeId },
+        });
+        if (!employee) {
+          throw new NotFoundException('Employee not found');
+        }
+        booking.employee = employee;
+      }
+      // ค้นหาลูกค้า
+      if (createBookingDto.customerId) {
+        const customer = await this.customersRepository.findOne({
+          where: { cus_id: createBookingDto.customerId },
+        });
+        if (!customer) {
+          throw new NotFoundException('Customer not found');
+        }
+        booking.customer = customer;
+      }
+
+      //promotion
+      if (createBookingDto.promotionId) {
+        const promotion = await this.promotionsRepository.findOne({
+          where: { prom_id: createBookingDto.promotionId },
+        });
+        if (!promotion) {
+          throw new NotFoundException('Promotion not found');
+        }
+        booking.promotion = promotion;
+        booking.booking_total -= promotion.prom_discount;
+      }
+
+      booking.activityPer = activitypers;
+      booking.booking_cash_pledge = createBookingDto.booking_cash_pledge;
+      booking.booking_total_discount = createBookingDto.booking_total_discount;
+      booking.booking_total -= createBookingDto.booking_total_discount; // ลดราคา
+      // save
+      const booking_ = await this.bookingsRepository.save(booking);
+
+      for (const book of createBookingDto.bookingdetail) {
+        console.log(book);
+        const room = await this.roomsRepository.findOne({
+          relations: ['roomtype'],
+          where: { room_id: book.roomId },
+        });
+        console.log(room);
+        if (room) {
+          booking_.booking_total += room.roomtype.room_type_price;
+          const bookingDetail = new BookingDetail();
+          bookingDetail.room = room;
+          bookingDetail.booking = booking_;
+          await this.bookingsdetailRepository.save(bookingDetail);
+        } else {
+          throw new NotFoundException('Room not found');
+        }
+      }
+      const booking__ = await this.bookingsRepository.save(booking_);
+
+      return this.bookingsRepository.findOne({
+        where: { booking_id: booking__.booking_id },
+        relations: [
+          'customer',
+          'employee',
+          'promotion',
+          'bookingDetail',
+          'activityPer',
+          'activityPer.activity',
+          'bookingDetail.room',
+          'bookingDetail.room.roomtype',
+        ],
+      });
+    } catch (error) {
+      console.log(error);
+      throw new NotFoundException('Booking not found');
+    }
   }
 
   //create fucntion getBookingbyStatusAndOrderTime
@@ -502,5 +659,59 @@ export class BookingService {
       console.error('Error fetching booking by customer name or ID:', error);
       throw error; // Or handle more gracefully as needed
     }
+  }
+  //update booking  checkin
+  async updateBookingCheckin(id: number) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: id },
+    });
+
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    booking.booking_status = 'checkin';
+    booking.booking_checkin = new Date();
+    booking.updateDate = new Date();
+
+    await this.bookingsRepository.save(booking);
+
+    return this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
+  }
+
+  //create function getBookingByEmployeeIdLastcreated
+  async getBookingByEmployeeIdLastcreated(bookingemp: number) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { employee: { emp_id: bookingemp } },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+      order: {
+        booking_create_date: 'DESC',
+      },
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
   }
 }

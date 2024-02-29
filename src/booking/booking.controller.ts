@@ -15,11 +15,15 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
-  @Post()
+  @Post('employee')
   create(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingService.create(createBookingDto);
   }
 
+  @Post()
+  createByEmployee(@Body() createBookingDto: CreateBookingDto) {
+    return this.bookingService.createBookingByEmployee(createBookingDto);
+  }
   @Get()
   findAll() {
     return this.bookingService.findAll();
@@ -72,6 +76,11 @@ export class BookingController {
   @Get('/customer/:id/lasted')
   findByCustomerLastcreated(@Param('id') bookingcus: number) {
     return this.bookingService.getBookingByCustomerIdLastcreated(bookingcus);
+  }
+
+  @Get('/employee/:id/lasted')
+  findByEmployeeLastcreated(@Param('id') bookingemp: number) {
+    return this.bookingService.getBookingByEmployeeIdLastcreated(bookingemp);
   }
 
   @Get('/time/:time/status/:status')
