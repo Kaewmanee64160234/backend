@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Customer } from 'src/customers/entities/customer.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { Room } from 'src/rooms/entities/room.entity';
@@ -163,20 +163,39 @@ export class BookingService {
       throw new NotFoundException('Booking not found');
     }
   }
-  findAll() {
-    return this.bookingsRepository.find({
-      relations: [
-        'customer',
-        'employee',
-        'promotion',
-        'bookingDetail',
-        'activityPer',
-        'activityPer.activity',
-        'bookingDetail.room',
-        'bookingDetail.room.roomtype',
-      ],
-    });
-  }
+  // async findAll(query): Promise<Booking> {
+  //   const page = query.page || 1;
+  //   const take: number = query.take || 10;
+  //   const skip = (page - 1) * take;
+  //   const keyword = query.keyword || '';
+  //   const orderBy = query.order || 'cus_name';
+  //   const order = query.order || 'DESC';
+  //   const currentPage = page;
+
+  //   const [result, total] = await this.bookingsRepository.find({
+  //     relations: [
+  //       'customer',
+  //       'employee',
+  //       'promotion',
+  //       'bookingDetail',
+  //       'activityPer',
+  //       'activityPer.activity',
+  //       'bookingDetail.room',
+  //       'bookingDetail.room.roomtype',
+  //     ],
+  //     where: { booking_cus_name: Like(`%${keyword}$%`) },
+  //     order: { [orderBy]: order },
+  //     take: take,
+  //     skip: skip,
+  //   });
+  //   const lastPage = Math.ceil(total / take);
+  //   return {
+  //     data: result,
+  //     count: total,
+  //     currentPage: currentPage,
+  //     lastPage: lastPage,
+  //   };
+  // }
 
   //findOne booking
   async findOne(id: number) {
@@ -675,6 +694,38 @@ export class BookingService {
     booking.booking_status = 'checkin';
     booking.booking_checkin = new Date();
     booking.updateDate = new Date();
+
+    await this.bookingsRepository.save(booking);
+
+    return this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
+  }
+
+  //update booking  checkout
+  async updateBookingCheckout(id: number) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: id },
+    });
+
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    booking.booking_status = 'checkout';
+    booking.booking_checkout = new Date();
+    booking.updateDate = new Date();
+    booking.booking_payment_checkout = new Booking().toString();
 
     await this.bookingsRepository.save(booking);
 
