@@ -783,4 +783,96 @@ export class BookingService {
     }
     return booking;
   }
+
+  // check in bookings
+  async checkInBooking(id: number) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: id },
+    });
+
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    booking.booking_status = 'checkin';
+    booking.booking_checkin = new Date();
+    booking.updateDate = new Date();
+    //set status room
+    const bookingdetail = await this.bookingsdetailRepository.find({
+      where: { booking: { booking_id: id } },
+      relations: ['room'],
+    });
+    for (const book of bookingdetail) {
+      book.room.room_status = 'checkin';
+      await this.roomsRepository.save(book.room);
+    }
+
+    await this.bookingsRepository.save(booking);
+
+    return this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
+  }
+
+  // check out bookings
+  async checkOutBooking(id: number, updatedBookingDto: UpdateBookingDto) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: id },
+    });
+
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    booking.booking_status = 'checkout';
+    booking.booking_payment_checkout = 'cash';
+    booking.updateDate = new Date();
+    //set status room
+    const bookingdetail = await this.bookingsdetailRepository.find({
+      where: { booking: { booking_id: id } },
+      relations: ['room'],
+    });
+    for (const book of bookingdetail) {
+      book.room.room_status = 'ready';
+      await this.roomsRepository.save(book.room);
+    }
+    //if checkout late + fine
+    const date1 = new Date(booking.booking_checkout);
+    const date2 = new Date();
+    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays > 0) {
+      booking.booking_status_late = 'late';
+      booking.booking_total += diffDays * 100;
+    }
+    // set status payment checkout
+    booking.booking_payment_checkout =
+      updatedBookingDto.booking_payment_checkout;
+
+    await this.bookingsRepository.save(booking);
+
+    return this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
+  }
 }
