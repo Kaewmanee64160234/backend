@@ -245,7 +245,7 @@ export class BookingService {
         relations: ['room'],
       });
       for (const book of bookingdetail) {
-        book.room.room_status = 'empty';
+        book.room.room_status = 'ready';
         await this.roomsRepository.save(book.room);
       }
     }
@@ -369,6 +369,9 @@ export class BookingService {
         'bookingDetail.room',
         'bookingDetail.room.roomtype',
       ],
+      order: {
+        booking_create_date: 'DESC',
+      },
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
@@ -389,6 +392,9 @@ export class BookingService {
         'bookingDetail.room',
         'bookingDetail.room.roomtype',
       ],
+      order: {
+        booking_create_date: 'DESC',
+      },
     });
     if (!booking) {
       throw new NotFoundException('Booking not found');
