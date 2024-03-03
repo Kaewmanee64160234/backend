@@ -72,6 +72,11 @@ export class BookingController {
   findByCustomer(@Param('id') bookingcus: number) {
     return this.bookingService.getBookingByCustommerId(bookingcus);
   }
+  //GetgetBookingByEmployeeId
+  @Get('/employee/:id')
+  findByEmployee(@Param('id') bookingemp: number) {
+    return this.bookingService.getBookingByEmployeeId(bookingemp);
+  }
 
   @Get('/customer/:id/lasted')
   findByCustomerLastcreated(@Param('id') bookingcus: number) {

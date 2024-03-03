@@ -227,7 +227,48 @@ export class BookingService {
     booking.updateDate = new Date();
 
     await this.bookingsRepository.save(booking);
-
+    if (booking.booking_status == 'confirm') {
+      //set room to status booking
+      const bookingdetail = await this.bookingsdetailRepository.find({
+        where: { booking: { booking_id: id } },
+        relations: ['room'],
+      });
+      for (const book of bookingdetail) {
+        book.room.room_status = 'booking';
+        await this.roomsRepository.save(book.room);
+      }
+    }
+    if (booking.booking_status == 'cancel') {
+      //set room to status booking
+      const bookingdetail = await this.bookingsdetailRepository.find({
+        where: { booking: { booking_id: id } },
+        relations: ['room'],
+      });
+      for (const book of bookingdetail) {
+        book.room.room_status = 'empty';
+        await this.roomsRepository.save(book.room);
+      }
+    }
+    if (booking.booking_status == 'checkin') {
+      const bookingdetail = await this.bookingsdetailRepository.find({
+        where: { booking: { booking_id: id } },
+        relations: ['room'],
+      });
+      for (const book of bookingdetail) {
+        book.room.room_status = 'checkin';
+        await this.roomsRepository.save(book.room);
+      }
+    }
+    if (booking.booking_status == 'checkout') {
+      const bookingdetail = await this.bookingsdetailRepository.find({
+        where: { booking: { booking_id: id } },
+        relations: ['room'],
+      });
+      for (const book of bookingdetail) {
+        book.room.room_status = 'empty';
+        await this.roomsRepository.save(book.room);
+      }
+    }
     return this.bookingsRepository.findOne({
       where: { booking_id: id },
       relations: [
@@ -318,6 +359,26 @@ export class BookingService {
   async getBookingByCustommerId(bookingcus: number) {
     const booking = await this.bookingsRepository.find({
       where: { customer: { cus_id: bookingcus } },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
+  }
+  //getBookingByEmployeeId
+  async getBookingByEmployeeId(bookingemp: number) {
+    const booking = await this.bookingsRepository.find({
+      where: { employee: { emp_id: bookingemp } },
       relations: [
         'customer',
         'employee',
