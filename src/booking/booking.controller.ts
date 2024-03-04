@@ -25,10 +25,11 @@ export class BookingController {
   createByEmployee(@Body() createBookingDto: CreateBookingDto) {
     return this.bookingService.createBookingByEmployee(createBookingDto);
   }
-  // @Get()
-  // findAll(@Query() query) {
-  //   return this.bookingService.findAll(query);
-  // }
+
+  @Get()
+  findAll(@Query() query) {
+    return this.bookingService.findAll(query);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

@@ -12,7 +12,7 @@ import { Activity } from 'src/activity/entities/activity.entity';
 import { Booking } from './entities/booking.entity';
 import { BookingDetail } from './entities/bookingDetail';
 import { Activityper } from 'src/activityper/entities/activityper.entity';
-
+import { Paginate } from '../type/paginate';
 @Injectable()
 export class BookingService {
   constructor(
@@ -163,39 +163,40 @@ export class BookingService {
       throw new NotFoundException('Booking not found');
     }
   }
-  // async findAll(query): Promise<Booking> {
-  //   const page = query.page || 1;
-  //   const take: number = query.take || 10;
-  //   const skip = (page - 1) * take;
-  //   const keyword = query.keyword || '';
-  //   const orderBy = query.order || 'cus_name';
-  //   const order = query.order || 'DESC';
-  //   const currentPage = page;
+  async findAll(query): Promise<Paginate> {
+    const page = query.page || 1;
+    const take: number = query.take || 5;
+    const skip = (page - 1) * take;
+    const keyword = query.keyword || '';
+    const orderBy = query.order || 'booking_cus_name';
+    const order = query.order || 'DESC';
+    const currentPage = page;
 
-  //   const [result, total] = await this.bookingsRepository.find({
-  //     relations: [
-  //       'customer',
-  //       'employee',
-  //       'promotion',
-  //       'bookingDetail',
-  //       'activityPer',
-  //       'activityPer.activity',
-  //       'bookingDetail.room',
-  //       'bookingDetail.room.roomtype',
-  //     ],
-  //     where: { booking_cus_name: Like(`%${keyword}$%`) },
-  //     order: { [orderBy]: order },
-  //     take: take,
-  //     skip: skip,
-  //   });
-  //   const lastPage = Math.ceil(total / take);
-  //   return {
-  //     data: result,
-  //     count: total,
-  //     currentPage: currentPage,
-  //     lastPage: lastPage,
-  //   };
-  // }
+    const [result, total] = await this.bookingsRepository.findAndCount({
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+      where: { booking_cus_name: Like(`%${keyword}%`) },
+      order: { [orderBy]: order },
+      take: take,
+      skip: skip,
+    });
+    const lastPage = Math.ceil(total / take);
+    console.log(keyword);
+    return {
+      data: result,
+      count: total,
+      currentPage: currentPage,
+      lastPage: lastPage,
+    };
+  }
 
   //findOne booking
   async findOne(id: number) {
