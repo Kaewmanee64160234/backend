@@ -47,6 +47,15 @@ export class Roomtype {
   @Column({ nullable: true })
   room_type_desk: boolean;
 
+  @Column({ nullable: true })
+  max_adult: number;
+
+  @Column({ nullable: true })
+  max_child: number;
+
+  @Column({ nullable: true })
+  sleep: number;
+
   @CreateDateColumn()
   createDate: Date;
 

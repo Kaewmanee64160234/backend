@@ -22,4 +22,11 @@ export class CreateRoomtypeDto {
   room_type_water: boolean;
 
   room_type_desk: boolean;
+
+  //max_adult
+  room_type_max_adult: number;
+  // max_child
+  room_type_max_child: number;
+  // sleep
+  room_type_sleep: number;
 }

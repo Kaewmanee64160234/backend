@@ -41,10 +41,8 @@ export class AuthsService {
       });
 
       if (existingUser) {
-        throw new HttpException(
-          'Email already in use.',
-          HttpStatus.BAD_REQUEST,
-        );
+        // A user with this email already exists 409
+        throw new HttpException('User already exists', HttpStatus.CONFLICT);
       }
 
       const passwordRegex =
@@ -85,7 +83,7 @@ export class AuthsService {
       });
     } catch (error) {
       console.error(error); // More specific error logging
-      throw new HttpException(error, HttpStatus.NOT_FOUND);
+      throw new HttpException(error, HttpStatus.CONFLICT);
     }
   }
 

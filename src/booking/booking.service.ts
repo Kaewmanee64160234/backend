@@ -48,13 +48,17 @@ export class BookingService {
       booking.booking_payment_booking =
         createBookingDto.booking_payment_booking;
       booking.booking_status = 'waiting';
-      booking.booking_checkin = new Date(createBookingDto.booking_checkin);
-      booking.booking_checkout = new Date(createBookingDto.booking_checkout);
       booking.booking_payment_checkout = null;
       booking.booking_status_late = null;
       booking.booking_adult = createBookingDto.booking_adult;
       booking.booking_child = createBookingDto.booking_child;
 
+      const checkinDate = new Date(createBookingDto.booking_checkin);
+      const checkoutDate = new Date(createBookingDto.booking_checkout);
+      const diffTime = checkoutDate.getTime() - checkinDate.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
+
+      // Initialize booking total
       booking.booking_total = 0;
 
       // Activity
@@ -134,7 +138,7 @@ export class BookingService {
         });
         console.log(room);
         if (room) {
-          booking_.booking_total += room.roomtype.room_type_price;
+          booking_.booking_total += room.roomtype.room_type_price * diffDays;
           const bookingDetail = new BookingDetail();
           bookingDetail.room = room;
           bookingDetail.booking = booking_;
