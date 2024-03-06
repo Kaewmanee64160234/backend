@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Customer } from 'src/customers/entities/customer.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { Room } from 'src/rooms/entities/room.entity';
@@ -12,7 +12,7 @@ import { Activity } from 'src/activity/entities/activity.entity';
 import { Booking } from './entities/booking.entity';
 import { BookingDetail } from './entities/bookingDetail';
 import { Activityper } from 'src/activityper/entities/activityper.entity';
-
+import { Paginate } from '../type/paginate';
 @Injectable()
 export class BookingService {
   constructor(
@@ -167,8 +167,16 @@ export class BookingService {
       throw new NotFoundException('Booking not found');
     }
   }
-  findAll() {
-    return this.bookingsRepository.find({
+  async findAll(query): Promise<Paginate> {
+    const page = query.page || 1;
+    const take: number = query.take || 5;
+    const skip = (page - 1) * take;
+    const keyword = query.keyword || '';
+    const orderBy = query.order || 'booking_cus_name';
+    const order = query.order || 'DESC';
+    const currentPage = page;
+
+    const [result, total] = await this.bookingsRepository.findAndCount({
       relations: [
         'customer',
         'employee',
@@ -179,7 +187,19 @@ export class BookingService {
         'bookingDetail.room',
         'bookingDetail.room.roomtype',
       ],
+      where: { booking_cus_name: Like(`%${keyword}%`) },
+      order: { [orderBy]: order },
+      take: take,
+      skip: skip,
     });
+    const lastPage = Math.ceil(total / take);
+    console.log(keyword);
+    return {
+      data: result,
+      count: total,
+      currentPage: currentPage,
+      lastPage: lastPage,
+    };
   }
 
   //findOne booking
@@ -746,6 +766,38 @@ export class BookingService {
     booking.booking_status = 'checkin';
     booking.booking_checkin = new Date();
     booking.updateDate = new Date();
+
+    await this.bookingsRepository.save(booking);
+
+    return this.bookingsRepository.findOne({
+      where: { booking_id: id },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+    });
+  }
+
+  //update booking  checkout
+  async updateBookingCheckout(id: number) {
+    const booking = await this.bookingsRepository.findOne({
+      where: { booking_id: id },
+    });
+
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    booking.booking_status = 'checkout';
+    booking.booking_checkout = new Date();
+    booking.updateDate = new Date();
+    booking.booking_payment_checkout = new Booking().toString();
 
     await this.bookingsRepository.save(booking);
 
