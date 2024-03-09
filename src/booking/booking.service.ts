@@ -127,6 +127,8 @@ export class BookingService {
 
       booking.booking_total_discount = createBookingDto.booking_total_discount;
       booking.booking_total -= createBookingDto.booking_total_discount; // ลดราคา
+      booking.booking_checkin = new Date(createBookingDto.booking_checkin);
+      booking.booking_checkout = new Date(createBookingDto.booking_checkout);
       // save
       const booking_ = await this.bookingsRepository.save(booking);
 
@@ -147,6 +149,7 @@ export class BookingService {
           throw new NotFoundException('Room not found');
         }
       }
+      booking_.booking_total = createBookingDto.booking_total;
       const booking__ = await this.bookingsRepository.save(booking_);
 
       return this.bookingsRepository.findOne({
