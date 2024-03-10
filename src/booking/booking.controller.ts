@@ -106,4 +106,9 @@ export class BookingController {
   confirmBooking() {
     return this.bookingService.getBookingByStatusAndOrderTimeForConfirm();
   }
+
+  @Get('/employee/history/booking')
+  getBookingHistory() {
+    return this.bookingService.getBookingHistory();
+  }
 }

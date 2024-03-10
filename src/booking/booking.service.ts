@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
 import { Customer } from 'src/customers/entities/customer.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { Room } from 'src/rooms/entities/room.entity';
@@ -389,9 +389,13 @@ export class BookingService {
     return booking;
   }
 
-  async getBookingByCustommerId(bookingcus: number) {
-    const booking = await this.bookingsRepository.find({
-      where: { customer: { cus_id: bookingcus } },
+  ///booking/employee/history
+  async getBookingHistory() {
+    //by no status waiting and edited
+    const bookings = await this.bookingsRepository.find({
+      where: {
+        booking_status: In(['confirm', 'cancel', 'checkin', 'checkout']),
+      },
       relations: [
         'customer',
         'employee',
@@ -406,15 +410,71 @@ export class BookingService {
         booking_create_date: 'DESC',
       },
     });
-    if (!booking) {
+    console.log(bookings);
+    //sort by status
+    const statusOrder = ['checkin', 'confirm', 'checkout', 'cancel'];
+    bookings.sort((a, b) => {
+      return (
+        statusOrder.indexOf(a.booking_status) -
+          statusOrder.indexOf(b.booking_status) ||
+        b.booking_create_date.getTime() - a.booking_create_date.getTime()
+      );
+    });
+    if (!bookings.length) {
       throw new NotFoundException('Booking not found');
     }
-    return booking;
+    return bookings;
   }
+
+  async getBookingByCustommerId(bookingcus: number) {
+    const bookings = await this.bookingsRepository.find({
+      where: {
+        customer: { cus_id: bookingcus },
+        booking_status: In(['confirm', 'cancel', 'waiting', 'edited']),
+      },
+      relations: [
+        'customer',
+        'employee',
+        'promotion',
+        'bookingDetail',
+        'activityPer',
+        'activityPer.activity',
+        'bookingDetail.room',
+        'bookingDetail.room.roomtype',
+      ],
+      order: {
+        booking_create_date: 'DESC',
+      },
+    });
+
+    // Updated custom sort order for the statuses
+    const statusOrder = ['edited', 'waiting', 'confirm', 'cancel'];
+
+    // Sort bookings by status according to the defined order
+    bookings.sort((a, b) => {
+      return (
+        statusOrder.indexOf(a.booking_status) -
+          statusOrder.indexOf(b.booking_status) ||
+        b.booking_create_date.getTime() - a.booking_create_date.getTime()
+      );
+    });
+
+    if (!bookings.length) {
+      throw new NotFoundException('Booking not found');
+    }
+
+    console.log(bookings); // For debugging purposes
+    return bookings;
+  }
+
   //getBookingByEmployeeId
   async getBookingByEmployeeId(bookingemp: number) {
-    const booking = await this.bookingsRepository.find({
-      where: { employee: { emp_id: bookingemp } },
+    // Fetch all bookings for the given employee ID and any status
+    const bookings = await this.bookingsRepository.find({
+      where: {
+        employee: { emp_id: bookingemp },
+        booking_status: In(['confirm', 'cancel', 'waiting', 'edited']),
+      },
       relations: [
         'customer',
         'employee',
@@ -429,10 +489,25 @@ export class BookingService {
         booking_create_date: 'DESC',
       },
     });
-    if (!booking) {
+
+    // Updated custom sort order for the statuses
+    const statusOrder = ['edited', 'waiting', 'confirm', 'cancel'];
+
+    // Sort bookings by status according to the defined order
+    bookings.sort((a, b) => {
+      return (
+        statusOrder.indexOf(a.booking_status) -
+          statusOrder.indexOf(b.booking_status) ||
+        b.booking_create_date.getTime() - a.booking_create_date.getTime()
+      );
+    });
+
+    if (!bookings.length) {
       throw new NotFoundException('Booking not found');
     }
-    return booking;
+
+    console.log(bookings); // For debugging purposes
+    return bookings;
   }
 
   async getBookingByCustomerIdLastcreated(bookingcus: number) {
