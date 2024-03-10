@@ -252,7 +252,13 @@ export class BookingService {
     // Update booking status and updateDate
     booking.booking_status = updateBookingDto.booking_status;
     booking.updateDate = new Date();
-
+    //checkin out date
+    if (updateBookingDto.booking_checkin) {
+      booking.booking_checkin = new Date(updateBookingDto.booking_checkin);
+    }
+    if (updateBookingDto.booking_checkout) {
+      booking.booking_checkout = new Date(updateBookingDto.booking_checkout);
+    }
     await this.bookingsRepository.save(booking);
     if (booking.booking_status == 'confirm') {
       //set room to status booking
@@ -933,5 +939,31 @@ export class BookingService {
         'bookingDetail.room.roomtype',
       ],
     });
+  }
+
+  async getBookingByStatusAndOrderTimeForConfirm() {
+    const bookings = await this.bookingsRepository
+      .createQueryBuilder('booking')
+      .leftJoinAndSelect('booking.customer', 'customer')
+      .leftJoinAndSelect('booking.employee', 'employee')
+      .leftJoinAndSelect('booking.promotion', 'promotion')
+      .leftJoinAndSelect('booking.bookingDetail', 'bookingDetail')
+      .leftJoinAndSelect('booking.activityPer', 'activityPer')
+      .leftJoinAndSelect('activityPer.activity', 'activity')
+      .leftJoinAndSelect('bookingDetail.room', 'room')
+      .leftJoinAndSelect('room.roomtype', 'roomtype')
+      .where('booking.booking_status IN (:...statuses)', {
+        statuses: ['waiting', 'edited'],
+      })
+      .orderBy('booking.booking_create_date', 'DESC') // Primary sort by creation date
+      // Assuming 'edited' and 'waiting' can be sorted alphabetically as you want 'edited' to come after 'waiting'
+      // If your case needs explicit conditional sorting, consider handling it in the application logic or with a more complex SQL expression
+      .addOrderBy('booking.booking_status', 'ASC') // Secondary sort by status
+      .getMany();
+
+    if (!bookings.length) {
+      throw new NotFoundException('Bookings not found');
+    }
+    return bookings;
   }
 }

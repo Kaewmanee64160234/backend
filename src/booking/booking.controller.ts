@@ -100,4 +100,10 @@ export class BookingController {
       bookingtime,
     );
   }
+
+  //confirm
+  @Get('/confirm/booking')
+  confirmBooking() {
+    return this.bookingService.getBookingByStatusAndOrderTimeForConfirm();
+  }
 }
