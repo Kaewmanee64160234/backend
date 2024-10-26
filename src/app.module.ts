@@ -35,23 +35,16 @@ import { Booking } from './booking/entities/booking.entity';
 import { BookingDetail } from './booking/entities/bookingDetail';
 import { AuthsModule } from './auths/auths.module';
 import { Auth } from './auths/entities/auth.entity';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.env.local', '.env'], // Loads .env.local first, then .env if not found
-      isGlobal: true,
-    }),
-
     TypeOrmModule.forRoot({
-      type: 'mysql', // or 'postgres'
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT, 10),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      autoLoadEntities: true,
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'hotelcarifornai',
       entities: [
         Booking,
         Employee,
@@ -94,22 +87,3 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule {}
-
-// import { Module } from '@nestjs/common';
-// import { TypeOrmModule } from '@nestjs/typeorm';
-
-// @Module({
-//   imports: [
-//     TypeOrmModule.forRoot({
-//       type: 'mysql', // or your DB engine type
-//       host: process.env.DB_HOST,
-//       port: Number(process.env.DB_PORT),
-//       username: process.env.DB_USER,
-//       password: process.env.DB_PASSWORD,
-//       database: process.env.DB_NAME,
-//       entities: [__dirname + '/*/.entity{.ts,.js}'],
-//       synchronize: true, // Set to false in production to avoid data loss
-//     }),
-//   ],
-// })
-// export class AppModule {}
