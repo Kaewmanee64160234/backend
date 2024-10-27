@@ -39,7 +39,7 @@ import { Auth } from './auths/entities/auth.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type:'mysql',
+      type: 'mysql',
       host: 'hoteldatabase.cjogmyuk6dpv.us-east-1.rds.amazonaws.com',
       port: 3306,
       username: 'admin',
