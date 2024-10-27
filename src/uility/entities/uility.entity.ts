@@ -1,4 +1,3 @@
-import { Employee } from 'src/employees/entities/employee.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +7,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
+import { Employee } from 'src/employees/entities/employee.entity';
 
 @Entity()
 export class Uility {
@@ -31,8 +31,6 @@ export class Uility {
 
   @Column({ nullable: true })
   ue_other: string;
-  // @Column({nullable:true , type: 'real'})
-  // ue_other: number;
 
   @Column({ nullable: true })
   ue_date: Date;

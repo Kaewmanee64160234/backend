@@ -39,12 +39,12 @@ import { Auth } from './auths/entities/auth.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
+      type:'mysql',
+      host: 'hoteldatabase.cjogmyuk6dpv.us-east-1.rds.amazonaws.com',
       port: 3306,
-      username: 'root',
-      password: '',
-      database: 'hotelcarifornai',
+      username: 'admin',
+      password: 'Pass_1234',
+      database: 'hoteldatabase',
       entities: [
         Booking,
         Employee,
