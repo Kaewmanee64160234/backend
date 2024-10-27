@@ -23,22 +23,22 @@ export class Employee {
   @Column({ type: 'text' })
   emp_position: string;
 
-  @Column({ unique: true, type: 'text' })
+  @Column({ unique: true, type: 'varchar', length: 10 })
   emp_tel: string;
 
-  @Column()
+  @Column({ type: 'date' })
   emp_dob: Date;
 
   @Column({ type: 'text' })
   emp_addr: string;
 
-  @Column({ unique: true, type: 'text' })
+  @Column({ type: 'varchar', length: 255, unique: true })
   emp_email: string;
 
-  @Column()
+  @Column({ type: 'date' })
   emp_dsw: Date;
 
-  @Column({ type: 'real' })
+  @Column({ type: 'float' })
   emp_hourly_wage: number;
 
   @DeleteDateColumn()

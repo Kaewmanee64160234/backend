@@ -23,10 +23,10 @@ export class Promotion {
   @Column({ type: 'text' })
   prom_name: string;
 
-  @Column({ type: 'real', nullable: true })
+  @Column({ type: 'real', nullable: true }) // Assuming this is the discount amount
   prom_discount: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true }) // Changed to 'float' for percentage
   prom_discount_pres: number;
 
   @UpdateDateColumn()

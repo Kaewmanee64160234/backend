@@ -16,7 +16,7 @@ export class Customer {
   @PrimaryGeneratedColumn()
   cus_id: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 255 })
   cus_name: string;
 
   @CreateDateColumn()

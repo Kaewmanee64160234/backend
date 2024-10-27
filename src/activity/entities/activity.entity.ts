@@ -14,13 +14,13 @@ export class Activity {
   @PrimaryGeneratedColumn()
   act_id: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 255 })
   act_img_path: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 100 })
   act_name: string;
 
-  @Column({ type: 'real' })
+  @Column({ type: 'float' })
   act_price: number;
 
   @Column({ nullable: true, type: 'text' })

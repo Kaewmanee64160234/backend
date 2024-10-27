@@ -14,16 +14,16 @@ export class Review {
   @PrimaryGeneratedColumn()
   rev_id: number;
 
-  @Column()
+  @Column({ type: 'int', nullable: false }) // Explicit type and non-nullable
   rev_star_clean: number;
 
-  @Column()
+  @Column({ type: 'int', nullable: false }) // Explicit type and non-nullable
   rev_star_service: number;
 
-  @Column()
+  @Column({ type: 'int', nullable: false }) // Explicit type and non-nullable
   rev_star_conv: number;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text', nullable: true }) // Optional comment
   rev_comment: string;
 
   @CreateDateColumn()

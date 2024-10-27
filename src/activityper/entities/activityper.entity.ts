@@ -18,7 +18,7 @@ export class Activityper {
   @Column()
   act_rec_qty: number;
 
-  @Column({ type: 'real' })
+  @Column({ type: 'float' })
   act_rec_total_price: number;
 
   @CreateDateColumn()

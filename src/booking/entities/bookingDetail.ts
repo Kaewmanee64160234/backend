@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  Column,
 } from 'typeorm';
 
 import { Room } from 'src/rooms/entities/room.entity';
@@ -19,8 +20,8 @@ export class BookingDetail {
   @PrimaryGeneratedColumn()
   booking_de_id: number;
 
-  // @Column({ type: 'real' })
-  // booking_de_total_price: number;
+  @Column({ type: 'float', nullable: true }) // Added the total price column
+  booking_de_total_price: number;
 
   @CreateDateColumn()
   createDate: Date;

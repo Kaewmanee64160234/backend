@@ -14,7 +14,7 @@ export class Checkinandout {
   @PrimaryGeneratedColumn()
   cio_id: number;
 
-  @Column()
+  @Column({ type: 'date' })
   cio_date: Date;
 
   @Column({ type: 'time' })
@@ -23,10 +23,10 @@ export class Checkinandout {
   @Column({ type: 'time' })
   cio_time_out: string;
 
-  @Column()
+  @Column({ type: 'float' })
   cio_total_hour: number;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column({ nullable: true, type: 'varchar', length: 20 })
   cio_paid_status: string;
 
   @UpdateDateColumn()

@@ -21,7 +21,7 @@ export class User {
   @Length(8, 20)
   user_name: string;
 
-  @Column({ type: 'text', unique: true })
+  @Column({ type: 'varchar', length: 255, unique: true })
   @IsEmail()
   user_login: string;
 

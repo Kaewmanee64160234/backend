@@ -22,53 +22,65 @@ export class Booking {
   @CreateDateColumn()
   booking_create_date: Date;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 100 })
   booking_cus_name: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 100 })
   booking_cus_lastname: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 15 })
   booking_cus_tel: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 100 })
   booking_cus_email: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 255 })
   booking_cus_addr: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar', length: 255 })
   booking_cus_addr_des: string;
 
-  @Column({})
+  @Column({ type: 'date' })
   booking_checkin: Date;
 
-  @Column({})
+  @Column({ type: 'date' })
   booking_checkout: Date;
+
   @Column({ default: 0, nullable: true })
   booking_adult: number;
 
   @Column({ default: 0, nullable: true })
   booking_child: number;
-  @Column({ type: 'real', nullable: true })
+
+  @Column({ type: 'float', nullable: true })
   booking_total: number;
 
-  @Column({ default: 0, type: 'real' })
+  @Column({ default: 0, type: 'float' })
   booking_cash_pledge: number;
 
-  @Column({ default: 0, type: 'real', nullable: true })
+  @Column({ default: 0, type: 'float', nullable: true })
   booking_total_discount: number;
 
-  @Column({ default: 'cash', type: 'text' })
+  @Column({ default: 'cash', type: 'varchar', length: 50 })
   booking_payment_booking: string;
 
-  @Column({ default: 'cash', type: 'text', nullable: true })
+  @Column({ default: 'cash', type: 'varchar', length: 50, nullable: true })
   booking_payment_checkout: string;
 
-  @Column({ default: 'Not Comfrim', type: 'text', nullable: true })
+  @Column({
+    default: 'Not Confirmed',
+    type: 'varchar',
+    length: 50,
+    nullable: true,
+  })
   booking_status: string;
 
-  @Column({ default: 'Not Comfrim', type: 'text', nullable: true })
+  @Column({
+    default: 'Not Confirmed',
+    type: 'varchar',
+    length: 50,
+    nullable: true,
+  })
   booking_status_late: string;
 
   @UpdateDateColumn()
